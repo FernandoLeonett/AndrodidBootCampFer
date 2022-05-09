@@ -15,7 +15,17 @@ class Provider {
             Lot("4","Monday, 25 May,2022","8:30 pm"),
             Lot("5","Monday, 25 May,2022","8:30 pm"),
             Lot("6","Monday, 25 May,2022","8:30 pm"),
-            Lot("7","Monday, 25 May,2022","8:30 pm"),Lot("7","Monday, 25 May,2022","8:30 pm")
+            Lot("7","Monday, 25 May,2022","8:30 pm"),
+            Lot("7","Monday, 25 May,2022","8:30 pm"),
+            Lot("1","Monday, 25 May,2022","8:30 pm"),
+            Lot("1","Monday, 25 May,2022","8:30 pm"),
+            Lot("2","Monday, 25 May,2022","8:30 pm"),
+            Lot("3","Monday, 25 May,2022","8:30 pm"),
+            Lot("4","Monday, 25 May,2022","8:30 pm"),
+            Lot("5","Monday, 25 May,2022","8:30 pm"),
+            Lot("6","Monday, 25 May,2022","8:30 pm"),
+            Lot("7","Monday, 25 May,2022","8:30 pm"),
+            Lot("7","Monday, 25 May,2022","8:30 pm")
         )
 
     }

@@ -2,6 +2,8 @@
     <string name="app_name">Parking App</string>
     <string name="monday_25_m">Monday 25, May, 2022</string>
     <string name="pm">08:30 PM</string>
+    <string name="busy">12 busy</string>
+    <string name="free">18 free </string>
 
 
 </resources>

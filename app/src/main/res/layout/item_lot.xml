@@ -1,88 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="360dp"
-    android:layout_height="69dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:background="@drawable/list_item">
-    <!-- Ellipse 1 -->
-    <View
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="14.5dp"
-        android:layout_marginEnd="304dp"
-        android:layout_marginBottom="14.5dp"
-        android:background="@drawable/ellipse_1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+android:layout_marginTop="20dp"
+    tools:context=".MainActivity">
 
 
-        />
 
-
-    <!-- Monday 25 May 2022 -->
-    <TextView
-        android:id="@+id/text_date_lot"
-        android:layout_width="272dp"
-        android:layout_height="23dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="34dp"
-
-
-        android:lineSpacingExtra="4sp"
-        android:text="@string/monday_25_m"
-        android:textAppearance="@style/monday_25_m"
-
-
-        />
-
-    <!-- 08:30 PM -->
     <TextView
         android:id="@+id/text_hour_lot"
         android:layout_width="272dp"
-        android:layout_height="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="12dp"
-        android:gravity="center_vertical"
-        android:lineSpacingExtra="3sp"
+        android:layout_height="23dp"
+
+
+        android:layout_marginStart="20dp"
         android:text="@string/pm"
-        android:textAppearance="@style/pm" />
+        android:textAppearance="@style/pm"
+        android:textColor="#757575"
+        app:layout_constraintBottom_toBottomOf="@+id/vw_figure_id"
+        app:layout_constraintStart_toEndOf="@+id/vw_figure_id"
+        app:layout_constraintTop_toBottomOf="@id/text_date_lot" />
 
-<!--    number id-->
+    <TextView
+        android:id="@+id/text_date_lot"
+
+        android:layout_width="272dp"
+        android:layout_height="23dp"
 
 
-    <!-- 1 -->
+        android:layout_marginTop="14dp"
+        android:text="@string/monday_25_m"
+
+
+        app:layout_constraintStart_toStartOf="@+id/text_hour_lot"
+        app:layout_constraintTop_toTopOf="@+id/vw_figure_id" />
+
+    <View
+        android:id="@+id/vw_figure_id"
+        android:layout_width="60dp"
+
+
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/ellipse_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/text_id_lot"
-        android:layout_width="11dp"
+        android:layout_width="wrap_content"
         android:layout_height="31dp"
-        android:layout_alignParentTop="true"
 
-        android:layout_marginStart="30dp"
 
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="20dp"
-
-        android:gravity="center_horizontal|center_vertical"
-        android:lineSpacingExtra="4sp"
         android:textAppearance="@style/some_id"
-        tools:text="1" />
+
+        android:textColor="#546E7A"
+        app:layout_constraintBottom_toBottomOf="@+id/vw_figure_id"
+        app:layout_constraintEnd_toEndOf="@+id/vw_figure_id"
+        app:layout_constraintStart_toStartOf="@+id/vw_figure_id"
+        app:layout_constraintTop_toTopOf="@+id/vw_figure_id"
+        tools:text="12" />
 
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

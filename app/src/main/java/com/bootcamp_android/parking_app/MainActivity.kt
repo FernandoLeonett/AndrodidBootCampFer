@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        val recycleView = findViewById<RecyclerView>(R.id.recycler_id_list)
+        val recycleView = findViewById<RecyclerView>(R.id.lot_list)
         recycleView.layoutManager = LinearLayoutManager(this)
 
         recycleView.adapter = LotAdapter(Provider.lots)

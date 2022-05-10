@@ -38,7 +38,7 @@ android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/text_hour_lot"
         app:layout_constraintTop_toTopOf="@+id/vw_figure_id" />
 
-    <View
+    <FrameLayout
         android:id="@+id/vw_figure_id"
         android:layout_width="60dp"
 

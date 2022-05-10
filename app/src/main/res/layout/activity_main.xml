@@ -8,11 +8,11 @@
 
     <!-- Rectangle top -->
     <View
-        android:id="@+id/text_rectangle_listLot_top"
+        android:id="@+id/text_header_lot_list"
         android:layout_width="0dp"
         android:layout_height="83dp"
 
-        app:layout_constraintBottom_toTopOf="@id/recycler_id_list"
+        app:layout_constraintBottom_toTopOf="@id/lot_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,11 +27,11 @@
         android:max="100"
         android:progress="60"
         android:scaleY="3"
-        app:layout_constraintBottom_toBottomOf="@+id/text_rectangle_listLot_top"
-        app:layout_constraintEnd_toEndOf="@id/text_rectangle_listLot_top"
-        app:layout_constraintStart_toStartOf="@id/text_rectangle_listLot_top"
-        app:layout_constraintTop_toBottomOf="@id/text_rectangle_listLot_top"
-        app:layout_constraintTop_toTopOf="@id/text_rectangle_listLot_top" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_header_lot_list"
+        app:layout_constraintEnd_toEndOf="@id/text_header_lot_list"
+        app:layout_constraintStart_toStartOf="@id/text_header_lot_list"
+        app:layout_constraintTop_toBottomOf="@id/text_header_lot_list"
+        app:layout_constraintTop_toTopOf="@id/text_header_lot_list" />
 
 
     <!-- busy -->
@@ -43,8 +43,8 @@
 
         android:text="@string/busy"
         android:textAppearance="@style/busy"
-        app:layout_constraintBottom_toBottomOf="@id/text_rectangle_listLot_top"
-        app:layout_constraintStart_toStartOf="@id/text_rectangle_listLot_top"
+        app:layout_constraintBottom_toBottomOf="@id/text_header_lot_list"
+        app:layout_constraintStart_toStartOf="@id/text_header_lot_list"
 
         />
     <!-- free -->
@@ -53,14 +53,14 @@
         android:layout_height="0dp"
         android:text="@string/free"
         android:textAppearance="@style/free"
-        app:layout_constraintBottom_toBottomOf="@id/text_rectangle_listLot_top"
-        app:layout_constraintEnd_toEndOf="@id/text_rectangle_listLot_top"
+        app:layout_constraintBottom_toBottomOf="@id/text_header_lot_list"
+        app:layout_constraintEnd_toEndOf="@id/text_header_lot_list"
 android:layout_marginEnd="30dp"
         />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_id_list"
+        android:id="@+id/lot_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -70,7 +70,7 @@ android:layout_marginEnd="30dp"
 
         app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@id/text_rectangle_listLot_top" />
+        app:layout_constraintTop_toBottomOf="@id/text_header_lot_list" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

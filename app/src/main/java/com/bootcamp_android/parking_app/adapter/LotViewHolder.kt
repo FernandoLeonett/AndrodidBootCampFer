@@ -16,12 +16,19 @@ class LotViewHolder(view: View):RecyclerView.ViewHolder(view) {
     fun binding(lotModel : Lot){
 
         id.text = lotModel.id
-        date.text = lotModel.date
+        if(lotModel.available) {
 
-        hour.text = lotModel.hour
+            date.text = lotModel.date
+
+            hour.text = lotModel.hour
 
 
+        }else{
 
+            date.text ="Free"
+
+            hour.text =""
+        }
 
     }
 }

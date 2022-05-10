@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.bootcamp_android.parking_app
 
 import org.junit.Test
 

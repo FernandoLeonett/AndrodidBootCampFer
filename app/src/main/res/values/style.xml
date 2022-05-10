@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- styles.xml -->
+
+    <!-- styles.xml -->
+    <style name="pm">
+
+        <item name="android:textSize">
+            14sp
+        </item>
+
+        <item name="android:textColor">
+            #878D96
+        </item>
+
+    </style>
+
+    <!--
+    Font family: Inter
+    Line height: 31sp
+    (identical to box height)
+    -->
+    <!-- styles.xml -->
+    <style name="some_id">
+
+        <item name="android:textSize">
+            22sp
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+    </style>
+
+    <style name="busy">
+
+        <item name="android:textSize">
+            18sp
+        </item>
+
+        <item name="android:textColor">
+            #4D5358
+        </item>
+
+    </style>
+
+    <style name="free">
+
+        <item name="android:textSize">
+            18sp
+        </item>
+
+        <item name="android:textColor">
+            #4D5358
+        </item>
+
+    </style>
+
+
+</resources>

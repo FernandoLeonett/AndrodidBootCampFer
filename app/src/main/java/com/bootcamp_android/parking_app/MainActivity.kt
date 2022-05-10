@@ -9,11 +9,6 @@ import com.bootcamp_android.parking_app.adapter.Provider
 
 class MainActivity : AppCompatActivity() {
 
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun initRecyclerView() {
+    private fun initRecyclerView() {
         val recycleView = findViewById<RecyclerView>(R.id.recycler_id_list)
         recycleView.layoutManager = LinearLayoutManager(this)
 

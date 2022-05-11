@@ -8,12 +8,13 @@ import com.bootcamp_android.parking_app.adapter.LotAdapter
 import com.bootcamp_android.parking_app.adapter.Provider
 
 class MainActivity : AppCompatActivity() {
-
+//TODO testing pull request with tomas and andy
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initRecyclerView()
+
 
     }
 

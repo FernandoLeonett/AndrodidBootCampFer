@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.parking_app.Lot
 import com.bootcamp_android.parking_app.R
 
-class LotAdapter(val lotList: List<Lot>): RecyclerView.Adapter<LotViewHolder>() {
+class LotAdapter(private val lotList: List<Lot>): RecyclerView.Adapter<LotViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): LotViewHolder {
  val layoutInflater = LayoutInflater.from(parent.context)
 

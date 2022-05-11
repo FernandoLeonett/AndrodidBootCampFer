@@ -15,9 +15,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        dataAdapter.setData(Provider.lots)
+        dataAdapter.setData(Provider.reservations)
 
-        findViewById<RecyclerView>(R.id.lot_list)
+     findViewById<RecyclerView>(R.id.lot_list)
             .apply {
                 layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
                 hasFixedSize()

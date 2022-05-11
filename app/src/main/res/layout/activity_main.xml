@@ -11,7 +11,6 @@
         android:id="@+id/text_header_lot_list"
         android:layout_width="0dp"
         android:layout_height="83dp"
-
         app:layout_constraintBottom_toTopOf="@id/lot_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="30dp"
-
         android:text="@string/busy"
         android:textAppearance="@style/busy"
         app:layout_constraintBottom_toBottomOf="@id/text_header_lot_list"
@@ -51,25 +49,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginEnd="30dp"
         android:text="@string/free"
         android:textAppearance="@style/free"
         app:layout_constraintBottom_toBottomOf="@id/text_header_lot_list"
-        app:layout_constraintEnd_toEndOf="@id/text_header_lot_list"
-android:layout_marginEnd="30dp"
-        />
+        app:layout_constraintEnd_toEndOf="@id/text_header_lot_list" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lot_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toBottomOf="@id/text_header_lot_list" />
 
 

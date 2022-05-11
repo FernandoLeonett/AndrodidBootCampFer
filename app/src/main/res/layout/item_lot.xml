@@ -5,17 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-android:layout_marginTop="20dp"
+    android:layout_marginTop="20dp"
     tools:context=".MainActivity">
-
 
 
     <TextView
         android:id="@+id/text_hour_lot"
         android:layout_width="272dp"
         android:layout_height="23dp"
-
-
         android:layout_marginStart="20dp"
         android:text="@string/pm"
         android:textAppearance="@style/pm"
@@ -26,23 +23,16 @@ android:layout_marginTop="20dp"
 
     <TextView
         android:id="@+id/text_date_lot"
-
         android:layout_width="272dp"
         android:layout_height="23dp"
-
-
         android:layout_marginTop="14dp"
         android:text="@string/monday_25_m"
-
-
         app:layout_constraintStart_toStartOf="@+id/text_hour_lot"
         app:layout_constraintTop_toTopOf="@+id/vw_figure_id" />
 
     <FrameLayout
         android:id="@+id/vw_figure_id"
         android:layout_width="60dp"
-
-
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:background="@drawable/ellipse_1"
@@ -53,10 +43,7 @@ android:layout_marginTop="20dp"
         android:id="@+id/text_id_lot"
         android:layout_width="wrap_content"
         android:layout_height="31dp"
-
-
         android:textAppearance="@style/some_id"
-
         android:textColor="#546E7A"
         app:layout_constraintBottom_toBottomOf="@+id/vw_figure_id"
         app:layout_constraintEnd_toEndOf="@+id/vw_figure_id"

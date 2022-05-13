@@ -8,57 +8,57 @@ class Provider {
 
         private fun lot_list() = listOf(
 
-            DataModel.Lot("88","Miercoles, 25 May,2022","8:30 pm",true),
+            Lot("88","Miercoles, 25 May,2022","8:30 pm",true),
 
-            DataModel.Lot("1","Monday, 25 May,2022","8:30 pm",false),
-            DataModel.Lot("1","Monday, 25 May,2022","8:30 pm",false),
-            DataModel.Lot("2","Monday, 25 May,2022","8:30 pm",false),
-            DataModel.Lot("3","Monday, 25 May,2022","8:30 pm",false),
-            DataModel.Lot("4","Monday, 25 May,2022","8:30 pm",false),
-            DataModel.Lot("5","Monday, 25 May,2022","8:30 pm",true),
-            DataModel.Lot("6","Monday, 25 May,2022","8:30 pm",true),
-            DataModel.Lot("7","Monday, 25 May,2022","8:30 pm",true),
-            DataModel.Lot("7","Monday, 25 May,2022","8:30 pm",true),
-            DataModel.Lot("1","Monday, 25 May,2022","8:30 pm",true),
-            DataModel.Lot("1","Monday, 25 May,2022","8:30 pm",true),
-            DataModel.Lot("2","Monday, 25 May,2022","8:30 pm",true),
-            DataModel.Lot("3","Monday, 25 May,2022","8:30 pm",false),
-            DataModel.Lot("4","Monday, 25 May,2022","8:30 pm",false),
-            DataModel.Lot("5","Monday, 25 May,2022","8:30 pm",false),
-            DataModel.Lot("6","Monday, 25 May,2022","8:30 pm",false),
-            DataModel.Lot("99","Monday, 25 May,2022","8:30 pm",false),
+            Lot("1","Monday, 25 May,2022","8:30 pm",false),
+            Lot("1","Monday, 25 May,2022","8:30 pm",false),
+            Lot("2","Monday, 25 May,2022","8:30 pm",false),
+            Lot("3","Monday, 25 May,2022","8:30 pm",false),
+            Lot("4","Monday, 25 May,2022","8:30 pm",false),
+            Lot("5","Monday, 25 May,2022","8:30 pm",true),
+            Lot("6","Monday, 25 May,2022","8:30 pm",true),
+            Lot("7","Monday, 25 May,2022","8:30 pm",true),
+            Lot("7","Monday, 25 May,2022","8:30 pm",true),
+            Lot("1","Monday, 25 May,2022","8:30 pm",true),
+            Lot("1","Monday, 25 May,2022","8:30 pm",true),
+            Lot("2","Monday, 25 May,2022","8:30 pm",true),
+            Lot("3","Monday, 25 May,2022","8:30 pm",false),
+            Lot("4","Monday, 25 May,2022","8:30 pm",false),
+            Lot("5","Monday, 25 May,2022","8:30 pm",false),
+            Lot("6","Monday, 25 May,2022","8:30 pm",false),
+            Lot("99","Monday, 25 May,2022","8:30 pm",false),
 
             )
 
-        private fun reservationList() = listOf<DataModel.Reservation>(
-            DataModel.Reservation(
+        private fun reservationList() = listOf<Reservation>(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
-            DataModel.Reservation(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
-            DataModel.Reservation(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
-            DataModel.Reservation(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
-            DataModel.Reservation(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
-            DataModel.Reservation(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
-            DataModel.Reservation(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
-            DataModel.Reservation(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
-            DataModel.Reservation(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
-            DataModel.Reservation(
+            Reservation(
                 "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
             ),
         )

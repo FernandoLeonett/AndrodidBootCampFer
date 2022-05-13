@@ -8,22 +8,11 @@ import com.bootcamp_android.parking_app.adapter.Provider
 
 class MainActivity : AppCompatActivity() {
 
-    private val dataAdapter: Adapter by lazy {
-        Adapter()
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        dataAdapter.setData(Provider.reservations)
-
-     findViewById<RecyclerView>(R.id.lot_list)
-            .apply {
-                layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
-                hasFixedSize()
-                this.adapter = dataAdapter
-            }
-
 
     }
 

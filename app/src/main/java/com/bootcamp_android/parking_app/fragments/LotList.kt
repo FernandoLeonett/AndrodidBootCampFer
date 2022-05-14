@@ -30,12 +30,12 @@ class LotList : Fragment() {
 
 
         Toast.makeText(activity,"PASÉ POR AQUÍ",Toast.LENGTH_SHORT).show(); //Correcto
-//        binding.recyclerLotList
-//            .apply {
-//                layoutManager = LinearLayoutManager(activity)
-//
-//                adapter = dataAdapter
-//                dataAdapter.setData(Provider.lots)
-//            }
+        binding.recyclerLotList
+            .apply {
+                layoutManager = LinearLayoutManager(activity)
+
+                adapter = dataAdapter
+                dataAdapter.setData(Provider.lots)
+            }
     }
 }

@@ -10,4 +10,11 @@
         android:label="LotList"
         tools:layout="@layout/fragment_lots"
         />
+    <fragment
+        android:id="@+id/reservationList"
+        android:name="com.bootcamp_android.parking_app.fragments.ReservationList"
+        android:label="ReservationList"
+        tools:layout="@layout/fragment_reservation"
+
+        />
 </navigation>

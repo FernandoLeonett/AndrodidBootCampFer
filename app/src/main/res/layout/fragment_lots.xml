@@ -10,7 +10,7 @@
         android:id="@+id/text_header_lot_list"
         android:layout_width="0dp"
         android:layout_height="83dp"
-        app:layout_constraintBottom_toTopOf="@id/lot_list"
+        app:layout_constraintBottom_toTopOf="@id/recycler_lot_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +50,7 @@
         app:layout_constraintEnd_toEndOf="@id/text_header_lot_list" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lot_list"
+        android:id="@+id/recycler_lot_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"

@@ -7,26 +7,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp_android.parking_app.adapter.Adapter
-import com.bootcamp_android.parking_app.adapter.Provider.Companion.lots
-import com.bootcamp_android.parking_app.databinding.FragmentLotsBinding
+import com.bootcamp_android.parking_app.adapter.Provider.Companion.reservations
+import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
 
-class LotList : Fragment() {
-    private lateinit var binding: FragmentLotsBinding
+class ReservationListFragment : Fragment() {
 
+    private lateinit var binding: FragmentReservationsBinding
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLotsBinding.inflate(inflater)
+        binding = FragmentReservationsBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
-        binding.recyclerLotList
-        binding.recyclerLotList.apply {
+        binding.recyclerReservationList.apply {
             layoutManager = LinearLayoutManager(activity)
-
-            adapter = Adapter(lots)
+            adapter = Adapter(reservations)
         }
     }
 }

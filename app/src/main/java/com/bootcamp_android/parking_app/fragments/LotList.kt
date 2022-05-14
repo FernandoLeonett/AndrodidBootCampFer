@@ -15,7 +15,7 @@ import com.bootcamp_android.parking_app.databinding.FragmentLotsBinding
 class LotList : Fragment() {
     private var _binding: FragmentLotsBinding? = null
     private val binding: FragmentLotsBinding get() = _binding!!
-    private lateinit var dataAdapter: Adapter
+//    private lateinit var dataAdapter: Adapter
 
 
     override fun onCreateView(
@@ -31,11 +31,11 @@ class LotList : Fragment() {
 
         Toast.makeText(activity,"PASÉ POR AQUÍ",Toast.LENGTH_SHORT).show(); //Correcto
         binding.recyclerLotList
-            .apply {
+          binding.recyclerLotList.apply {
                 layoutManager = LinearLayoutManager(activity)
 
-                adapter = dataAdapter
-                dataAdapter.setData(Provider.lots)
+                adapter = Adapter()
+
             }
     }
 }

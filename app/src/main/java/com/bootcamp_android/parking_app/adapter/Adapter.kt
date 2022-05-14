@@ -7,16 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.parking_app.R
 import java.util.Collections.addAll
 
-class Adapter : RecyclerView.Adapter<DataViewHolder>() {
+class Adapter(private val adapterData: List<DataModel>) : RecyclerView.Adapter<DataViewHolder>() {
     //    private val adapterData = mutableListOf<DataModel>()
-    private val adapterData = listOf(
-        Lot("88","Thursday, 25 May,2022","8:30 pm",true),
-        Lot("1","Monday, 25 May,2022","8:30 pm",false),
-        Lot("1","Monday, 25 May,2022","8:30 pm",false),
-        Lot("2","Monday, 25 May,2022","8:30 pm",false),
-        Lot("3","Monday, 25 May,2022","8:30 pm",false),
-        Lot("4","Monday, 25 May,2022","8:30 pm",false)
-    )
+
 
     override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): DataViewHolder {
 // here i cannot get one view holder, that`s the reason i assign an custom int to the view type in getItemViewType

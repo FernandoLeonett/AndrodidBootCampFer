@@ -15,7 +15,7 @@
             />
 
         <path
-            android:fillColor="#FFFFFF"
+            android:fillColor="@color/cardview_dark_background"
             android:pathData="M0 0V140H312V0"
             />
 

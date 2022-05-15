@@ -1,7 +1,9 @@
 package com.bootcamp_android.parking_app.adapter
 
 import android.view.View
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentLotBinding
 import com.bootcamp_android.parking_app.databinding.FragmentReservationBinding
 import com.google.android.material.snackbar.Snackbar
@@ -14,9 +16,7 @@ class DataViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         binding.textDateLot.text = if(!lot.available) lot.date else "free"
         binding.textHourLot.text = lot.hour
         view.setOnClickListener { view ->
-            Snackbar.make(view,"Here's a Snackbar of lot ${lot.id}",Snackbar.LENGTH_LONG)
-                .setAction("Action",null)
-                .show()
+            view.findNavController().navigate(R.id.action_lotListFragment_to_reservationListFragment22)
         }
     }
 

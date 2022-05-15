@@ -1,27 +1,18 @@
 package com.bootcamp_android.parking_app.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.adapter.Adapter
 import com.bootcamp_android.parking_app.adapter.Provider.Companion.lots
 import com.bootcamp_android.parking_app.databinding.FragmentLotsBinding
 
-class LotListFragment : Fragment() {
-
-    private lateinit var binding: FragmentLotsBinding
-    override fun onCreateView(
-        inflater: LayoutInflater,container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentLotsBinding.inflate(inflater)
-        return binding.root
-    }
+class LotListFragment : Fragment(R.layout.fragment_lots) {
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
+        val binding = FragmentLotsBinding.bind(itemView)
         binding.recyclerLotList
         binding.recyclerLotList.apply {
             layoutManager = LinearLayoutManager(activity)

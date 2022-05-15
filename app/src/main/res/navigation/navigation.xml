@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/reservationListFragment2">
+    app:startDestination="@id/lotListFragment">
     <fragment
         android:id="@+id/lotListFragment"
         android:name="com.bootcamp_android.parking_app.fragments.LotListFragment"
@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_lotListFragment_to_reservationListFragment22"
             app:destination="@id/reservationListFragment2" />
+        <action
+            android:id="@+id/action_lotListFragment_to_fragmentAddReservation"
+            app:destination="@id/fragmentAddReservation" />
     </fragment>
     <fragment
         android:id="@+id/reservationListFragment2"
@@ -20,4 +23,9 @@
         android:label="ReservationListFragment"
         tools:layout="@layout/fragment_reservations"
         />
+    <fragment
+        android:id="@+id/fragmentAddReservation"
+        android:name="com.bootcamp_android.parking_app.fragments.FragmentAddReservation"
+        android:label="fragment_add_reservation"
+        tools:layout="@layout/fragment_add_reservation" />
 </navigation>

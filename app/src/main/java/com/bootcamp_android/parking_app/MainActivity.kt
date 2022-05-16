@@ -2,13 +2,15 @@ package com.bootcamp_android.parking_app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bootcamp_android.parking_app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        //TODO data picker
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }

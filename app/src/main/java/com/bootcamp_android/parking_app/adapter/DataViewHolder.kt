@@ -16,7 +16,7 @@ class DataViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         binding.textDateLot.text = if(!lot.available) lot.date else "free"
         binding.textHourLot.text = lot.hour
         view.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_lotListFragment_to_reservationListFragment22)
+            view.findNavController().navigate(R.id.action_lotListFragment_to_reservationListFragment)
         }
     }
 

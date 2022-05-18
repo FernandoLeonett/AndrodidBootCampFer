@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
 
-class FragmentAddReservation : Fragment(R.layout.fragment_add_reservation) {
+class ReservationAddFragment : Fragment(R.layout.fragment_add_reservation) {
 
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
         super.onViewCreated(view,savedInstanceState)

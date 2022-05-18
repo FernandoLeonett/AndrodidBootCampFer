@@ -6,71 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- Rectangle top -->
-    <View
-        android:id="@+id/text_header_lot_list"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
-        android:layout_height="83dp"
-
-        app:layout_constraintBottom_toTopOf="@id/lot_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!--progress bar-->
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:max="100"
-        android:progress="60"
-        android:scaleY="3"
-        app:layout_constraintBottom_toBottomOf="@+id/text_header_lot_list"
-        app:layout_constraintEnd_toEndOf="@id/text_header_lot_list"
-        app:layout_constraintStart_toStartOf="@id/text_header_lot_list"
-        app:layout_constraintTop_toBottomOf="@id/text_header_lot_list"
-        app:layout_constraintTop_toTopOf="@id/text_header_lot_list" />
-
-
-    <!-- busy -->
-    <TextView
-
-        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="30dp"
-
-        android:text="@string/busy"
-        android:textAppearance="@style/busy"
-        app:layout_constraintBottom_toBottomOf="@id/text_header_lot_list"
-        app:layout_constraintStart_toStartOf="@id/text_header_lot_list"
-
-        />
-    <!-- free -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:text="@string/free"
-        android:textAppearance="@style/free"
-        app:layout_constraintBottom_toBottomOf="@id/text_header_lot_list"
-        app:layout_constraintEnd_toEndOf="@id/text_header_lot_list"
-android:layout_marginEnd="30dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/navigation"
         />
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lot_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@id/text_header_lot_list" />
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/fragmentContainerFab"-->
+<!--        android:name="com.bootcamp_android.parking_app.fragments.FabFrament"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="50dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.864" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

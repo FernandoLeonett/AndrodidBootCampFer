@@ -4,6 +4,18 @@
     <string name="pm">08:30 PM</string>
     <string name="busy">12 busy</string>
     <string name="free">18 free </string>
+    <string name="submit">go to reservation</string>
+    <string name="spinner_lots">lots available</string>
 
-
+    <string-array name="slots_options_spinner">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+    >
 </resources>

@@ -1,16 +1,12 @@
 package com.bootcamp_android.parking_app.adapter
 
-import com.bootcamp_android.parking_app.Lot
-
 class Provider {
 
-
     companion object {
-        val lots = list()
+        val lots = lot_list()
+        val reservations = reservationList()
 
-        private fun list() = listOf(
-
-
+        private fun lot_list() = listOf(
 
             Lot("88","Miercoles, 25 May,2022","8:30 pm",true),
 
@@ -32,9 +28,39 @@ class Provider {
             Lot("6","Monday, 25 May,2022","8:30 pm",false),
             Lot("99","Monday, 25 May,2022","8:30 pm",false),
 
+            )
+
+        private fun reservationList() = listOf<Reservation>(
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
+            Reservation(
+                "Monday 25, May 2022","Monday 25, May 2022","7:30 am","8:30 am"
+            ),
         )
-
     }
-
-
 }

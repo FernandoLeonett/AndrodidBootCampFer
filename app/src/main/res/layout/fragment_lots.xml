@@ -64,8 +64,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/submit"
-
-        android:focusableInTouchMode="true"
         android:src="@android:drawable/ic_input_add"
         app:flow_horizontalBias="0.1"
         app:layout_constraintBottom_toBottomOf="parent"

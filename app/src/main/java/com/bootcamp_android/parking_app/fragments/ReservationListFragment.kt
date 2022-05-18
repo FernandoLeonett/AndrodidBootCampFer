@@ -12,8 +12,6 @@ import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
 
 class ReservationListFragment : Fragment(R.layout.fragment_reservations) {
 
-
-
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
         val binding = FragmentReservationsBinding.bind(itemView)
         binding.recyclerReservationList.apply {
@@ -21,8 +19,7 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservations) {
             adapter = Adapter(reservations)
         }
 
-        binding.fab.setOnClickListener{
-
+        binding.fab.setOnClickListener {
             findNavController().navigate(R.id.from_reservations_to_add)
         }
     }

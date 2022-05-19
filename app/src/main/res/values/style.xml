@@ -4,6 +4,7 @@
     <style name="mypickerDialogStart" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorAccent">#FF5722</item>
     </style>
+
     <style name="mypickerDialogEnd" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorAccent">#2196F3</item>
     </style>

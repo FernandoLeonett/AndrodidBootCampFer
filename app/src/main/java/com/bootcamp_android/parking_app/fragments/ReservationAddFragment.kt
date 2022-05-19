@@ -1,5 +1,7 @@
 package com.bootcamp_android.parking_app.fragments
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -8,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
-import com.bootcamp_android.parking_app.date_picker.DatePickerFragment
+import java.util.*
 
 class ReservationAddFragment : Fragment(R.layout.fragment_add_reservation) {
 
@@ -18,10 +20,10 @@ class ReservationAddFragment : Fragment(R.layout.fragment_add_reservation) {
 
         binding.apply {
             textSelectStartDateReservation.setOnClickListener {
-                showDatePickerDialog(R.style.mypickerDialogStart)
+                showDateTimePickerDialog(R.style.mypickerDialogStart)
             }
             textSelectEndDateReservation.setOnClickListener {
-                showDatePickerDialog(R.style.mypickerDialogEnd)
+                showDateTimePickerDialog(R.style.mypickerDialogEnd)
             }
         }
         val spinnerList = listOf(
@@ -61,22 +63,38 @@ class ReservationAddFragment : Fragment(R.layout.fragment_add_reservation) {
         }
     }
 
-    private fun showDatePickerDialog(style: Int = R.style.mypickerDialogStart) {
-        //TODO check for another simple way
-        // how can i set different colors for the calendars ready
-        val datePickerFragment = DatePickerFragment(style)
-        val supportFragmentManager = requireActivity().supportFragmentManager
-        // we have to implement setFragmentResultListener
-        supportFragmentManager.setFragmentResultListener(
-            "REQUEST_KEY",
-            viewLifecycleOwner
-        ) { resultKey,bundle ->
-            if(resultKey == "REQUEST_KEY") {
-                val date = bundle.getString("SELECTED_DATE")
-                binding.textSelectStartDateReservation.text = date
-            }
+    private fun showDateTimePickerDialog(style: Int = R.style.mypickerDialogStart) {
+        val cal = Calendar.getInstance()
+        val dateTimeListener = DatePickerDialog.OnDateSetListener { _,year,month,day ->
+            Toast.makeText(
+                activity,
+                "$day/$month/$year",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
-        datePickerFragment.show(supportFragmentManager,"DatePickerFragment")
+        DatePickerDialog(
+            requireContext(),
+            style,
+            dateTimeListener,
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        ).show()
+        val listenerHora = TimePickerDialog.OnTimeSetListener { _,hour,minutes ->
+            Toast.makeText(
+                activity,
+                "$hour:$minutes",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        TimePickerDialog(
+            activity,
+            style,
+            listenerHora,cal.get(Calendar.HOUR_OF_DAY),
+            cal.get(Calendar.MINUTE),false
+        ).show()
     }
 }
+

@@ -16,4 +16,7 @@
         <item>Slot 7</item>
     </string-array>
     >
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+
 </resources>

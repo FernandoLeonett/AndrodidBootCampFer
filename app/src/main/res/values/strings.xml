@@ -6,16 +6,14 @@
     <string name="free">18 free </string>
     <string name="submit">go to reservation</string>
     <string name="spinner_lots">lots available</string>
-
     <string-array name="slots_options_spinner">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Slot 1</item>
+        <item>Slot 2</item>
+        <item>Slot 3</item>
+        <item>Slot 4</item>
+        <item>Slot 5</item>
+        <item>Slot 6</item>
+        <item>Slot 7</item>
     </string-array>
     >
 </resources>

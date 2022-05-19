@@ -8,11 +8,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
+import com.bootcamp_android.parking_app.date_picker.DatePickerFragment
 
 class ReservationAddFragment : Fragment(R.layout.fragment_add_reservation) {
 
+    private lateinit var binding: FragmentAddReservationBinding
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
-        val binding = FragmentAddReservationBinding.bind(view)
+        binding = FragmentAddReservationBinding.bind(view)
+
+        binding.textSelectStartDateReservation.setOnClickListener {
+            showDatePickerDialog()
+        }
         val spinnerList = listOf(
             "Parking Slot 1",
             "Parking Slot 2",
@@ -48,5 +54,23 @@ class ReservationAddFragment : Fragment(R.layout.fragment_add_reservation) {
                     }
                 }
         }
+    }
+
+    private fun showDatePickerDialog() {
+        //TODO check for another simple way
+        val datePickerFragment = DatePickerFragment()
+        val supportFragmentManager = requireActivity().supportFragmentManager
+        // we have to implement setFragmentResultListener
+        supportFragmentManager.setFragmentResultListener(
+            "REQUEST_KEY",
+            viewLifecycleOwner
+        ) { resultKey,bundle ->
+            if(resultKey == "REQUEST_KEY") {
+                val date = bundle.getString("SELECTED_DATE")
+                binding.textSelectStartDateReservation.text = date
+            }
+        }
+
+        datePickerFragment.show(supportFragmentManager,"DatePickerFragment")
     }
 }

@@ -16,8 +16,13 @@ class ReservationAddFragment : Fragment(R.layout.fragment_add_reservation) {
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
         binding = FragmentAddReservationBinding.bind(view)
 
-        binding.textSelectStartDateReservation.setOnClickListener {
-            showDatePickerDialog()
+        binding.apply {
+            textSelectStartDateReservation.setOnClickListener {
+                showDatePickerDialog(R.style.mypickerDialogStart)
+            }
+            textSelectEndDateReservation.setOnClickListener {
+                showDatePickerDialog(R.style.mypickerDialogEnd)
+            }
         }
         val spinnerList = listOf(
             "Parking Slot 1",
@@ -56,9 +61,10 @@ class ReservationAddFragment : Fragment(R.layout.fragment_add_reservation) {
         }
     }
 
-    private fun showDatePickerDialog() {
+    private fun showDatePickerDialog(style: Int = R.style.mypickerDialogStart) {
         //TODO check for another simple way
-        val datePickerFragment = DatePickerFragment()
+        // how can i set different colors for the calendars ready
+        val datePickerFragment = DatePickerFragment(style)
         val supportFragmentManager = requireActivity().supportFragmentManager
         // we have to implement setFragmentResultListener
         supportFragmentManager.setFragmentResultListener(

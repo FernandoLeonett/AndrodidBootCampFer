@@ -2,8 +2,6 @@ package com.bootcamp_android.parking_app.date_picker
 
 import android.app.DatePickerDialog
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
@@ -12,7 +10,7 @@ import com.bootcamp_android.parking_app.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DatePickerFragment : DialogFragment(),DatePickerDialog.OnDateSetListener{
+class DatePickerFragment(val style: Int =  R.style.mypickerDialogStart) : DialogFragment(),DatePickerDialog.OnDateSetListener{
 
 private val calendar = Calendar.getInstance()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -20,7 +18,7 @@ private val calendar = Calendar.getInstance()
         val year =  calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        return DatePickerDialog(requireActivity(), R.style.mypickerDialog,this,year, month, day)// change style theme
+        return DatePickerDialog(requireActivity(), style,this,year, month, day)// change style theme
     }
     override fun onDateSet(view: DatePicker?,year: Int,month: Int,dayOfMonth: Int) {
       calendar.set(Calendar.YEAR, year)

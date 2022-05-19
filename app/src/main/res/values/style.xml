@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="mypickerDialog" parent="android:Theme.Material.Light.Dialog">
+    <style name="mypickerDialogStart" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorAccent">#FF5722</item>
+    </style>
+    <style name="mypickerDialogEnd" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">#2196F3</item>
     </style>
 
     <style name="pm">

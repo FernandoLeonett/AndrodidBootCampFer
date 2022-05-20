@@ -18,5 +18,8 @@
     >
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
-
+    <string name="title">Lot # 1</string>
+    <string name="btn_delete">DELETE</string>
+    <string name="title_reservation">Add Reservation</string>
+    <string name="authorization_code">Authorization code</string>
 </resources>

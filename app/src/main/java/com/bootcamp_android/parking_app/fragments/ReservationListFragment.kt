@@ -1,7 +1,10 @@
 package com.bootcamp_android.parking_app.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,5 +25,7 @@ class ReservationListFragment : Fragment(R.layout.fragment_reservations) {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.from_reservations_to_add)
         }
+
+
     }
 }

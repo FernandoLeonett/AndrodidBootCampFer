@@ -44,4 +44,16 @@
             #4D5358
         </item>
     </style>
+
+    <style name="title">
+
+        <item name="android:textSize">
+            18sp
+        </item>
+
+        <item name="android:textColor">
+            #151B36
+        </item>
+
+    </style>
 </resources>

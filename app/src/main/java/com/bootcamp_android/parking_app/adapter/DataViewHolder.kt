@@ -26,7 +26,15 @@ class DataViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         binding.textHourStart.text = reservation.startHour
         binding.textEndHour.text = reservation.endHour
         binding.textDateEnd.text = reservation.endDate
-
+        binding.btnDeleteReservation.setOnClickListener {
+            Snackbar.make(
+                view,
+                "Here's a Snackbar reserva ${reservation.endDate}",
+                Snackbar.LENGTH_LONG
+            )
+                .setAction("Action",null)
+                .show()
+        }
     }
 
     fun binding(dataModel: DataModel) {

@@ -1,7 +1,9 @@
 package com.bootcamp_android.parking_app.adapter
 
 import android.app.AlertDialog
+import android.text.InputType
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -33,19 +35,21 @@ class DataViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             btnDeleteReservation.setOnClickListener { view ->
                 val builder = AlertDialog.Builder(view.context)
 
-                builder.setTitle("Alert!").setMessage("Are you sure do you want delete this reservation ?")
+                builder.setTitle("Delete Reservation")
+                val input =
+                    EditText(view.context) // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                builder.setView(input)
+                    .setMessage("Are you sure you want to delete this reservation? Please input the authorization code to confirm")
                     .setCancelable(true) // dialog box in cancellable
                     // set positive button
                     //take two parameters dialogInterface and an int
-                    .setPositiveButton("Yes") { dialogInterface,_ ->
+                    .setPositiveButton("OK") { dialogInterface,_ ->
                         Toast.makeText(view.context,"me borraron",Toast.LENGTH_SHORT).show()
                         dialogInterface.dismiss()
-                    }.setNegativeButton("No") { dialogInterface,_ -> // cancel the dialogbox
+                    }.setNegativeButton("CANCEL") { dialogInterface,_ -> // cancel the dialogbox
                         dialogInterface.cancel()
-                    }.setNeutralButton("Help") { dialogInterface,_ -> // just show a toast
-                        Toast.makeText(view.context,"Help Clicked",Toast.LENGTH_SHORT).show()
-                    } // show the builder
-                    .show()
+                    }.show()
             }
         }
     }

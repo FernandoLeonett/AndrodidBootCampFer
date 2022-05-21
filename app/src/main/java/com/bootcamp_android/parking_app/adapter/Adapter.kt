@@ -6,17 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.parking_app.R
 
 class Adapter(private val adapterData: List<DataModel>) : RecyclerView.Adapter<DataViewHolder>() {
-    //    private val adapterData = mutableListOf<DataModel>()
-    override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): DataViewHolder {
-// here i cannot get one view holder, that`s the reason i assign an custom int to the view type in getItemViewType
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,viewType: Int
+    ): DataViewHolder { // here i cannot get one view holder, that`s the reason i assign an custom int to the view type in getItemViewType
         val layout = when(viewType) {
             TYPE_LOT -> R.layout.fragment_lot
             TYPE_RESERVATION -> R.layout.fragment_reservation
             else -> throw IllegalArgumentException("Invalid type")
         }
-        val view = LayoutInflater
-            .from(parent.context)
-            .inflate(layout,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(layout,parent,false)
 
         return DataViewHolder(view)
     }

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_title"
         android:layout_width="360dp"
@@ -30,7 +29,6 @@
         android:layout_width="328dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/slot"
         android:contentDescription="@string/spinner_lots"
         android:entries="@array/slots_options_spinner"
         android:paddingStart="16dp"
@@ -44,7 +42,6 @@
         android:layout_width="328dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/slot"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:text="@string/start_date"
@@ -57,7 +54,6 @@
         android:layout_width="328dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/slot"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:text="@string/end_date"
@@ -70,7 +66,6 @@
         android:layout_width="328dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/slot"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:text="@string/authorization_code"

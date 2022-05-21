@@ -5,7 +5,10 @@ import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -14,9 +17,15 @@ import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
 import java.util.*
 
-class ReservationAddFragment : Fragment(R.layout.fragment_add_reservation) {
+class ReservationAddFragment : Fragment() {
+
 
     private lateinit var binding: FragmentAddReservationBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
+    ): View? { // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_add_reservation,container,false)
+    }
 
     override fun onViewCreated(
         view: View,savedInstanceState: Bundle?

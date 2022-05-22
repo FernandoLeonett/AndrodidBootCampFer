@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        app:circularflow_radiusInDP=""
         android:max="100"
         android:progress="20"
         android:scaleY="3"

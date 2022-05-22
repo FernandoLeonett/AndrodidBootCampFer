@@ -3,26 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_title"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/text_title_reservations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:elevation="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/title_reservations"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="320dp"
-            android:layout_height="40dp"
-            android:background="@drawable/bar_app_bar"
-            android:elevation="6.25dp"
-            android:gravity="center_vertical"
-            android:paddingStart="25dp"
-            android:text="@string/title" />
-    </androidx.appcompat.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="@+id/toolbar_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_reservation_list"

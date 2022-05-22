@@ -3,32 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!--aca tiene que tener background el que quiero elevar-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_title"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="17dp"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/text_title_reservations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:elevation="17dp"
+        android:gravity="center_vertical"
+        android:text="@string/title_reservation"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="320dp"
-            android:layout_height="40dp"
-            android:background="@drawable/bar_app_bar"
-            android:elevation="6.25dp"
-            android:gravity="center_vertical"
-            android:paddingStart="25dp"
-            android:text="@string/title_reservation" />
-    </androidx.appcompat.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="@+id/toolbar_title" />
 
     <Spinner
         android:id="@+id/lots_options_spinner"
         android:layout_width="328dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/ic_arrow_down"
         android:contentDescription="@string/spinner_lots"
         android:entries="@array/slots_options_spinner"
         android:paddingStart="16dp"
@@ -42,8 +50,11 @@
         android:layout_width="328dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/slot"
+        android:drawableEnd="@drawable/ic_calendar"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:text="@string/start_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,31 +65,39 @@
         android:layout_width="328dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/slot"
+        android:drawableEnd="@drawable/ic_calendar"
         android:gravity="center_vertical"
+        android:hint="@string/end_date"
         android:paddingStart="16dp"
-        android:text="@string/end_date"
+        android:paddingEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_select_start_date_reservation" />
 
-    <TextView
+    <EditText
         android:id="@+id/text_auth"
         android:layout_width="328dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:background="@drawable/slot"
         android:gravity="center_vertical"
+        android:hint="@string/authorization_code"
+        android:inputType="textPassword"
         android:paddingStart="16dp"
-        android:text="@string/authorization_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_select_end_date_reservation" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/btn_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

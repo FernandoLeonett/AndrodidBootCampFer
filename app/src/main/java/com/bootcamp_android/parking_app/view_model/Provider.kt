@@ -5,60 +5,28 @@ import com.bootcamp_android.parking_app.model.Reservation
 
 class Provider { companion object {
 
-    val lots = lotList()
-    val reservations = reservationList()
-    private fun lotList() = listOf(
-        Lot("88","Miercoles, 25 May,2022","8:30 pm",true),
-        Lot("1","Monday, 25 May,2022","8:30 pm",false),
-        Lot("1","Monday, 25 May,2022","8:30 pm",false),
-        Lot("2","Monday, 25 May,2022","8:30 pm",false),
-        Lot("3","Monday, 25 May,2022","8:30 pm",false),
-        Lot("4","Monday, 25 May,2022","8:30 pm",false),
-        Lot("5","Monday, 25 May,2022","8:30 pm",true),
-        Lot("6","Monday, 25 May,2022","8:30 pm",true),
-        Lot("7","Monday, 25 May,2022","8:30 pm",true),
-        Lot("7","Monday, 25 May,2022","8:30 pm",true),
-        Lot("1","Monday, 25 May,2022","8:30 pm",true),
-        Lot("1","Monday, 25 May,2022","8:30 pm",true),
-        Lot("2","Monday, 25 May,2022","8:30 pm",true),
-        Lot("3","Monday, 25 May,2022","8:30 pm",false),
-        Lot("4","Monday, 25 May,2022","8:30 pm",false),
-        Lot("5","Monday, 25 May,2022","8:30 pm",false),
-        Lot("6","Monday, 25 May,2022","8:30 pm",false),
-        Lot("99","Monday, 25 May,2022","8:30 pm",false),
-        )
+    val lots = lotList(100)
+    val reservations = reservationList(100)
+    private fun lotList(n: Int): MutableList<Lot> {
+        val lots = mutableListOf<Lot>()
 
-    private fun reservationList() = listOf<Reservation>(
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-        Reservation(
-            "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
-        ),
-    )
+        for(i in 1..n) {
+            lots.add(Lot("$i","Monday, 25 May,2022","8:30 pm",true))
+        }
+        return lots
+    }
+
+    private fun reservationList(n: Int): MutableList<Reservation> {
+        val reservations = mutableListOf<Reservation>()
+
+        for(i in 1..n) {
+            reservations.add(
+                Reservation(
+                    "Monday 25 May 2022","Monday 25 May 2022","7:30 am","8:30 am"
+                )
+            )
+        }
+        return reservations
+    }
 }
 }

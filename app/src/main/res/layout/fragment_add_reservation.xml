@@ -82,7 +82,7 @@
         android:background="@drawable/slot"
         android:gravity="center_vertical"
         android:hint="@string/authorization_code"
-        android:inputType="textPassword"
+        android:inputType="numberPassword"
         android:paddingStart="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

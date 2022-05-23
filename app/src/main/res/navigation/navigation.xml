@@ -16,7 +16,7 @@
             android:id="@+id/from_lots_to_add"
             app:destination="@id/fragmentAddReservation"
             app:popUpTo="@id/lotListFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/from_lots_to_reservations"
@@ -28,7 +28,7 @@
             android:id="@+id/from_reservations_to_add"
             app:destination="@id/fragmentAddReservation"
             app:popUpTo="@id/lotListFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddReservation"

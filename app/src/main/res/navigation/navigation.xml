@@ -5,7 +5,7 @@
     app:startDestination="@id/lotListFragment">
     <fragment
         android:id="@+id/lotListFragment"
-        android:name="com.bootcamp_android.parking_app.fragments.LotListFragment"
+        android:name="com.bootcamp_android.parking_app.view.fragments.LotListFragment"
         android:label="LotListFragment"
         tools:layout="@layout/fragment_lots"
 
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/from_lots_to_reservations"
-        android:name="com.bootcamp_android.parking_app.fragments.ReservationListFragment"
+        android:name="com.bootcamp_android.parking_app.view.fragments.ReservationListFragment"
         android:label="ReservationListFragment"
         tools:layout="@layout/fragment_reservations"
         >
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAddReservation"
-        android:name="com.bootcamp_android.parking_app.fragments.ReservationAddFragment"
+        android:name="com.bootcamp_android.parking_app.view.fragments.ReservationAddFragment"
         android:label="fragment_add_reservation"
         tools:layout="@layout/fragment_add_reservation" />
 </navigation>

@@ -41,9 +41,9 @@ android {
 
 
 dependencies {
+    implementation project(path: ':Data')
+    implementation project(path: ':Domain')
     def nav_version = "2.4.2"
-
-
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation 'com.google.android.material:material:1.6.0'

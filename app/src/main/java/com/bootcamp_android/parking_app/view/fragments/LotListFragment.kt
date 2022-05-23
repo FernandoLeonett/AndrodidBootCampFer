@@ -1,4 +1,4 @@
-package com.bootcamp_android.parking_app.fragments
+package com.bootcamp_android.parking_app.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp_android.parking_app.R
-import com.bootcamp_android.parking_app.adapter.Adapter
-import com.bootcamp_android.parking_app.adapter.Provider.Companion.lots
+import com.bootcamp_android.parking_app.view_model.adapter.Adapter
+import com.bootcamp_android.parking_app.view_model.Provider.Companion.lots
 import com.bootcamp_android.parking_app.databinding.FragmentLotsBinding
 
 class LotListFragment : Fragment() {

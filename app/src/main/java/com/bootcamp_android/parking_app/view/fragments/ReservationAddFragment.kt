@@ -1,11 +1,10 @@
-package com.bootcamp_android.parking_app.fragments
+package com.bootcamp_android.parking_app.view.fragments
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +14,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
+import java.time.format.DecimalStyle
 import java.util.*
 
 class ReservationAddFragment : Fragment() {
-
 
     private lateinit var binding: FragmentAddReservationBinding
     override fun onCreateView(
@@ -66,7 +65,7 @@ class ReservationAddFragment : Fragment() {
         }
     }
 
-    private fun showDateTimePickerDialog() {
+    private fun showDateTimePickerDialog( ) {
         val cal = Calendar.getInstance()
         val listenerHora = TimePickerDialog.OnTimeSetListener { _,hour,minutes ->
             Toast.makeText(

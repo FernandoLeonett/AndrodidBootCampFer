@@ -1,4 +1,4 @@
-package com.bootcamp_android.parking_app
+package com.bootcamp_android.parking_app.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

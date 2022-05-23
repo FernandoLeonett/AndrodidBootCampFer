@@ -1,4 +1,4 @@
-package com.bootcamp_android.parking_app.adapter
+package com.bootcamp_android.parking_app.view_model.adapter
 
 import android.app.AlertDialog
 import android.text.InputType
@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentLotBinding
 import com.bootcamp_android.parking_app.databinding.FragmentReservationBinding
+import com.bootcamp_android.parking_app.model.DataModel
+import com.bootcamp_android.parking_app.model.Lot
+import com.bootcamp_android.parking_app.model.Reservation
 
 class DataViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -39,6 +42,7 @@ class DataViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
                 val input =
                     EditText(view.context) // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                input.clipToOutline
                 builder.setView(input)
                     .setMessage("Are you sure you want to delete this reservation? Please input the authorization code to confirm")
                     .setCancelable(true) // dialog box in cancellable

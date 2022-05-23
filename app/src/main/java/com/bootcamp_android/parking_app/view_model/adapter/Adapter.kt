@@ -1,9 +1,11 @@
-package com.bootcamp_android.parking_app.adapter
+package com.bootcamp_android.parking_app.view_model.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.parking_app.R
+import com.bootcamp_android.parking_app.model.DataModel
+import com.bootcamp_android.parking_app.model.Lot
 
 class Adapter(private val adapterData: List<DataModel>) : RecyclerView.Adapter<DataViewHolder>() {
 

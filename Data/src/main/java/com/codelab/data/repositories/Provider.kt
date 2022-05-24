@@ -1,7 +1,7 @@
-package com.bootcamp_android.parking_app.view_model
+package com.codelab.data.repositories
 
-import com.bootcamp_android.parking_app.model.Lot
-import com.bootcamp_android.parking_app.model.Reservation
+import com.codelab.domain.model.Lot
+import com.codelab.domain.model.Reservation
 
 class Provider { companion object {
 

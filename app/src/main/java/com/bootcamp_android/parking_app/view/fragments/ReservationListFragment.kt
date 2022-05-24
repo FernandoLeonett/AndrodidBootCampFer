@@ -5,22 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
-import com.bootcamp_android.parking_app.view_model.Provider.Companion.reservations
-import com.bootcamp_android.parking_app.view_model.adapter.Adapter
+import com.bootcamp_android.parking_app.viewmodel.ReservationsViewModel
+import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
+import com.bootcamp_android.parking_app.viewmodel.adapters.ReservationAdapter
+import com.codelab.data.repositories.Provider
+
 
 class ReservationListFragment : Fragment() {
 
-    private lateinit var lotId: String
+    private lateinit var reservationsViewModel: ReservationsViewModel
+    private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var binding: FragmentReservationsBinding
-    override fun onCreateView(
-        inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
-    ): View? { // Inflate the layout for this fragment
 
-
+    override fun onCreateView(  inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?  ): View? {
+        viewModelFactory = ViewModelFactory()
+        reservationsViewModel = ViewModelProvider(this,viewModelFactory).get(reservationsViewModel::class.java)
         return inflater.inflate(R.layout.fragment_reservations,container,false)
     }
 
@@ -28,16 +32,16 @@ class ReservationListFragment : Fragment() {
         binding = FragmentReservationsBinding.bind(itemView)
         binding.recyclerReservationList.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = Adapter(reservations)
+            adapter = ReservationAdapter(Provider.reservations)
         }
 
         arguments?.let {
-            lotId = it.getString("KEY_ID").toString()
+            val lotId = it.getString("KEY_ID").toString()
             binding.textTitleReservations.text = "lot # $lotId";
         }
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.from_reservations_to_add)
+            findNavController().navigate(R.id.fab_res_to_add)
         }
     }
 }

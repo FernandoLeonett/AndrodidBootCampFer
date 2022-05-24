@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
-import java.time.format.DecimalStyle
 import java.util.*
 
 class ReservationAddFragment : Fragment() {
@@ -65,7 +64,7 @@ class ReservationAddFragment : Fragment() {
         }
     }
 
-    private fun showDateTimePickerDialog( ) {
+    private fun showDateTimePickerDialog() {
         val cal = Calendar.getInstance()
         val listenerHora = TimePickerDialog.OnTimeSetListener { _,hour,minutes ->
             Toast.makeText(

@@ -1,37 +1,17 @@
-package com.bootcamp_android.parking_app.view_model.adapter
+package com.bootcamp_android.parking_app.viewmodel.adapters
 
 import android.app.AlertDialog
-import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bootcamp_android.parking_app.R
-import com.bootcamp_android.parking_app.databinding.FragmentLotBinding
 import com.bootcamp_android.parking_app.databinding.FragmentReservationBinding
-import com.bootcamp_android.parking_app.model.DataModel
-import com.bootcamp_android.parking_app.model.Lot
-import com.bootcamp_android.parking_app.model.Reservation
+import com.codelab.domain.model.Reservation
 
-class DataViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class ReservationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    private fun bindLot(lot: Lot) {
-        val binding = FragmentLotBinding.bind(view)
-        binding.apply {
-            textIdLot.text = lot.id
-            textDateLot.text = if(!lot.available) lot.date else "free"
-            textHourLot.text = lot.hour
-            view.setOnClickListener { view ->
-                val bundle: Bundle = bundleOf("KEY_ID" to lot.id)
-                view.findNavController().navigate(R.id.action_lotListFragment_to_reservationListFragment,bundle)
-            }
-        }
-    }
-
-    private fun bindReservation(reservation: Reservation) {
+    fun bind(reservation: Reservation) {
         val binding = FragmentReservationBinding.bind(view)
         binding.apply {
             textDateStart.text = reservation.startDate
@@ -60,11 +40,6 @@ class DataViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             }
         }
     }
-
-    fun binding(dataModel: DataModel) {
-        when(dataModel) {
-            is Lot -> bindLot(dataModel)
-            is Reservation -> bindReservation(dataModel)
-        }
-    }
 }
+
+

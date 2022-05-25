@@ -13,7 +13,7 @@ import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
 import com.bootcamp_android.parking_app.viewmodel.ReservationsViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
 import com.bootcamp_android.parking_app.viewmodel.adapters.ReservationAdapter
-import com.codelab.data.repositories.Provider
+import com.bootcamp_android.data.repositories.Provider
 
 
 class ReservationListFragment : Fragment() {
@@ -24,7 +24,7 @@ class ReservationListFragment : Fragment() {
 
     override fun onCreateView(  inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?  ): View? {
         viewModelFactory = ViewModelFactory()
-        reservationsViewModel = ViewModelProvider(this,viewModelFactory).get(reservationsViewModel::class.java)
+        reservationsViewModel = ViewModelProvider(this,viewModelFactory).get(ReservationsViewModel::class.java)
         return inflater.inflate(R.layout.fragment_reservations,container,false)
     }
 
@@ -35,10 +35,7 @@ class ReservationListFragment : Fragment() {
             adapter = ReservationAdapter(Provider.reservations)
         }
 
-        arguments?.let {
-            val lotId = it.getString("KEY_ID").toString()
-            binding.textTitleReservations.text = "lot # $lotId";
-        }
+
 
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.fab_res_to_add)

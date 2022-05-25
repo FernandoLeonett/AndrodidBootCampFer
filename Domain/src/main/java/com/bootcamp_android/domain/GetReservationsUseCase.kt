@@ -1,6 +1,6 @@
-package com.codelab.domain
+package com.bootcamp_android.domain
 
-import com.codelab.domain.repostories.IReservationRepository
+import com.bootcamp_android.domain.repostories.IReservationRepository
 
 class GetReservationsUseCase {
 

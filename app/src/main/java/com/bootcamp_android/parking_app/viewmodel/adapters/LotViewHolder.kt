@@ -10,7 +10,7 @@ import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentLotBinding
 
 import com.bootcamp_android.parking_app.utils.Utils
-import com.codelab.domain.model.Lot
+import com.bootcamp_android.domain.model.Lot
 
 class LotViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 

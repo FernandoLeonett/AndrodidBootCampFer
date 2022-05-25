@@ -1,4 +1,4 @@
-package com.codelab.domain.model
+package com.bootcamp_android.domain.model
 
 data class Reservation(
     val startDate: String,

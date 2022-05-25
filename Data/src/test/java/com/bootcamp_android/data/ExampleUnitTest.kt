@@ -1,4 +1,4 @@
-package com.codelab.data
+package com.bootcamp_android.data
 
 import org.junit.Test
 import org.junit.Assert.*

@@ -2,10 +2,10 @@ package com.bootcamp_android.parking_app.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.codelab.data.repositories.LotRepository
-import com.codelab.data.repositories.ReservationRepository
-import com.codelab.domain.GetLotsUseCase
-import com.codelab.domain.GetReservationsUseCase
+import com.bootcamp_android.data.repositories.LotRepository
+import com.bootcamp_android.data.repositories.ReservationRepository
+import com.bootcamp_android.domain.GetLotsUseCase
+import com.bootcamp_android.domain.GetReservationsUseCase
 
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
 

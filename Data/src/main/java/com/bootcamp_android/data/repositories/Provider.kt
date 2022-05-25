@@ -1,7 +1,7 @@
-package com.codelab.data.repositories
+package com.bootcamp_android.data.repositories
 
-import com.codelab.domain.model.Lot
-import com.codelab.domain.model.Reservation
+import com.bootcamp_android.domain.model.Lot
+import com.bootcamp_android.domain.model.Reservation
 
 class Provider { companion object {
 

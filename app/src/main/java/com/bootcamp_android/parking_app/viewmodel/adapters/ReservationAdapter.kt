@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.parking_app.R
-import com.codelab.domain.model.Reservation
+import com.bootcamp_android.domain.model.Reservation
 
 class ReservationAdapter(private val reservationData: List<Reservation>) :
     RecyclerView.Adapter<ReservationViewHolder>() {

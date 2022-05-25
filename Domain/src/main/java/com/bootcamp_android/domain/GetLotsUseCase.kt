@@ -1,6 +1,6 @@
-package com.codelab.domain
+package com.bootcamp_android.domain
 
-import com.codelab.domain.repostories.ILotsRepository
+import com.bootcamp_android.domain.repostories.ILotsRepository
 
 class GetLotsUseCase {
 

@@ -1,4 +1,4 @@
-package com.codelab.data
+package com.bootcamp_android.data
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAddReservation"
-        android:name="com.bootcamp_android.parking_app.fragments.FragmentAddReservation"
+        android:name="com.bootcamp_android.parking_app.fragments.ReservationAddFragment"
         android:label="fragment_add_reservation"
         tools:layout="@layout/fragment_add_reservation" />
 </navigation>

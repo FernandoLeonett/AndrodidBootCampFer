@@ -4,18 +4,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Spinner
-        android:id="@+id/lots_options_spinner"
-        android:layout_width="0dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_title"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:contentDescription="@string/spinner_lots"
-        android:minHeight="60dp"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bar_app_bar"
+            android:elevation="6.25dp"
+            android:gravity="center_vertical"
+            android:paddingStart="25dp"
+            android:text="@string/title_reservation" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <Spinner
+        android:id="@+id/lots_options_spinner"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/spinner_lots"
+        android:entries="@array/slots_options_spinner"
+        android:paddingStart="16dp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_title" />
+
+    <TextView
+        android:id="@+id/text_select_start_date_reservation"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:text="@string/start_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lots_options_spinner" />
+
+    <TextView
+        android:id="@+id/text_select_end_date_reservation"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:text="@string/end_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_select_start_date_reservation" />
+
+    <TextView
+        android:id="@+id/text_auth"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:text="@string/authorization_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_select_end_date_reservation" />
 </androidx.constraintlayout.widget.ConstraintLayout>

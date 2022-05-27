@@ -24,10 +24,13 @@
     <fragment
         android:id="@+id/reservationListFragment"
         android:name="com.bootcamp_android.parking_app.view.fragments.ReservationListFragment"
-        android:label="ReservationListFragment"
+        android:label="Lot {lot_id}"
         tools:layout="@layout/fragment_reservations">
         <action
             android:id="@+id/fab_res_to_add"
             app:destination="@id/fragmentAddReservation" />
+        <argument
+            android:name="lot_id"
+            app:argType="integer" />
     </fragment>
 </navigation>

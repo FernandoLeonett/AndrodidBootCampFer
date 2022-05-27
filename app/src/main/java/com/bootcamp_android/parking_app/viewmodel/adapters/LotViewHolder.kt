@@ -1,31 +1,41 @@
 package com.bootcamp_android.parking_app.viewmodel.adapters
 
-import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bootcamp_android.parking_app.R
-import com.bootcamp_android.parking_app.databinding.FragmentLotBinding
-
-import com.bootcamp_android.parking_app.utils.Utils
 import com.bootcamp_android.domain.model.Lot
+import com.bootcamp_android.domain.model.LotDetail
+import com.bootcamp_android.parking_app.databinding.FragmentLotBinding
+import com.bootcamp_android.parking_app.utils.Services
+import com.bootcamp_android.parking_app.utils.Services.fullDateFormatLot
+import com.bootcamp_android.parking_app.utils.Services.timeFormatLot
+import com.bootcamp_android.parking_app.utils.Utils
 
-class LotViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(lot: Lot) {
+class LotViewHolder(
+    private val view: View
+) : RecyclerView.ViewHolder(view) {
+
+    fun bind(lot: LotDetail,listener: (LotDetail) -> Unit) {
         val binding = FragmentLotBinding.bind(view)
         binding.apply {
-            textIdLot.text = lot.id
-            textDateLot.text = if(!lot.available) lot.date else Utils.free
-            textHourLot.text = lot.hour
-            view.setOnClickListener { view ->
+            var hour = ""
+            var date = Utils.free
 
-                Toast.makeText(view.context,"Hola",Toast.LENGTH_SHORT).show()
-                val bundle: Bundle = bundleOf("KEY_ID" to lot.id)
-                view.findNavController().navigate(R.id.btn_lot_to_res,bundle)
+            if(Services.isAvailableLot(lot.enDateDateTime,lot.startDateTime)) {
+                date = fullDateFormatLot(lot.enDateDateTime)
+                hour = timeFormatLot(lot.enDateDateTime)
+
             }
+
+            textHourLot.text = hour
+            textDateLot.text = date
+            textIdLot.text = lot.parkingLot.toString()
+            itemView.setOnClickListener {
+//                Toast.makeText(view.context,"hola soy",Toast.LENGTH_SHORT).show()
+                listener(lot)
+            }
+
         }
     }
 }

@@ -13,8 +13,6 @@ import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
 import com.bootcamp_android.parking_app.viewmodel.ReservationsViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
 import com.bootcamp_android.parking_app.viewmodel.adapters.ReservationAdapter
-import com.bootcamp_android.data.repositories.Provider
-
 
 class ReservationListFragment : Fragment() {
 
@@ -22,17 +20,25 @@ class ReservationListFragment : Fragment() {
     private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var binding: FragmentReservationsBinding
 
-    override fun onCreateView(  inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?  ): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         viewModelFactory = ViewModelFactory()
-        reservationsViewModel = ViewModelProvider(this,viewModelFactory).get(ReservationsViewModel::class.java)
+        reservationsViewModel = ViewModelProvider(
+            this,
+            viewModelFactory
+        ).get(ReservationsViewModel::class.java)
         return inflater.inflate(R.layout.fragment_reservations,container,false)
     }
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
+        val reservations = reservationsViewModel.requireReservations()
         binding = FragmentReservationsBinding.bind(itemView)
         binding.recyclerReservationList.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ReservationAdapter(Provider.reservations)
+            adapter = ReservationAdapter(reservations)
         }
 
 

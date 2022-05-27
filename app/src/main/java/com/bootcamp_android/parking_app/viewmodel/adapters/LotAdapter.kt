@@ -3,10 +3,10 @@ package com.bootcamp_android.parking_app.viewmodel.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bootcamp_android.domain.model.LotDetail
 import com.bootcamp_android.parking_app.R
-import com.bootcamp_android.domain.model.Lot
 
-class LotAdapter(private val lotData: List<Lot>) : RecyclerView.Adapter<LotViewHolder>() {
+class LotAdapter(private val lotData: List<LotDetail>, private val listener :(LotDetail)-> Unit): RecyclerView.Adapter<LotViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,viewType: Int
@@ -19,7 +19,7 @@ class LotAdapter(private val lotData: List<Lot>) : RecyclerView.Adapter<LotViewH
     override fun onBindViewHolder(holder: LotViewHolder,position: Int) {
         val item = lotData[position]
 
-        holder.bind(item)
+        holder.bind(item, listener)
     }
 
     override fun getItemCount() =

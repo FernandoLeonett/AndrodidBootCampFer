@@ -1,3 +1,7 @@
 package com.bootcamp_android.domain.model
 
-data class Lot(val id: String,val date: String,val hour: String,var available: Boolean)
+data class Lot( val id: Int,  val reservations:List<LotDetail> = emptyList())
+
+
+
+

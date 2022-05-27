@@ -6,18 +6,19 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bootcamp_android.domain.model.LotDetail
 import com.bootcamp_android.parking_app.databinding.FragmentReservationBinding
-import com.bootcamp_android.domain.model.Reservation
+import com.bootcamp_android.parking_app.utils.Services
 
 class ReservationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(reservation: Reservation) {
+    fun bind(reservation: LotDetail) {
         val binding = FragmentReservationBinding.bind(view)
         binding.apply {
-            textDateStart.text = reservation.startDate
-            textHourStart.text = reservation.startHour
-            textEndHour.text = reservation.endHour
-            textDateEnd.text = reservation.endDate
+            textDateStart.text = Services.reservationCardFormatDate(reservation.startDateTime)
+            textDateEnd.text = Services.reservationCardFormatDate(reservation.enDateDateTime)
+            textEndHour.text = Services.timeFormatLot(reservation.enDateDateTime)
+            textHourStart.text = Services.timeFormatLot(reservation.startDateTime)
             btnDeleteReservation.setOnClickListener { view ->
                 val builder = AlertDialog.Builder(view.context)
 

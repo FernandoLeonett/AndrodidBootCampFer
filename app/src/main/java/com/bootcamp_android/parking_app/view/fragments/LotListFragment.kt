@@ -8,36 +8,47 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bootcamp_android.domain.model.LotDetail
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentLotsBinding
-import com.bootcamp_android.parking_app.viewmodel.LotsViewModel
+import com.bootcamp_android.parking_app.viewmodel.ReservationsViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
 import com.bootcamp_android.parking_app.viewmodel.adapters.LotAdapter
 
 class LotListFragment : Fragment() {
 
-    private lateinit var lotsViewModel: LotsViewModel
+    private lateinit var reservationsViewModel: ReservationsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var binding: FragmentLotsBinding
     override fun onCreateView(
-        inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? { // Inflate the layout for this fragment
         viewModelFactory = ViewModelFactory()
-        lotsViewModel = ViewModelProvider(this,viewModelFactory).get(LotsViewModel::class.java)
+        reservationsViewModel = ViewModelProvider(
+            this,viewModelFactory
+        ).get(ReservationsViewModel::class.java)
         return inflater.inflate(R.layout.fragment_lots,container,false)
     }
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
         binding = FragmentLotsBinding.bind(itemView)
-        var lots = lotsViewModel.requireLots()
+        val lots = reservationsViewModel.requireReservations()
         binding.apply {
             recyclerLotList.apply {
                 layoutManager = LinearLayoutManager(activity)
-                adapter = LotAdapter(lots)
+                adapter = LotAdapter(lots) { lot -> lotClick(lot) }
             }
             fab.setOnClickListener {
                 findNavController().navigate(R.id.fab_lot_to_add)
             }
         }
     }
+
+    private fun lotClick(lot: LotDetail) {
+        val action = LotListFragmentDirections.btnLotToRes(lot.parkingLot)
+        findNavController().navigate(action)
+    }
 }
+

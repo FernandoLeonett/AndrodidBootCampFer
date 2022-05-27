@@ -19,6 +19,7 @@
     <!--    &lt;!&ndash;progress bar&ndash;&gt;-->
     <ProgressBar
         android:id="@+id/pbar_availability"
+
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
     <!-- busy -->
     <TextView
+
         android:text="@string/busy"
         android:textAppearance="@style/busy"
         android:layout_width="wrap_content"

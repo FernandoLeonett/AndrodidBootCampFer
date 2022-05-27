@@ -1,12 +1,17 @@
 package com.bootcamp_android.parking_app.view.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
@@ -19,6 +24,7 @@ class ReservationListFragment : Fragment() {
     private lateinit var reservationsViewModel: ReservationsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var binding: FragmentReservationsBinding
+    private val args: ReservationListFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,18 +33,19 @@ class ReservationListFragment : Fragment() {
     ): View? {
         viewModelFactory = ViewModelFactory()
         reservationsViewModel = ViewModelProvider(
-            this,
-            viewModelFactory
+            this,viewModelFactory
         ).get(ReservationsViewModel::class.java)
         return inflater.inflate(R.layout.fragment_reservations,container,false)
     }
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
+        val msg = args.lotId
+        Toast.makeText(activity,"$msg es el lot",Toast.LENGTH_SHORT).show()
         val reservations = reservationsViewModel.requireReservations()
         binding = FragmentReservationsBinding.bind(itemView)
         binding.recyclerReservationList.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ReservationAdapter(reservations)
+            adapter = ReservationAdapter(reservations) { v -> onDeleteClick(v) }
         }
 
 
@@ -46,5 +53,30 @@ class ReservationListFragment : Fragment() {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.fab_res_to_add)
         }
+    }
+
+    private fun onDeleteClick(id: Int) {
+        val builder = AlertDialog.Builder(requireContext())
+
+        builder.setTitle("Delete Reservation")
+        val input =
+            EditText(requireContext()) // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.inputType =
+            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
+        input.clipToOutline
+        builder.setView(input)
+            .setMessage("Are you sure you want to delete this reservation? Please input the authorization code to confirm")
+            .setCancelable(true) // dialog box in cancellable
+            // set positive button
+            //take two parameters dialogInterface and an int
+            .setPositiveButton("OK") { dialogInterface,_ ->
+                Toast.makeText(
+                    requireContext(),"me ${input.text} borraron $id",Toast.LENGTH_SHORT
+                ).show()
+                dialogInterface.dismiss()
+            }
+            .setNegativeButton("CANCEL") { dialogInterface,_ -> // cancel the dialogbox
+                dialogInterface.cancel()
+            }.show()
     }
 }

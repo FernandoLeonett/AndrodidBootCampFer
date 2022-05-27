@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.domain.model.LotDetail
 import com.bootcamp_android.parking_app.R
 
-class ReservationAdapter(private val reservationData: List<LotDetail>) :
+class ReservationAdapter(private val reservationData: List<LotDetail> ,private val clickDelete :(Int)-> Unit) :
     RecyclerView.Adapter<ReservationViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -20,7 +20,7 @@ class ReservationAdapter(private val reservationData: List<LotDetail>) :
     override fun onBindViewHolder(holder: ReservationViewHolder,position: Int) {
         val item = reservationData[position]
 
-        holder.bind(item)
+        holder.bind(item,clickDelete)
     }
 
     override fun getItemCount() =

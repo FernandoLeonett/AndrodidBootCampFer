@@ -19,7 +19,7 @@
     >
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
-    <string name="title_reservations">Lot # 1</string>
+    <string name="title_reservations_detail">Lot # {lot_id}</string>
     <string name="btn_delete">DELETE</string>
     <string name="title_reservation">Add Reservation</string>
     <string name="btn_save">SAVE</string>

@@ -12,33 +12,18 @@ import com.bootcamp_android.parking_app.utils.Services
 
 class ReservationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(reservation: LotDetail) {
+    fun bind(reservation: LotDetail,listener: (Int) -> Unit) {
         val binding = FragmentReservationBinding.bind(view)
         binding.apply {
-            textDateStart.text = Services.reservationCardFormatDate(reservation.startDateTime)
-            textDateEnd.text = Services.reservationCardFormatDate(reservation.enDateDateTime)
-            textEndHour.text = Services.timeFormatLot(reservation.enDateDateTime)
-            textHourStart.text = Services.timeFormatLot(reservation.startDateTime)
-            btnDeleteReservation.setOnClickListener { view ->
-                val builder = AlertDialog.Builder(view.context)
-
-                builder.setTitle("Delete Reservation")
-                val input =
-                    EditText(view.context) // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
-                input.clipToOutline
-                builder.setView(input)
-                    .setMessage("Are you sure you want to delete this reservation? Please input the authorization code to confirm")
-                    .setCancelable(true) // dialog box in cancellable
-                    // set positive button
-                    //take two parameters dialogInterface and an int
-                    .setPositiveButton("OK") { dialogInterface,_ ->
-                        Toast.makeText(view.context,"me borraron",Toast.LENGTH_SHORT).show()
-                        dialogInterface.dismiss()
-                    }.setNegativeButton("CANCEL") { dialogInterface,_ -> // cancel the dialogbox
-                        dialogInterface.cancel()
-                    }.show()
-            }
+            textDateStart.text =
+                Services.reservationCardFormatDate(reservation.startDateTime)
+            textDateEnd.text =
+                Services.reservationCardFormatDate(reservation.enDateDateTime)
+            textEndHour.text =
+                Services.timeFormatLot(reservation.enDateDateTime)
+            textHourStart.text =
+                Services.timeFormatLot(reservation.startDateTime)
+           btnDeleteReservation.setOnClickListener { listener(reservation.parkingLot) }
         }
     }
 }

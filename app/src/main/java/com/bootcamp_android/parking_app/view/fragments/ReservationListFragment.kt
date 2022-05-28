@@ -23,7 +23,7 @@ class ReservationListFragment : Fragment() {
 
     private lateinit var reservationsViewModel: ReservationsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var binding: FragmentReservationsBinding
+    private var binding: FragmentReservationsBinding? = null
     private val args: ReservationListFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -43,15 +43,15 @@ class ReservationListFragment : Fragment() {
         Toast.makeText(activity,"$msg es el lot",Toast.LENGTH_SHORT).show()
         val reservations = reservationsViewModel.requireReservations()
         binding = FragmentReservationsBinding.bind(itemView)
-        binding.recyclerReservationList.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = ReservationAdapter(reservations) { v -> onDeleteClick(v) }
-        }
-
-
-
-        binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.fab_res_to_add)
+        binding?.apply {
+            recyclerReservationList.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter =
+                    ReservationAdapter(reservations) { v -> onDeleteClick(v) }
+            }
+            fab.setOnClickListener {
+                findNavController().navigate(R.id.fab_res_to_add)
+            }
         }
     }
 
@@ -71,7 +71,9 @@ class ReservationListFragment : Fragment() {
             //take two parameters dialogInterface and an int
             .setPositiveButton("OK") { dialogInterface,_ ->
                 Toast.makeText(
-                    requireContext(),"me ${input.text} borraron $id",Toast.LENGTH_SHORT
+                    requireContext(),
+                    "me ${input.text} borraron $id",
+                    Toast.LENGTH_SHORT
                 ).show()
                 dialogInterface.dismiss()
             }

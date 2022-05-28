@@ -19,7 +19,8 @@ class LotListFragment : Fragment() {
 
     private lateinit var reservationsViewModel: ReservationsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var binding: FragmentLotsBinding
+
+    private  var binding: FragmentLotsBinding?= null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +36,7 @@ class LotListFragment : Fragment() {
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
         binding = FragmentLotsBinding.bind(itemView)
         val lots = reservationsViewModel.requireReservations()
-        binding.apply {
+        binding?.apply {
             recyclerLotList.apply {
                 layoutManager = LinearLayoutManager(activity)
                 adapter = LotAdapter(lots) { lot -> lotClick(lot) }
@@ -49,6 +50,11 @@ class LotListFragment : Fragment() {
     private fun lotClick(lot: LotDetail) {
         val action = LotListFragmentDirections.btnLotToRes(lot.parkingLot)
         findNavController().navigate(action)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null;
     }
 }
 

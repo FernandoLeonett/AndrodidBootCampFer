@@ -5,5 +5,5 @@ import com.bootcamp_android.domain.repostories.ILotsRepository
 class GetLotsUseCase {
 
     lateinit var lotsRepository: ILotsRepository
-    operator fun invoke() = lotsRepository.getLots()
+    operator fun invoke() = lotsRepository.getAllCompleteLots()
 }

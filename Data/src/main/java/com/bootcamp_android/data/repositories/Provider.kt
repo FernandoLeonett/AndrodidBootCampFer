@@ -1,5 +1,7 @@
 package com.bootcamp_android.data.repositories
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.bootcamp_android.domain.model.Lot
 import com.bootcamp_android.domain.model.LotDetail
 
@@ -7,18 +9,20 @@ class Provider {
 
     companion object {
 
-        val reservations = reservations(60)
-        val lots = lots(10)
-        private fun reservations(n: Int): MutableList<LotDetail> {
+        private const val starDateTest = 1650308957285 //apr 2022
+        private const val endDateTest = 1654718874072 // jun 2022
+
+        fun reservations(n: Int): MutableList<LotDetail> {
             val reservations = mutableListOf<LotDetail>()
 
             for(i in 1..n) {
-                reservations.add(LotDetail("1234",233254543636,433254543636,i))
+                reservations.add(LotDetail("1234",starDateTest,(starDateTest..endDateTest).random(),i))
             }
+            Log.d(TAG,"reservations: api: $reservations")
             return reservations
         }
 
-        private fun lots(n: Int): MutableList<Lot> {
+        fun lots(n: Int): MutableList<Lot> {
             val lots = mutableListOf<Lot>()
             for(i in 1..n) {
                 lots.add(Lot(i))

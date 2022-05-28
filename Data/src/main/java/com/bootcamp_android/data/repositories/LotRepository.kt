@@ -1,12 +1,24 @@
 package com.bootcamp_android.data.repositories
 
-import com.bootcamp_android.data.repositories.Provider.Companion.reservations
 import com.bootcamp_android.domain.model.Lot
-import com.bootcamp_android.domain.model.LotDetail
 import com.bootcamp_android.domain.repostories.ILotsRepository
-import com.bootcamp_android.domain.repostories.IReservationRepository
 
-class LotRepository : ILotsRepository {
+class LotRepository() : ILotsRepository {
 
-    override fun getLots(): List<Lot> = Provider.lots
+    private val lots = mutableListOf<Lot>()
+    private val list = Provider.reservations(30)
+    override fun getAllCompleteLots(): MutableList<Lot> {
+        for(lot in Provider.lots(10)) {
+            for(reservation in list) {
+                if(lot.id == reservation.parkingLot) {
+                    lot.reservations.add(reservation)
+                }
+            }
+        }
+        return lots
+    }
+
+    override fun getOneLotWithReservations(id: Int): Lot? {
+     return getAllCompleteLots().find { lot-> lot.id==id }
+    }
 }

@@ -18,11 +18,13 @@ import java.util.*
 
 class ReservationAddFragment : Fragment() {
 
-    private lateinit var binding: FragmentAddReservationBinding
+    private var binding: FragmentAddReservationBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
     ): View? { // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_reservation,container,false)
+        return inflater.inflate(
+            R.layout.fragment_add_reservation,container,false
+        )
     }
 
     override fun onViewCreated(
@@ -30,35 +32,35 @@ class ReservationAddFragment : Fragment() {
     ) {
         binding = FragmentAddReservationBinding.bind(view)
 
-        binding.apply {
+        binding?.apply {
             textSelectStartDateReservation.setOnClickListener {
                 showDateTimePickerDialog()
             }
             textSelectEndDateReservation.setOnClickListener {
                 showDateTimePickerDialog()
             }
-        }
-        val spinnerList = listOf(
-            "Parking Slot 1","Parking Slot 2","Parking Slot 3","Parking Slot 4","Parking Slot 5 final"
-        ) //TODO("this is a test ready to receive arguments")
-        val adapter = ArrayAdapter(
-            requireContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,spinnerList
-        )
-        binding.lotsOptionsSpinner.apply {
-            this.adapter = adapter
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,view: View?,position: Int,id: Long
-                ) {
-                    Toast.makeText(
-                        activity,"you have selected ${
-                            parent?.getItemAtPosition(position).toString()
-                        }",Toast.LENGTH_SHORT
-                    ).show()
-                }
+            val spinnerList = listOf(
+                "Parking Slot 1","Parking Slot 2","Parking Slot 3","Parking Slot 4","Parking Slot 5 final"
+            ) //TODO("this is a test ready to receive arguments")
+            val adapter = ArrayAdapter(
+                requireContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,spinnerList
+            )
+            lotsOptionsSpinner.apply {
+                this.adapter = adapter
+                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,view: View?,position: Int,id: Long
+                    ) {
+                        Toast.makeText(
+                            activity,"you have selected ${
+                                parent?.getItemAtPosition(position).toString()
+                            }",Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
                 }
             }
         }
@@ -70,7 +72,9 @@ class ReservationAddFragment : Fragment() {
             Toast.makeText(
                 activity,"$hour:$minutes",Toast.LENGTH_LONG
             ).show()
-            Log.d(TAG,"showDateTimePickerDialog: hour minutes $hour $minutes")
+            Log.d(
+                TAG,"showDateTimePickerDialog: hour minutes $hour $minutes"
+            )
         }
 
         TimePickerDialog(
@@ -80,7 +84,9 @@ class ReservationAddFragment : Fragment() {
             Toast.makeText(
                 activity,"$day/$month/$year",Toast.LENGTH_LONG
             ).show()
-            Log.d(TAG,"showDateTimePickerDialog: dia mes anio : $day/$month/$year")
+            Log.d(
+                TAG,"showDateTimePickerDialog: dia mes anio : $day/$month/$year"
+            )
         }
 
         DatePickerDialog(
@@ -90,6 +96,11 @@ class ReservationAddFragment : Fragment() {
             cal.get(Calendar.MONTH),
             cal.get(Calendar.DAY_OF_MONTH)
         ).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null;
     }
 }
 

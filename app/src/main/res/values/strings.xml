@@ -21,7 +21,7 @@
     <string name="end_date">End date</string>
     <string name="title_reservations_detail">Lot # {lot_id}</string>
     <string name="btn_delete">DELETE</string>
-    <string name="title_reservation">Add Reservation</string>
+    <string name="title_reservation" translatable="false">Add Reservation</string>
     <string name="btn_save">SAVE</string>
     <string name="authorization_code">Authorization code</string>
 

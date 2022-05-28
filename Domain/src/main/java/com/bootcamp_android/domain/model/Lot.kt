@@ -1,6 +1,6 @@
 package com.bootcamp_android.domain.model
 
-data class Lot( val id: Int,  val reservations:List<LotDetail> = emptyList())
+data class Lot( val id: Int,  val reservations: MutableList<LotDetail> = mutableListOf())
 
 
 

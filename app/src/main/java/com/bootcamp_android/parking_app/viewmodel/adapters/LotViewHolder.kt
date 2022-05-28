@@ -2,7 +2,7 @@ package com.bootcamp_android.parking_app.viewmodel.adapters
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.bootcamp_android.domain.model.LotDetail
+import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.util.Utils.fullDateFormatLot
 import com.bootcamp_android.domain.util.Utils.isMarkedAsFree
 import com.bootcamp_android.domain.util.Utils.timeFormatLot
@@ -15,7 +15,7 @@ class LotViewHolder(
     private val view: View
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(lot: LotDetail,listener: (LotDetail) -> Unit) {
+    fun bind(lot: Reservation,listener: (Reservation) -> Unit) {
         val binding = FragmentLotBinding.bind(view)
         binding.apply {
             var hour = ""

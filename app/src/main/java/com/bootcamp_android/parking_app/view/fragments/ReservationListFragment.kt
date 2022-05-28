@@ -17,7 +17,7 @@ import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
 import com.bootcamp_android.parking_app.viewmodel.ReservationsViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
-import com.bootcamp_android.parking_app.viewmodel.adapters.ReservationAdapter
+import com.bootcamp_android.parking_app.viewmodel.adapters.ReservationsAdapter
 
 class ReservationListFragment : Fragment() {
 
@@ -47,7 +47,7 @@ class ReservationListFragment : Fragment() {
             recyclerReservationList.apply {
                 layoutManager = LinearLayoutManager(activity)
                 adapter =
-                    ReservationAdapter(reservations) { v -> onDeleteClick(v) }
+                    ReservationsAdapter(reservations) { v -> onDeleteClick(v) }
             }
             fab.setOnClickListener {
                 findNavController().navigate(R.id.fab_res_to_add)

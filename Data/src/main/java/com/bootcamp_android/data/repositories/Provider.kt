@@ -3,7 +3,7 @@ package com.bootcamp_android.data.repositories
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.bootcamp_android.domain.model.Lot
-import com.bootcamp_android.domain.model.LotDetail
+import com.bootcamp_android.domain.model.Reservation
 
 class Provider {
 
@@ -12,11 +12,11 @@ class Provider {
         private const val starDateTest = 1650308957285 //apr 2022
         private const val endDateTest = 1654718874072 // jun 2022
 
-        fun reservations(n: Int): MutableList<LotDetail> {
-            val reservations = mutableListOf<LotDetail>()
+        fun reservations(n: Int): MutableList<Reservation> {
+            val reservations = mutableListOf<Reservation>()
 
             for(i in 1..n) {
-                reservations.add(LotDetail("1234",starDateTest,(starDateTest..endDateTest).random(),i))
+                reservations.add(Reservation("1234",starDateTest,(starDateTest..endDateTest).random(),i))
             }
             Log.d(TAG,"reservations: api: $reservations")
             return reservations

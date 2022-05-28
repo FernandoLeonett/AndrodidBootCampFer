@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bootcamp_android.domain.model.LotDetail
+import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentLotsBinding
 import com.bootcamp_android.parking_app.viewmodel.ReservationsViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
-import com.bootcamp_android.parking_app.viewmodel.adapters.LotAdapter
+import com.bootcamp_android.parking_app.viewmodel.adapters.LotsAdapter
 
 class LotListFragment : Fragment() {
 
@@ -39,7 +39,7 @@ class LotListFragment : Fragment() {
         binding?.apply {
             recyclerLotList.apply {
                 layoutManager = LinearLayoutManager(activity)
-                adapter = LotAdapter(lots) { lot -> lotClick(lot) }
+                adapter = LotsAdapter(lots) { lot -> lotClick(lot) }
             }
             fab.setOnClickListener {
                 findNavController().navigate(R.id.fab_lot_to_add)
@@ -47,7 +47,7 @@ class LotListFragment : Fragment() {
         }
     }
 
-    private fun lotClick(lot: LotDetail) {
+    private fun lotClick(lot: Reservation) {
         val action = LotListFragmentDirections.btnLotToRes(lot.parkingLot)
         findNavController().navigate(action)
     }

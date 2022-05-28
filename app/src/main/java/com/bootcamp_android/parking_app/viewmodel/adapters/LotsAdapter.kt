@@ -3,10 +3,10 @@ package com.bootcamp_android.parking_app.viewmodel.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bootcamp_android.domain.model.LotDetail
+import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 
-class LotAdapter(private val lotData: List<LotDetail>, private val listener :(LotDetail)-> Unit): RecyclerView.Adapter<LotViewHolder>() {
+class LotsAdapter(private val lotData: List<Reservation>, private val listener :(Reservation)-> Unit): RecyclerView.Adapter<LotViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,viewType: Int

@@ -3,10 +3,10 @@ package com.bootcamp_android.parking_app.viewmodel.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bootcamp_android.domain.model.LotDetail
+import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 
-class ReservationAdapter(private val reservationData: List<LotDetail> ,private val clickDelete :(Int)-> Unit) :
+class ReservationsAdapter(private val reservationData: List<Reservation> ,private val clickDelete :(Int)-> Unit) :
     RecyclerView.Adapter<ReservationViewHolder>() {
 
     override fun onCreateViewHolder(

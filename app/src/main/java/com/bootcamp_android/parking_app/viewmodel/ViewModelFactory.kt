@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bootcamp_android.data.repositories.LotRepository
 import com.bootcamp_android.data.repositories.ReservationRepository
 import com.bootcamp_android.domain.GetLotsUseCase
-import com.bootcamp_android.domain.GetReservationsUseCase
+import com.bootcamp_android.domain.GetLotsAvailableForReserve
 
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
 
@@ -15,7 +15,7 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
                 lotsRepository = LotRepository() // use context
             }) as T
         } else if(modelClass == ReservationsViewModel::class.java) {
-            ReservationsViewModel(GetReservationsUseCase().apply {
+            ReservationsViewModel(GetLotsAvailableForReserve().apply {
                 reservationRepository = ReservationRepository() // use context
             }) as T
         } else {

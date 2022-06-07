@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 
-class ReservationsAdapter(private val reservationData: List<Reservation> ,private val clickDelete :(Int)-> Unit) :
+class ReservationsAdapter(private val reservationData: MutableList<Reservation>,private val clickDelete:(Reservation)-> Unit) :
     RecyclerView.Adapter<ReservationViewHolder>() {
 
     override fun onCreateViewHolder(

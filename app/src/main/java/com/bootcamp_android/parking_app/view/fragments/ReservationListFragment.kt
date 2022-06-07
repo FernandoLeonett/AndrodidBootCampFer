@@ -13,15 +13,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
-import com.bootcamp_android.parking_app.viewmodel.ReservationsViewModel
+import com.bootcamp_android.parking_app.viewmodel.lot_detail.LotDetailViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
 import com.bootcamp_android.parking_app.viewmodel.adapters.ReservationsAdapter
 
 class ReservationListFragment : Fragment() {
 
-    private lateinit var reservationsViewModel: ReservationsViewModel
+    private lateinit var reservationsViewModel: LotDetailViewModel
     private lateinit var viewModelFactory: ViewModelFactory
     private var binding: FragmentReservationsBinding? = null
     private val args: ReservationListFragmentArgs by navArgs()
@@ -34,20 +35,18 @@ class ReservationListFragment : Fragment() {
         viewModelFactory = ViewModelFactory()
         reservationsViewModel = ViewModelProvider(
             this,viewModelFactory
-        ).get(ReservationsViewModel::class.java)
+        ).get(LotDetailViewModel::class.java)
         return inflater.inflate(R.layout.fragment_reservations,container,false)
     }
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
-        val msg = args.lotId
-        Toast.makeText(activity,"$msg es el lot",Toast.LENGTH_SHORT).show()
-        val reservations = reservationsViewModel.requireReservations()
         binding = FragmentReservationsBinding.bind(itemView)
+        val reservations = reservationsViewModel.lot(args.lotId)
         binding?.apply {
             recyclerReservationList.apply {
                 layoutManager = LinearLayoutManager(activity)
-                adapter =
-                    ReservationsAdapter(reservations) { v -> onDeleteClick(v) }
+                // adapter
+
             }
             fab.setOnClickListener {
                 findNavController().navigate(R.id.fab_res_to_add)
@@ -55,7 +54,7 @@ class ReservationListFragment : Fragment() {
         }
     }
 
-    private fun onDeleteClick(id: Int) {
+    private fun onDeleteClick(Reservation: Reservation) {
         val builder = AlertDialog.Builder(requireContext())
 
         builder.setTitle("Delete Reservation")

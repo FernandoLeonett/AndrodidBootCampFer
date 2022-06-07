@@ -1,6 +1,8 @@
 package com.bootcamp_android.domain.model
 
-class Parking(private val id: Int,private val lots: List<Lot>) {
+import com.bootcamp_android.domain.util.Utils
 
-    private var countSize: Int = lots.size
+class Parking(private val id: String =Utils.parkingId , var lotsForReserve: List<Lot>) {
+
+     var countSize: Int = lotsForReserve.size
 }

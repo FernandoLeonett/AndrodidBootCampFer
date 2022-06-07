@@ -23,22 +23,20 @@ class LotsFragment : Fragment() {
     private var binding: FragmentLotsBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
-    ): View? { // Inflate the layout for this fragment
+    ): View? {
         viewModelFactory = ViewModelFactory()
         lotsViewModel = ViewModelProvider(
             this,viewModelFactory
         ).get(LotsViewModel::class.java)
 
-        lotsViewModel.lots.observe(viewLifecycleOwner) {
-            binding?.recyclerLotList?.apply {
-                layoutManager = LinearLayoutManager(activity)
-                adapter = LotsAdapter(it) { v -> lotClick(v) }
-            }
+        lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
+            initRecycleLots(lots)
         }
         return inflater.inflate(R.layout.fragment_lots,container,false)
     }
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
+        lotsViewModel.loadLots()
         binding = FragmentLotsBinding.bind(itemView)
 
         binding?.apply {
@@ -49,13 +47,20 @@ class LotsFragment : Fragment() {
     }
 
     private fun lotClick(lot: Lot) {
-        val action = LotsFragmentDirections.btnLotToRes(lot.id)
+        val action = LotsFragmentDirections.btnLotToRes(lot,lot.id.toString())
         findNavController().navigate(action)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    private fun initRecycleLots(lots: List<Lot>) {
+        binding?.recyclerLotList?.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = LotsAdapter(lots) { lot -> lotClick(lot) }
+        }
     }
 }
 

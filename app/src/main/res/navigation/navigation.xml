@@ -35,7 +35,10 @@
             android:id="@+id/fab_res_to_add"
             app:destination="@id/fragmentAddReservation" />
         <argument
+            android:name="lot"
+            app:argType="com.bootcamp_android.domain.model.Lot"/>
+        <argument
             android:name="lot_id"
-            app:argType="integer" />
+            app:argType="string"/>
     </fragment>
 </navigation>

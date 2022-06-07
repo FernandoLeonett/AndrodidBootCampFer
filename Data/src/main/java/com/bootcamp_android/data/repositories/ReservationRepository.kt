@@ -5,7 +5,7 @@ import com.bootcamp_android.domain.repostories.IReservationRepository
 
 class ReservationRepository : IReservationRepository {
 
-    val reservationsApi = Provider.reservations(30)
+
     private lateinit var lotRepository: LotRepository
 
     override fun addReservation(res: Reservation): Boolean {
@@ -17,6 +17,6 @@ class ReservationRepository : IReservationRepository {
     }
 
     override fun getReservations(): List<Reservation> {
-        return Provider.reservations(30)
+        return Provider.reservations(30,13)
     }
 }

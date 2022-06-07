@@ -4,6 +4,6 @@ import com.bootcamp_android.domain.model.Lot
 
 interface ILotsRepository {
 
-    fun getDetailLot(id: Int): Lot?
-    fun getLots ():List<Lot>
+    suspend fun getDetailLot(id: Int): Lot?
+    suspend fun getLots(): List<Lot>
 }

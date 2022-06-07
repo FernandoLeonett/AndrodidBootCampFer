@@ -41,11 +41,12 @@ class ReservationListFragment : Fragment() {
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
         binding = FragmentReservationsBinding.bind(itemView)
-        val reservations = reservationsViewModel.lot(args.lotId)
+      val reservations  = args.lot.reservations
+
         binding?.apply {
             recyclerReservationList.apply {
                 layoutManager = LinearLayoutManager(activity)
-                // adapter
+                adapter =ReservationsAdapter(reservations){reservation -> onDeleteClick(reservation) }
 
             }
             fab.setOnClickListener {

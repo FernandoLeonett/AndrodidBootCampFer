@@ -6,7 +6,7 @@ object Utils {
 
     const val free:String= "Free"
     const val oneHour = 3600000
-    const val parkingId: String = "N0TUMxRLEatjw7G8jsw"
+
 
     private fun String.capitalizeWords(): String =
         split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } } //    fun isMarkedAsFree(startDate: Long,endDate: Long) = System.currentTimeMillis() !in startDate..endDate

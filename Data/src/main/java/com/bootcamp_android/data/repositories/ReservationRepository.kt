@@ -1,22 +1,30 @@
 package com.bootcamp_android.data.repositories
 
+import com.bootcamp_android.data.services.ParkingService
+import com.bootcamp_android.domain.model.Parking
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.repostories.IReservationRepository
+import com.bootcamp_android.domain.util.Result
 
 class ReservationRepository : IReservationRepository {
 
-
-    private lateinit var lotRepository: LotRepository
-
-    override fun addReservation(res: Reservation): Boolean {
+    override suspend fun addReservation(res: Reservation): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun deleteReservation(id: Int): Boolean {
+    override suspend fun deleteReservation(id: Int): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun getReservations(): List<Reservation> {
-        return Provider.reservations(30,13)
+    var reservationService: ParkingService = ParkingService()
+    override suspend fun getReservations(): List<Reservation> {
+        var reservationList = mutableListOf<Reservation>()
+        var result = reservationService.getReservations()
+        var resultLotList = Parking(reservations = Provider.reservations(20,5))
+
+        if(result is Result.Success) {
+            reservationList = resultLotList.reservations
+        }
+        return reservationList
     }
 }

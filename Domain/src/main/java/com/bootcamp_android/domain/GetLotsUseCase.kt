@@ -27,6 +27,7 @@ class GetLotsUseCase {
                 emptyLot.reservations = any.reservations
             }
         }
+         val test =allLots;
         return allLots
     } //    private fun Lot.calculateTimeAvailable() {
     //        val actual: Long = 1300 //emulating the current time

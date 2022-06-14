@@ -1,8 +1,11 @@
 package com.bootcamp_android.domain.model
 
-data class Reservation(
-    val authorizationCode: String,val startDateTime: Long,var enDateDateTime: Long,val parkingLot: Int
-) {
+import java.io.Serializable
 
-    val id: String = "1"
-}
+data class Reservation(
+    val id: String,
+    val authorizationCode: String,
+    val starDateTimeInMillis: Long,
+    val endDateTimeInMillis: Long,
+    val parkingLot: Int
+) : Serializable

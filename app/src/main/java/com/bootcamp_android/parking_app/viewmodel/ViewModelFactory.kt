@@ -6,6 +6,7 @@ import com.bootcamp_android.data.repositories.LotRepository
 import com.bootcamp_android.data.repositories.ReservationRepository
 import com.bootcamp_android.domain.GetDetailALotUseCase
 import com.bootcamp_android.domain.GetLotsUseCase
+import com.bootcamp_android.domain.GetReservationsUseCase
 import com.bootcamp_android.parking_app.viewmodel.lot_detail.LotDetailViewModel
 import com.bootcamp_android.parking_app.viewmodel.lots.LotsViewModel
 
@@ -15,7 +16,8 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
         return if(modelClass == LotsViewModel::class.java) {
             LotsViewModel(GetLotsUseCase().apply {
                 lotRepository = LotRepository() // use context
-                reservationsRepository =ReservationRepository()
+            },GetReservationsUseCase().apply {
+                reservationRepository = ReservationRepository()
             }) as T
         } else if(modelClass == LotDetailViewModel::class.java) {
             LotDetailViewModel(GetDetailALotUseCase().apply {

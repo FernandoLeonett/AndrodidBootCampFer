@@ -13,11 +13,11 @@ class LotRepository : ILotsRepository {
 
       var lotService: ParkingService = ParkingService()
 
-    //bring list from the service
+
     override suspend fun getLots(): List<Lot> {
         var lotList = mutableListOf<Lot>()
         var result = lotService.getLots()
-        var resultLotList = Parking(Utils.parkingId,lotList)
+        var resultLotList = Parking( lotsForReserve = lotList)
 
         if(result is Result.Success) {
             result.data.forEach {

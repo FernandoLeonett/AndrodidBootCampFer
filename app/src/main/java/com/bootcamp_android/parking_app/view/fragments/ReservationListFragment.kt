@@ -55,10 +55,10 @@ class ReservationListFragment : Fragment() {
         }
     }
 
-    private fun onDeleteClick(Reservation: Reservation) {
+    private fun onDeleteClick(reservation: Reservation) {
         val builder = AlertDialog.Builder(requireContext())
 
-        builder.setTitle("Delete Reservation")
+        builder.setTitle("Delete Reservation ${reservation.id}")
         val input =
             EditText(requireContext()) // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.inputType =

@@ -2,7 +2,6 @@ package com.bootcamp_android.data.services.retrofit_instance
 
 import com.bootcamp_android.data.services.response.ReservationListResponse
 import com.bootcamp_android.data.services.response.ReservationResponse
-
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

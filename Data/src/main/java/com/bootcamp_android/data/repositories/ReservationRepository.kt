@@ -3,6 +3,7 @@ package com.bootcamp_android.data.repositories
 import com.bootcamp_android.data.services.ParkingService
 import com.bootcamp_android.domain.model.Parking
 import com.bootcamp_android.domain.model.Reservation
+
 import com.bootcamp_android.domain.repostories.IReservationRepository
 import com.bootcamp_android.domain.util.Result
 
@@ -16,15 +17,29 @@ class ReservationRepository : IReservationRepository {
         TODO("Not yet implemented")
     }
 
-    var reservationService: ParkingService = ParkingService()
+     var reservationService: ParkingService = ParkingService()
     override suspend fun getReservations(): List<Reservation> {
         var reservationList = mutableListOf<Reservation>()
+        var reservations = Parking( reservations = reservationList)
         var result = reservationService.getReservations()
-        var resultLotList = Parking(reservations = Provider.reservations(20,5))
+
+
 
         if(result is Result.Success) {
-            reservationList = resultLotList.reservations
+            result.data.forEach { reservation ->
+                reservationList.add(
+                    Reservation(
+                        reservation.id,
+                        reservation.authorizationCode,
+                        reservation.startDate.toLong(),
+                        reservation.endDate.toLong(),
+                        reservation.parkingLot
+                    )
+                )
+            }
         }
-        return reservationList
+        reservations.reservations = reservationList
+
+        return reservations.reservations
     }
 }

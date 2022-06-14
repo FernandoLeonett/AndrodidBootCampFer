@@ -10,10 +10,7 @@ import kotlinx.coroutines.launch
 
 class LotDetailViewModel(private val geLotDetail: GetDetailALotUseCase) : ViewModel() {
 
-    private val _lot: MutableLiveData<Lot> by lazy {
-        MutableLiveData<Lot>()
-    }
-    val lot: LiveData<Lot> = _lot
+
 
 
 

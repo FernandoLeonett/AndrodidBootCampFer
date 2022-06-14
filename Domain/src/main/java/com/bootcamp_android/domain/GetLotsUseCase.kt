@@ -8,28 +8,33 @@ import com.bootcamp_android.domain.repostories.IReservationRepository
 class GetLotsUseCase {
 
     lateinit var lotRepository: ILotsRepository
-    lateinit var reservationsRepository: IReservationRepository
+
+    suspend fun getLots() = lotRepository.getLots()
 
 
 
-     suspend fun fillAllLots(): List<Lot> {
-        var lotsWithReservations = reservationsRepository.getReservations().groupBy {
-            it.parkingLot
-        }.map {
-            Lot(it.key,it.value as MutableList<Reservation>)
-        }
-        val allLots = lotRepository.getLots()
-        allLots.forEach { emptyLot ->
-            val any = lotsWithReservations.find {
-                it.id == emptyLot.id
-            }
-            if(any != null) {
-                emptyLot.reservations = any.reservations
-            }
-        }
-         val test =allLots;
-        return allLots
-    } //    private fun Lot.calculateTimeAvailable() {
+
+
+
+
+//     suspend fun fillAllLots(): List<Lot> {
+//        var lotsWithReservations = reservationsRepository.getReservations().groupBy {
+//            it.parkingLot
+//        }.map {
+//            Lot(it.key,it.value as MutableList<com.bootcamp_android.domain.model.Reservation>)
+//        }
+//        val allLots = lotRepository.getLots()
+//        allLots.forEach { emptyLot ->
+//            val any = lotsWithReservations.find {
+//                it.id == emptyLot.id
+//            }
+//            if(any != null) {
+//                emptyLot.reservations = any.reservations
+//            }
+//        }
+//
+//        return allLots
+//    } //    private fun Lot.calculateTimeAvailable() {
     //        val actual: Long = 1300 //emulating the current time
     //        this.reservations.sortedBy { it.enDateDateTime } // really I need  order it
     //        val beforeReservations = this.reservations.filter {

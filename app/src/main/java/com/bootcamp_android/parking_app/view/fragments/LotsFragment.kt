@@ -20,6 +20,8 @@ class LotsFragment : Fragment() {
     //LotDetailViewModel
     private lateinit var lotsViewModel: LotsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
+    var spinerList = mutableListOf<String>()
+
     private var binding: FragmentLotsBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
@@ -30,7 +32,12 @@ class LotsFragment : Fragment() {
         ).get(LotsViewModel::class.java)
 
         lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
+            spinerList.clear()
             initRecycleLots(lots)
+            lots.map {
+                spinerList.add("Lot: ${it.id}")
+            }
+
         }
         return inflater.inflate(R.layout.fragment_lots,container,false)
     }
@@ -40,8 +47,11 @@ class LotsFragment : Fragment() {
         binding = FragmentLotsBinding.bind(itemView)
 
         binding?.apply {
+
             fab.setOnClickListener {
-                findNavController().navigate(R.id.fab_lot_to_add)
+
+                val action = LotsFragmentDirections.fabLotToAdd(spinerList.toTypedArray())
+                findNavController().navigate(action)
             }
         }
     }

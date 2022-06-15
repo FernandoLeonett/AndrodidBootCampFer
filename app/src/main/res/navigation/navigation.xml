@@ -15,6 +15,9 @@
         <action
             android:id="@+id/fab_lot_to_add"
             app:destination="@id/fragmentAddReservation" />
+
+
+
     </fragment>
     <fragment
         android:id="@+id/fragmentAddReservation"
@@ -25,6 +28,10 @@
             android:id="@+id/action_fragmentAddReservation_to_lotListFragment"
             app:destination="@id/lotListFragment"
             app:popUpTo="@id/lotListFragment" />
+        <argument
+            android:name="lots"
+            app:argType="string[]"/>
+
     </fragment>
     <fragment
         android:id="@+id/reservationListFragment"

@@ -1,26 +1,56 @@
 package com.bootcamp_android.data.repositories
 
 import com.bootcamp_android.data.services.ParkingService
+import com.bootcamp_android.data.services.request.ReservationRequest
 import com.bootcamp_android.domain.model.Parking
 import com.bootcamp_android.domain.model.Reservation
-
 import com.bootcamp_android.domain.repostories.IReservationRepository
 import com.bootcamp_android.domain.util.Result
+import com.bootcamp_android.domain.util.Utils.parkingId
 
 class ReservationRepository : IReservationRepository {
 
-    override suspend fun addReservation(res: Reservation): Boolean {
-        TODO("Not yet implemented")
+    var reservationService: ParkingService = ParkingService()
+    override suspend fun addReservation(
+        parkingId: String,reservation: Reservation
+    ): Result<Boolean> {
+        val result = reservationService.addReservation(
+            (parkingId),ReservationRequest(
+                reservation.authorizationCode,
+                reservation.starDateTimeInMillis,
+                reservation.endDateTimeInMillis,
+                reservation.parkingLot
+            )
+        )
+
+        return when(result) {
+            is Result.Success -> {
+                Result.Success(result.data)
+            }
+            is Result.Failure -> {
+                Result.Failure(result.exception)
+            }
+        }
     }
 
-    override suspend fun deleteReservation(id: Int): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun deleteReservation(
+       reservation:Reservation ,authorizationCode: String
+    ): Result<Boolean> {
+        var result = reservationService.deleteReservation(parkingId,reservation.id)
+
+        return when(result) {
+            is Result.Success -> {
+                Result.Success(result.data)
+            }
+            is Result.Failure -> {
+                Result.Failure(result.exception)
+            }
+        }
     }
 
-     var reservationService: ParkingService = ParkingService()
     override suspend fun getReservations(): List<Reservation> {
         var reservationList = mutableListOf<Reservation>()
-        var reservations = Parking( reservations = reservationList)
+        var reservations = Parking(reservations = reservationList)
         var result = reservationService.getReservations()
 
 

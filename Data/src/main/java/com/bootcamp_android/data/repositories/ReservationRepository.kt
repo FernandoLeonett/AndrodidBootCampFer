@@ -1,7 +1,7 @@
 package com.bootcamp_android.data.repositories
 
 import com.bootcamp_android.data.services.ParkingService
-import com.bootcamp_android.data.services.request.ReservationRequest
+import com.bootcamp_android.data.services.request.ReservationResponse
 import com.bootcamp_android.domain.model.Parking
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.repostories.IReservationRepository
@@ -12,10 +12,10 @@ class ReservationRepository : IReservationRepository {
 
     var reservationService: ParkingService = ParkingService()
     override suspend fun addReservation(
-        parkingId: String,reservation: Reservation
+     reservation: Reservation
     ): Result<Boolean> {
         val result = reservationService.addReservation(
-            (parkingId),ReservationRequest(
+            (parkingId),ReservationResponse(
                 reservation.authorizationCode,
                 reservation.starDateTimeInMillis,
                 reservation.endDateTimeInMillis,
@@ -32,6 +32,8 @@ class ReservationRepository : IReservationRepository {
             }
         }
     }
+
+
 
     override suspend fun deleteReservation(
        reservation:Reservation ,authorizationCode: String

@@ -8,8 +8,8 @@ class AddReservationUseCase {
 
 
     lateinit var addReservationRepository: IReservationRepository
-    suspend operator fun invoke(parkingId: String, reservation: Reservation): Result<Boolean> {
-        return addReservationRepository.addReservation(parkingId,reservation)
+    suspend operator fun invoke( reservation: Reservation): Result<Boolean> {
+        return addReservationRepository.addReservation(reservation)
     }
 
 }

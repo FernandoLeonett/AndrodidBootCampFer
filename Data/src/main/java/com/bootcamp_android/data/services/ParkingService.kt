@@ -2,7 +2,7 @@ package com.bootcamp_android.data.services
 
 import com.bootcamp_android.data.services.retrofit_instance.RetrofitInstance
 import com.bootcamp_android.data.services.api.ApiService
-import com.bootcamp_android.data.services.request.ReservationRequest
+
 import com.bootcamp_android.data.services.response.ParkingLotResponse
 import com.bootcamp_android.data.services.response.ReservationResponse
 import com.bootcamp_android.domain.util.Result
@@ -53,7 +53,7 @@ class ParkingService { companion object {
         }
         return result
     }
-    suspend fun addReservation(parkingId: String, reservation: ReservationRequest):Result<Boolean>{
+    suspend fun addReservation(parkingId: String, reservation: com.bootcamp_android.data.services.request.ReservationResponse):Result<Boolean>{
         var result: Result<Boolean>
         withContext(Dispatchers.IO) {
 

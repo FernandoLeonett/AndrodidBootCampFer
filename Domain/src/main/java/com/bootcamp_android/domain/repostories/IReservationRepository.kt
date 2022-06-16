@@ -6,7 +6,7 @@ import com.bootcamp_android.domain.util.Result
 interface IReservationRepository {
 
     suspend fun addReservation(
-        parkingId: String,reservation: Reservation
+    reservation: Reservation
     ): Result<Boolean>
 
     suspend fun deleteReservation(

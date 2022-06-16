@@ -1,8 +1,10 @@
 package com.bootcamp_android.parking_app.view.fragments
 
 import android.app.AlertDialog
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,24 +16,31 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bootcamp_android.domain.model.Lot
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
 import com.bootcamp_android.parking_app.viewmodel.adapters.ReservationsAdapter
 import com.bootcamp_android.parking_app.viewmodel.lot_detail.ReservationsViewModel
+import com.bootcamp_android.parking_app.viewmodel.lots.LotsViewModel
 
 class ReservationListFragment : Fragment() {
 
     private lateinit var reservationsViewModel: ReservationsViewModel
+    private lateinit var lotsViewModel: LotsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
     private var binding: FragmentReservationsBinding? = null
     private val args: ReservationListFragmentArgs by navArgs()
+    private var lot: Lot? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
     ): View? {
         viewModelFactory = ViewModelFactory()
+        lotsViewModel = ViewModelProvider(
+            this,viewModelFactory
+        ).get(LotsViewModel::class.java)
         reservationsViewModel = ViewModelProvider(
             this,viewModelFactory
         ).get(ReservationsViewModel::class.java)
@@ -39,18 +48,25 @@ class ReservationListFragment : Fragment() {
     }
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
+        lot = args.lot
+        var reservations = args.lot.reservations
+        lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
+            lot = lots.find { l ->
+                l.id == lot?.id
+            }
+            reservations = args.lot.reservations
+        }
+
         binding = FragmentReservationsBinding.bind(itemView)
-        val reservations = args.lot.reservations
+
+
 
         binding?.apply {
             recyclerReservationList.apply {
                 layoutManager = LinearLayoutManager(activity)
-                adapter = ReservationsAdapter(reservations) { reservation ->
+                adapter = ReservationsAdapter(reservations) { reservation,pos ->
                     onDeleteClick(
-                        reservation,
-                        this,
-                        reservations,
-                        requireView()
+                        reservation,this,reservations,pos
                     )
                 }
             }
@@ -60,11 +76,13 @@ class ReservationListFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        lotsViewModel.loadLots()
+    }
+
     private fun onDeleteClick(
-        reservation: Reservation,
-        recyclerView: RecyclerView,
-        reservations: MutableList<Reservation>,
-        v: View
+        reservation: Reservation,recyclerView: RecyclerView,reservations: MutableList<Reservation>,pos: Int
     ) {
         val builder = AlertDialog.Builder(requireContext())
 
@@ -79,17 +97,20 @@ class ReservationListFragment : Fragment() {
             // set positive button
             //take two parameters dialogInterface and an int
             .setPositiveButton("OK") { dialogInterface,_ ->
-                reservationsViewModel.deleteReservation(reservation,input.text.toString())
+                reservationsViewModel.deleteReservation(
+                    reservation,input.text.toString()
+                )
 
 
-                if(reservationsViewModel.successfulDelete.value == true) {
-                    Toast.makeText(activity, "Actualize", Toast.LENGTH_SHORT).show()
-                    val pos = recyclerView.getChildAdapterPosition(v)
+                if(reservationsViewModel.mutableSuccessfulDelete.value == true) {
+
+                    Toast.makeText(activity,"borre",Toast.LENGTH_SHORT).show()
+                    val pos = pos
+
+                    Log.d(TAG,"onDeleteClick: pos: $pos")
                     reservations.removeAt(pos)
                     recyclerView.adapter?.notifyItemRemoved(pos); // Notificar al adaptador
-
                 }
-
                 dialogInterface.dismiss()
             }.setNegativeButton("CANCEL") { dialogInterface,_ -> // cancel the dialogbox
                 dialogInterface.cancel()

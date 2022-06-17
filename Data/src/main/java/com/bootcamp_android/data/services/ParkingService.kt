@@ -2,8 +2,9 @@ package com.bootcamp_android.data.services
 
 import com.bootcamp_android.data.services.api.ApiService
 import com.bootcamp_android.data.services.response.LotResponse
-import com.bootcamp_android.data.services.response.ReservationResponse
+
 import com.bootcamp_android.data.services.retrofit_instance.RetrofitInstance
+import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.util.Result
 import com.bootcamp_android.domain.util.Utils
 import kotlinx.coroutines.Dispatchers
@@ -34,8 +35,8 @@ class ParkingService { companion object {
         return resultList
     }
 
-    suspend fun getReservations(): Result<List<ReservationResponse>> {
-        var result: Result<List<ReservationResponse>>
+    suspend fun getReservations(): Result<List<Reservation>> {
+        var result: Result<List<Reservation>>
         withContext(Dispatchers.IO) {
 
             result = try {

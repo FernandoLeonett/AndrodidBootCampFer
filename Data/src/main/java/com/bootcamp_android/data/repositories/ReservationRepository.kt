@@ -9,7 +9,7 @@ import com.bootcamp_android.domain.repostories.IReservationRepository
 import com.bootcamp_android.domain.util.Result
 import com.bootcamp_android.domain.util.Utils.parkingId
 import com.bootcamp_android.data.services.request.ReservationRequest
-import com.bootcamp_android.data.services.response.ReservationResponse
+
 
 class ReservationRepository(
     private var parkingService: ParkingService,private var parkingDataBase: ParkingDataBase
@@ -32,10 +32,11 @@ class ReservationRepository(
         return reservationList.reservations
     }
 
-    private suspend fun saveToDataBase(reservation: ReservationResponse){
+    private suspend fun saveToDataBase(reservation: Reservation){
         val localReservation = ReservationMapperLocal().transformFromRepositoryToRoom(reservation)
 
         parkingDataBase.getReservationDao().addReservation(localReservation)
+        parkingDataBase.getReservationDao().deleteReservation(localReservation)
     }
     private fun getLocalInfo(): MutableList<Reservation>{
         val databaseReservations =  parkingDataBase.getReservationDao().getReservations()
@@ -79,5 +80,6 @@ class ReservationRepository(
                 Result.Failure(result.exception)
             }
         }
+        saveToDataBase(reservation)
     }
 }

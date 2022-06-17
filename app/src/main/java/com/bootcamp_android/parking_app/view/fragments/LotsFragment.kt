@@ -31,6 +31,14 @@ class LotsFragment : Fragment() {
             this,viewModelFactory
         ).get(LotsViewModel::class.java)
 
+
+        return inflater.inflate(R.layout.fragment_lots,container,false)
+    }
+
+    override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
+        binding = FragmentLotsBinding.bind(itemView)
+        lotsViewModel.loadLots()
+
         lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
             spinerList.clear()
             initRecycleLots(lots)
@@ -39,12 +47,6 @@ class LotsFragment : Fragment() {
             }
 
         }
-        return inflater.inflate(R.layout.fragment_lots,container,false)
-    }
-
-    override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
-        lotsViewModel.loadLots()
-        binding = FragmentLotsBinding.bind(itemView)
 
         binding?.apply {
 

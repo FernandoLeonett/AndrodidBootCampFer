@@ -35,6 +35,7 @@ class LotRepository(
         val localLot = LotMapperLocal().transformFromRepositoryToRoom(lot)
 
         parkingDataBase.getLotsDao().addLot(localLot)
+
     }
 
     private fun getLocalInfo(): MutableList<Lot> {

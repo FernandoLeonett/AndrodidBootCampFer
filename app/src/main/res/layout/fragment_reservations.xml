@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
 <!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar_title"-->
+<!--        android:parkingLot="@+parkingLot/toolbar_title"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:elevation="16dp"-->
 <!--        android:layout_height="wrap_content"-->
@@ -17,7 +17,7 @@
 <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 <!--    <TextView-->
-<!--        android:id="@+id/text_title_reservations"-->
+<!--        android:parkingLot="@+parkingLot/text_title_reservations"-->
 <!--        android:layout_width="0dp"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:layout_marginStart="10dp"-->
@@ -25,21 +25,23 @@
 <!--        android:gravity="center_vertical"-->
 <!--        android:text="@string/title_reservations"-->
 <!--        android:textSize="24sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/toolbar_title"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+parkingLot/toolbar_title"-->
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/toolbar_title" />-->
-
+<!--        app:layout_constraintTop_toTopOf="@+parkingLot/toolbar_title" />-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_reservation_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.122" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

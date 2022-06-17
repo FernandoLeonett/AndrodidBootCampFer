@@ -13,7 +13,7 @@ import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentLotsBinding
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
 import com.bootcamp_android.parking_app.viewmodel.adapters.LotsAdapter
-import com.bootcamp_android.parking_app.viewmodel.lots.LotsViewModel
+import com.bootcamp_android.parking_app.viewmodel.LotsViewModel
 
 class LotsFragment : Fragment() {
 
@@ -26,7 +26,7 @@ class LotsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
     ): View? {
-        viewModelFactory = ViewModelFactory()
+        viewModelFactory = ViewModelFactory(requireContext())
         lotsViewModel = ViewModelProvider(
             this,viewModelFactory
         ).get(LotsViewModel::class.java)
@@ -35,7 +35,7 @@ class LotsFragment : Fragment() {
             spinerList.clear()
             initRecycleLots(lots)
             lots.map {
-                spinerList.add("Lot: ${it.id}")
+                spinerList.add("Lot: ${it.parkingLot}")
             }
 
         }
@@ -57,7 +57,7 @@ class LotsFragment : Fragment() {
     }
 
     private fun lotClick(lot: Lot) {
-        val action = LotsFragmentDirections.btnLotToRes(lot,lot.id.toString())
+        val action = LotsFragmentDirections.btnLotToRes(lot,lot.parkingLot.toString())
         findNavController().navigate(action)
     }
 

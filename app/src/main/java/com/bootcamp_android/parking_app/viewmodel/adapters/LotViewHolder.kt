@@ -30,7 +30,7 @@ class LotViewHolder(
 
             textHourLot.text =  hour
             textDateLot.text = date
-            textIdLot.text = lot.id.toString()
+            textIdLot.text = lot.parkingLot.toString()
             itemView.setOnClickListener {
 //
                 listener(lot)

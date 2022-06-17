@@ -14,14 +14,15 @@ import androidx.navigation.fragment.navArgs
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
+import com.bootcamp_android.parking_app.viewmodel.AddReservationViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
 
-import com.bootcamp_android.parking_app.viewmodel.lot_detail.ReservationsViewModel
+import com.bootcamp_android.parking_app.viewmodel.ReservationsViewModel
 import java.util.*
 
 class ReservationAddFragment : Fragment() {
 
-    private lateinit var addReservationViewModel: ReservationsViewModel
+    private lateinit var addReservationViewModel: AddReservationViewModel
     private lateinit var viewModelFactory: ViewModelFactory
     private var binding: FragmentAddReservationBinding? = null
     private val args: ReservationAddFragmentArgs by navArgs()
@@ -33,10 +34,10 @@ class ReservationAddFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
     ): View? { // Inflate the layout for this fragment
-        viewModelFactory = ViewModelFactory()
+        viewModelFactory = ViewModelFactory(requireContext())
         addReservationViewModel = ViewModelProvider(
             this,viewModelFactory
-        ).get(ReservationsViewModel::class.java)
+        ).get(AddReservationViewModel::class.java)
         return inflater.inflate(
             R.layout.fragment_add_reservation,container,false
         )

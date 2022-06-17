@@ -1,4 +1,4 @@
-package com.bootcamp_android.parking_app.viewmodel.lots
+package com.bootcamp_android.parking_app.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -32,7 +32,7 @@ class LotsViewModel(
         }
         lotResponse.forEach { emptyLot ->
             val any = lotsWithReservations.find {
-                it.id == emptyLot.id
+                it.parkingLot == emptyLot.parkingLot
             }
             if(any != null) {
                 emptyLot.reservations = any.reservations

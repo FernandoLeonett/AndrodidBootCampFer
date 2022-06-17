@@ -2,7 +2,7 @@ package com.bootcamp_android.data.services.request
 
 
 
-data class ReservationResponse(
+data class ReservationAddModel(
     val authorizationCode: String,
     val startDate: Long,
     val endDate: Long,

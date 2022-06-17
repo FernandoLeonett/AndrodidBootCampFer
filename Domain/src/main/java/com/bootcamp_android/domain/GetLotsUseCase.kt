@@ -26,7 +26,7 @@ class GetLotsUseCase {
 //        val allLots = lotRepository.getLots()
 //        allLots.forEach { emptyLot ->
 //            val any = lotsWithReservations.find {
-//                it.id == emptyLot.id
+//                it.parkingLot == emptyLot.parkingLot
 //            }
 //            if(any != null) {
 //                emptyLot.reservations = any.reservations

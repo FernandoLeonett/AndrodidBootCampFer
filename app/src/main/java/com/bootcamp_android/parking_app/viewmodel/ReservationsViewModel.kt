@@ -1,4 +1,4 @@
-package com.bootcamp_android.parking_app.viewmodel.lot_detail
+package com.bootcamp_android.parking_app.viewmodel
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -13,28 +13,11 @@ import com.bootcamp_android.domain.util.Utils
 import kotlinx.coroutines.launch
 
 class ReservationsViewModel(
-    val addReservationUseCase: AddReservationUseCase,val deleteReservationUseCase: DeleteReservationUseCase
+   val deleteReservationUseCase: DeleteReservationUseCase
 ) : ViewModel() {
 
 
-    val mutableSuccessfulAdd = MutableLiveData<Boolean>()
     val mutableSuccessfulDelete = MutableLiveData<Boolean>()
-
-    fun addReservation(reservation: Reservation) = viewModelScope.launch {
-        if(reservation.authorizationCode != null && reservation.endDateTimeInMillis != null && reservation.starDateTimeInMillis != null && reservation.parkingLot != null) {
-            when(addReservationUseCase(reservation)) {
-                is Result.Success -> { //                    mutableSuccessfulAdd.postValue(true)
-                    mutableSuccessfulAdd.postValue(true)
-
-                }
-                is Result.Failure -> {
-                    mutableSuccessfulAdd.postValue(false)
-                }
-            }
-        } else {
-            mutableSuccessfulAdd.postValue(false)
-        }
-    }
 
     fun deleteReservation(reservation: Reservation,authorizationCode: String) = viewModelScope.launch {
         if(reservation.authorizationCode == authorizationCode) {

@@ -3,8 +3,8 @@ package com.bootcamp_android.data.services
 import com.bootcamp_android.data.services.retrofit_instance.RetrofitInstance
 import com.bootcamp_android.data.services.api.ApiService
 
-import com.bootcamp_android.data.services.response.ParkingLotResponse
-import com.bootcamp_android.data.services.response.ReservationResponse
+import com.bootcamp_android.data.services.response.LotResponse
+import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.util.Result
 import com.bootcamp_android.domain.util.Utils
 import kotlinx.coroutines.Dispatchers
@@ -15,8 +15,8 @@ class ParkingService { companion object {
     const val PARKING_ID = Utils.parkingId
 }
 
-    suspend fun getLots(): Result<List<ParkingLotResponse>> {
-        val resultList: Result<List<ParkingLotResponse>>
+    suspend fun getLots(): Result<List<LotResponse>> {
+        val resultList: Result<List<LotResponse>>
         withContext(Dispatchers.IO) {
             resultList = try {
                 val response = RetrofitInstance.getRetrofit().create(ApiService::class.java).getParkingLots(
@@ -35,8 +35,8 @@ class ParkingService { companion object {
         return resultList
     }
 
-    suspend fun getReservations(): Result<List<ReservationResponse>> {
-        var result: Result<List<ReservationResponse>>
+    suspend fun getReservations(): Result<List<Reservation>> {
+        var result: Result<List<Reservation>>
         withContext(Dispatchers.IO) {
             result = try {
                 val response = RetrofitInstance.getRetrofit().create(ApiService::class.java).getReservations(
@@ -53,7 +53,7 @@ class ParkingService { companion object {
         }
         return result
     }
-    suspend fun addReservation(parkingId: String, reservation: com.bootcamp_android.data.services.request.ReservationResponse):Result<Boolean>{
+    suspend fun addReservation(parkingId: String, reservation: com.bootcamp_android.data.services.request.ReservationAddModel):Result<Boolean>{
         var result: Result<Boolean>
         withContext(Dispatchers.IO) {
 

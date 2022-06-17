@@ -6,4 +6,5 @@ interface ILotsRepository {
 
     suspend fun getDetailLot(id: Int): Lot?
     suspend fun getLots(): List<Lot>
+
 }

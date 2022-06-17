@@ -1,7 +1,7 @@
 package com.bootcamp_android.data.services.api
 
 
-import com.bootcamp_android.data.services.request.ReservationResponse
+import com.bootcamp_android.data.services.request.ReservationAddModel
 import com.bootcamp_android.data.services.response.ParkingLotListResponse
 import com.bootcamp_android.data.services.response.ReservationListResponse
 import retrofit2.Response
@@ -18,7 +18,7 @@ interface ApiService {
     @POST("{parkingId}/reservations.json")
     suspend fun addReservations(
         @Path("parkingId") id: String,
-        @Body reservation: ReservationResponse
+        @Body reservation: ReservationAddModel
     ): Response<Any?>
 
     @GET("parkings/{parkingId}/.json")

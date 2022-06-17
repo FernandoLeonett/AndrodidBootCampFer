@@ -8,16 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
 import com.bootcamp_android.parking_app.viewmodel.AddReservationViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
-
-import com.bootcamp_android.parking_app.viewmodel.ReservationsViewModel
 import java.util.*
 
 class ReservationAddFragment : Fragment() {
@@ -49,16 +49,19 @@ class ReservationAddFragment : Fragment() {
         binding = FragmentAddReservationBinding.bind(view)
 
         binding?.apply {
-
-
             buttonSave.setOnClickListener {
                 authorizationCode = textAuth.text.toString()
                 val res = Reservation(
                     "",authorizationCode,startDate,endDate,selectedLot
                 )
+
+                addReservationViewModel.mutableSuccessfulAdd.observe(viewLifecycleOwner) {
+                    var msg = if(it) "Reservation Added Successfully" else "Error Please Chek the reservation"
+
+                    Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_fragmentAddReservation_to_lotListFragment)
+                }
                 addReservationViewModel.addReservation(res)
-
-
             }
             textSelectStartDateReservation.setOnClickListener {
                 startDate = showDateTimePickerDialog()
@@ -67,7 +70,6 @@ class ReservationAddFragment : Fragment() {
                 endDate = showDateTimePickerDialog()
             }
             var spinnerList: List<String> = args.lots.toList()
-
             val adapter = ArrayAdapter(
                 requireContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,spinnerList
             )
@@ -75,12 +77,11 @@ class ReservationAddFragment : Fragment() {
 
             lotsOptionsSpinner.apply {
                 this.adapter = adapter
-
-
                 onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
                         parent: AdapterView<*>?,view: View?,position: Int,id: Long
-               ) {                   selectedLot = position
+                    ) {
+                        selectedLot = position
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -127,7 +128,11 @@ class ReservationAddFragment : Fragment() {
     private fun getTimeInMillis(day: Int,month: Int,year: Int,hour: Int,min: Int): Long {
         val calendar = Calendar.getInstance()
         calendar[year,month] = day
-        return calendar.timeInMillis + hour * 3600000 + min * 60000
+        var time = calendar.timeInMillis + hour * 3600000 + min * 60000
+        if(time < System.currentTimeMillis()) {
+            time = -1
+        }
+        return time
     }
 
     override fun onDestroy() {

@@ -5,11 +5,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bootcamp_android.domain.AddReservationUseCase
-import com.bootcamp_android.domain.DeleteReservationUseCase
+import com.bootcamp_android.domain.usecases.DeleteReservationUseCase
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.util.Result
-import com.bootcamp_android.domain.util.Utils
 import kotlinx.coroutines.launch
 
 class ReservationsViewModel(

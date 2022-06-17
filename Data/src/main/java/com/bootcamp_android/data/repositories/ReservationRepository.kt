@@ -8,7 +8,8 @@ import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.repostories.IReservationRepository
 import com.bootcamp_android.domain.util.Result
 import com.bootcamp_android.domain.util.Utils.parkingId
-import com.bootcamp_android.data.services.request.ReservationAddModel
+import com.bootcamp_android.data.services.request.ReservationRequest
+import com.bootcamp_android.data.services.response.ReservationResponse
 
 class ReservationRepository(
     private var parkingService: ParkingService,private var parkingDataBase: ParkingDataBase
@@ -16,40 +17,41 @@ class ReservationRepository(
 
     override suspend fun getReservations(): List<Reservation> {
         val mutableReservationList = mutableListOf<Reservation>()
-        val reservationList = Parking(reservations = mutableReservationList)
-        val result = parkingService.getReservations()
+        val reservationList = Parking( reservations = mutableReservationList)
 
-        if(result is Result.Success) {
-            result.data.forEach { reservation ->
+        val result =  parkingService.getReservations()
+
+        if (result is Result.Success) {
+            result.data.forEach {reservation ->
                 saveToDataBase(reservation)
             }
+
         }
         reservationList.reservations = getLocalInfo()
 
         return reservationList.reservations
     }
 
-    private suspend fun saveToDataBase(reservation: Reservation) {
+    private suspend fun saveToDataBase(reservation: ReservationResponse){
         val localReservation = ReservationMapperLocal().transformFromRepositoryToRoom(reservation)
 
         parkingDataBase.getReservationDao().addReservation(localReservation)
     }
-
-    private fun getLocalInfo(): MutableList<Reservation> {
-        val databaseReservations = parkingDataBase.getReservationDao().getReservations()
+    private fun getLocalInfo(): MutableList<Reservation>{
+        val databaseReservations =  parkingDataBase.getReservationDao().getReservations()
         val reservationList = mutableListOf<Reservation>()
-        databaseReservations.forEach {
+        databaseReservations.forEach{
             reservationList.add(ReservationMapperLocal().transformFromRoomToDomain(it))
+
         }
         return reservationList
     }
-
     var reservationService: ParkingService = ParkingService()
     override suspend fun addReservation(
         reservation: Reservation
     ): Result<Boolean> {
         val result = reservationService.addReservation(
-            (parkingId),ReservationAddModel(
+            (parkingId),ReservationRequest(
                 reservation.authorizationCode,reservation.starDate,reservation.endDate,reservation.parkingLot
             )
         )

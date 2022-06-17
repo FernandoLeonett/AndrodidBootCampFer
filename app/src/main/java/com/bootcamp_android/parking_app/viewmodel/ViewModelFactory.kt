@@ -7,10 +7,7 @@ import com.bootcamp_android.data.repositories.LotRepository
 import com.bootcamp_android.data.repositories.ReservationRepository
 import com.bootcamp_android.data.room.localdatabase.ParkingDataBase
 import com.bootcamp_android.data.services.ParkingService
-import com.bootcamp_android.domain.AddReservationUseCase
-import com.bootcamp_android.domain.DeleteReservationUseCase
-import com.bootcamp_android.domain.GetLotsUseCase
-import com.bootcamp_android.domain.GetReservationsUseCase
+import com.bootcamp_android.domain.usecases.*
 
 class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInstanceFactory() {
 
@@ -34,6 +31,10 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
         } else if(modelClass == AddReservationViewModel::class.java) {
             AddReservationViewModel(AddReservationUseCase().apply {
                 addReservationRepository = ReservationRepository(
+                    ParkingService(),ParkingDataBase.getInstance(context)
+                )
+            },ValidateReservationUseCase().apply {
+                validateReservationRepository = LotRepository(
                     ParkingService(),ParkingDataBase.getInstance(context)
                 )
             }) as T

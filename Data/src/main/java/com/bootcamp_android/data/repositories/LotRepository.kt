@@ -13,8 +13,8 @@ class LotRepository(
     var parkingService: ParkingService,private var parkingDataBase: ParkingDataBase
 ) : ILotsRepository {
 
-    override suspend fun getDetailLot(id: Int): Lot? {
-        TODO("Not yet implemented")
+    override suspend fun getDetailLot(id: Int): Lot? = getLots().find {
+        it.parkingLot == id
     }
 
     override suspend fun getLots(): List<Lot> {

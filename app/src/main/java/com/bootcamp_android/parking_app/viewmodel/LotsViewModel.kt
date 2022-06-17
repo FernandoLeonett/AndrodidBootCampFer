@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bootcamp_android.domain.GetLotsUseCase
-import com.bootcamp_android.domain.GetReservationsUseCase
+import com.bootcamp_android.domain.usecases.GetLotsUseCase
+import com.bootcamp_android.domain.usecases.GetReservationsUseCase
 import com.bootcamp_android.domain.model.Lot
 import com.bootcamp_android.domain.model.Reservation
 import kotlinx.coroutines.launch

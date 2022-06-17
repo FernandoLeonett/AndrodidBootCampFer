@@ -5,6 +5,7 @@ import com.bootcamp_android.data.room.mapper.BaseMapperRepository
 import com.bootcamp_android.data.services.response.LotResponse
 import com.bootcamp_android.domain.model.Lot
 
+
 class LotMapperLocal : BaseMapperRepository<LotRoom,Lot,LotResponse> {
 
     override fun transformFromRoomToDomain(type: LotRoom): Lot = Lot(

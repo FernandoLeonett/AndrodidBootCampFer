@@ -69,6 +69,7 @@ android:id="@+id/busy"
         app:layout_constraintStart_toStartOf="parent"
 
 
+
         app:layout_constraintTop_toTopOf="@id/pbar_availability">
     </androidx.recyclerview.widget.RecyclerView>
 

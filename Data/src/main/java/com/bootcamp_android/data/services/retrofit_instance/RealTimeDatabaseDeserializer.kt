@@ -1,7 +1,9 @@
 package com.bootcamp_android.data.services.retrofit_instance
 
 import com.bootcamp_android.data.services.response.ReservationListResponse
-import com.bootcamp_android.domain.model.Reservation
+import com.bootcamp_android.data.services.response.ReservationResponse
+
+
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -19,17 +21,17 @@ class RealTimeDatabaseDeserializer : JsonDeserializer<ReservationListResponse> {
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): ReservationListResponse {
         val eJson = json?.asJsonObject
         val keys = eJson?.keySet()
-        var reservationListResponse = ReservationListResponse(mutableListOf())
+        var reservationListResponse = ReservationListResponse(mutableListOf<ReservationResponse>())
 
         keys?.let {
             for (key in keys) {
                 try {
                     val asJsonObject = eJson.get(key).asJsonObject
-                    val reservationResponse = Reservation(
+                    val reservationResponse = ReservationResponse(
                         key,
-                        asJsonObject.get(AUTHORIZATION_CODE).asString,asJsonObject.get(START_DATE).asLong,asJsonObject.get(
+                        asJsonObject.get(AUTHORIZATION_CODE).asString,asJsonObject.get(START_DATE).asString,asJsonObject.get(
                             END_DATE
-                        ).asLong,asJsonObject.get(PARKING_LOT).asInt
+                        ).asString,asJsonObject.get(PARKING_LOT).asInt
                     )
 
                     reservationListResponse.reservationList.add(reservationResponse)
@@ -41,3 +43,4 @@ class RealTimeDatabaseDeserializer : JsonDeserializer<ReservationListResponse> {
         return reservationListResponse
     }
 }
+

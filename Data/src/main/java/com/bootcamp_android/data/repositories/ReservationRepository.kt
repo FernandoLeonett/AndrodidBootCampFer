@@ -46,11 +46,11 @@ class ReservationRepository(
         }
         return reservationList
     }
-    var reservationService: ParkingService = ParkingService()
+
     override suspend fun addReservation(
         reservation: Reservation
     ): Result<Boolean> {
-        val result = reservationService.addReservation(
+        val result = parkingService.addReservation(
             (parkingId),ReservationRequest(
                 reservation.authorizationCode,reservation.starDate,reservation.endDate,reservation.parkingLot
             )
@@ -69,7 +69,7 @@ class ReservationRepository(
     override suspend fun deleteReservation(
         reservation: Reservation,authorizationCode: String
     ): Result<Boolean> {
-        var result = reservationService.deleteReservation(parkingId,reservation.id)
+        var result = parkingService.deleteReservation(parkingId,reservation.id)
 
         return when(result) {
             is Result.Success -> {

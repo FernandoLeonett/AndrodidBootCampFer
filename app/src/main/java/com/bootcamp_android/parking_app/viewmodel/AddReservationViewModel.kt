@@ -3,13 +3,16 @@ package com.bootcamp_android.parking_app.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bootcamp_android.domain.usecases.AddReservationUseCase
 import com.bootcamp_android.domain.model.Reservation
+import com.bootcamp_android.domain.usecases.AddReservationUseCase
 import com.bootcamp_android.domain.usecases.ValidateReservationUseCase
 import com.bootcamp_android.domain.util.Result
 import kotlinx.coroutines.launch
 
-class AddReservationViewModel(val addReservationUseCase: AddReservationUseCase, val validateReservationUseCase: ValidateReservationUseCase) : ViewModel() {
+class AddReservationViewModel(
+    val addReservationUseCase: AddReservationUseCase,
+    val validateReservationUseCase: ValidateReservationUseCase
+) : ViewModel() {
 
     val mutableSuccessfulAdd = MutableLiveData<Boolean>()
 
@@ -27,6 +30,8 @@ class AddReservationViewModel(val addReservationUseCase: AddReservationUseCase, 
             } else {
                 mutableSuccessfulAdd.postValue(false)
             }
+        } else {
+            mutableSuccessfulAdd.postValue(false)
         }
     }
 }

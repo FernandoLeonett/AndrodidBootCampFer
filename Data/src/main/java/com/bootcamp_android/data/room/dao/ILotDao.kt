@@ -16,4 +16,7 @@ interface LotDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addLot(addReservation: LotRoom)
+
+
+
 }

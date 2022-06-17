@@ -8,7 +8,9 @@ import com.bootcamp_android.domain.usecases.GetLotsUseCase
 import com.bootcamp_android.domain.usecases.GetReservationsUseCase
 import com.bootcamp_android.domain.model.Lot
 import com.bootcamp_android.domain.model.Reservation
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LotsViewModel(
     private val getLotsAvailableForReserve: GetLotsUseCase,private val getReservationsUseCase: GetReservationsUseCase
@@ -23,8 +25,8 @@ class LotsViewModel(
     val lots: LiveData<List<Lot>> = _lots
 
     fun loadLots() = viewModelScope.launch {
-        val lotResponse: List<Lot> = getLotsAvailableForReserve.getLots()
-        val reservationResponse: List<Reservation> = getReservationsUseCase.getReservation()
+        val lotResponse: List<Lot> = withContext(Dispatchers.IO) {getLotsAvailableForReserve.getLots()}
+        val reservationResponse: List<Reservation> =  withContext(Dispatchers.IO) { getReservationsUseCase.getReservation()}
         var lotsWithReservations = reservationResponse.groupBy {
             it.parkingLot
         }.map {

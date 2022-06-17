@@ -37,5 +37,6 @@ abstract class ParkingDataBase : RoomDatabase() {
     abstract fun getLotsDao(): LotDao
     abstract fun getReservationDao(): ReservationDao
 
+
 }
 

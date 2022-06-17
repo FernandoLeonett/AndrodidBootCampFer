@@ -54,14 +54,16 @@ class ReservationAddFragment : Fragment() {
                 val res = Reservation(
                     "",authorizationCode,startDate,endDate,selectedLot
                 )
-
-                addReservationViewModel.mutableSuccessfulAdd.observe(viewLifecycleOwner) {
-                    var msg = if(it) "Reservation Added Successfully" else "Error Please Chek the reservation"
-
-                    Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_fragmentAddReservation_to_lotListFragment)
-                }
+                var msg = "Error Please Chek the reservation"
                 addReservationViewModel.addReservation(res)
+                addReservationViewModel.mutableSuccessfulAdd.observe(viewLifecycleOwner) {
+                    if(it) {
+                        msg = "Reservation Added Successfully"
+                        findNavController().navigate(R.id.action_fragmentAddReservation_to_lotListFragment)
+                    }
+                }
+
+                Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
             }
             textSelectStartDateReservation.setOnClickListener {
                 startDate = showDateTimePickerDialog()

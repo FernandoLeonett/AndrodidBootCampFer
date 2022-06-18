@@ -8,6 +8,6 @@ class GetDetailALotUseCase {
     lateinit var lotRepository: ILotsRepository
 
     suspend fun getLotDetail(id: Int): Lot? {
-        return lotRepository.getDetailLot(id)
+        return lotRepository.getLotByID(id)
     }
 }

@@ -13,8 +13,13 @@ class LotRepository(
     var parkingService: ParkingService,private var parkingDataBase: ParkingDataBase
 ) : ILotsRepository {
 
-    override suspend fun getDetailLot(id: Int): Lot? = getLots().find {
+    override suspend fun getLotByID(id: Int): Lot? = getLots().find {
         it.parkingLot == id
+    }
+
+    override suspend fun getLotByIDFromDataBase(id: Int): Lot {
+        val lot = parkingDataBase.getLotsDao().getLotByID(id)
+        return LotMapperLocal().transformFromRoomToDomain(lot)
     }
 
     override suspend fun getLots(): List<Lot> {
@@ -35,7 +40,6 @@ class LotRepository(
         val localLot = LotMapperLocal().transformFromRepositoryToRoom(lot)
 
         parkingDataBase.getLotsDao().addLot(localLot)
-
     }
 
     private fun getLocalInfo(): MutableList<Lot> {

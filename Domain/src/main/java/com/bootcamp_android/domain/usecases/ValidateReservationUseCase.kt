@@ -7,12 +7,12 @@ class ValidateReservationUseCase {
 
     lateinit var validateReservationRepository: ILotsRepository
 
-    suspend operator fun  invoke (reservation: Reservation) = validateReservation(reservation )
+    suspend operator fun invoke(reservation: Reservation) = validateReservation(reservation)
 
-     private suspend fun validateReservation(reservation: Reservation): Boolean {
+    private suspend fun validateReservation(reservation: Reservation): Boolean {
         var isValid = true
-         validateReservationRepository.getDetailLot(reservation.parkingLot)?.reservations?.forEach {
-            if(reservation.endDate in it.starDate..it.endDate || reservation.starDate in it.starDate..it.endDate) {
+        validateReservationRepository.getLotByIDFromDataBase(reservation.parkingLot).reservations.forEach {
+            if(reservation.endDate in it.startDate..it.endDate || reservation.startDate in it.startDate..it.endDate) {
                 isValid = false;
             }
         }

@@ -37,6 +37,10 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
                 validateReservationRepository = LotRepository(
                     ParkingService(),ParkingDataBase.getInstance(context)
                 )
+            },GetLotsUseCase().apply {
+                lotRepository = LotRepository(
+                    ParkingService(),ParkingDataBase.getInstance(context)
+                )
             }) as T
         } else {
             super.create(modelClass)

@@ -100,8 +100,12 @@ class ReservationListFragment : Fragment() {
                 )
                 reservationsViewModel.mutableSuccessfulDelete.observe(viewLifecycleOwner) {
                     if(it) {
+
+//                        if(reservations.size>0)
                         reservations.removeAt(pos)
-                        recyclerView.adapter?.notifyItemRemoved(pos)
+                        initRecycleReservations(reservations)
+//                        recyclerView.adapter?.notifyItemRemoved(pos)
+
 
                         Log.d(TAG,"onDeleteClick: pos: $pos") //
                         Toast.makeText(

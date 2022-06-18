@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -28,9 +27,7 @@ class ReservationAddFragment : Fragment() {
     private lateinit var addReservationViewModel: AddReservationViewModel
     private lateinit var viewModelFactory: ViewModelFactory
     private var binding: FragmentAddReservationBinding? = null
-
-
-    private var selectedLot =- 1
+    private var selectedLot = -1
     private var authorizationCode = ""
     private var initialDate = DateReservation()
     private var finalDate = DateReservation()
@@ -63,7 +60,7 @@ class ReservationAddFragment : Fragment() {
                 addReservationViewModel.mutableSuccessfulAdd.observe(viewLifecycleOwner) { added ->
                     if(added) {
                         val action = ReservationAddFragmentDirections.actionFragmentAddReservationToLotListFragment()
-                        findNavController().navigate(action)
+                        findNavController().navigate(R.id.action_fragmentAddReservation_to_lotListFragment)
                         Toast.makeText(context,"Added correctly",Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(context,"Could not be processed",Toast.LENGTH_LONG).show()
@@ -71,10 +68,10 @@ class ReservationAddFragment : Fragment() {
                 }
             }
             textSelectStartDateReservation.setOnClickListener {
-                showDateTimePickerDialog(finalDate)
+                showDateTimePickerDialog(initialDate)
             }
             textSelectEndDateReservation.setOnClickListener {
-                showDateTimePickerDialog(initialDate)
+                showDateTimePickerDialog(finalDate)
             }
 
             lotsOptionsSpinner.apply {
@@ -87,7 +84,6 @@ class ReservationAddFragment : Fragment() {
                     lots.forEach {
                         adapter.add(it.parkingLot)
                     }
-
                 }
                 this.adapter = adapter
                 onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -113,10 +109,15 @@ class ReservationAddFragment : Fragment() {
         val listenerHour = TimePickerDialog.OnTimeSetListener { _,hour,minutes ->
             calendar[Calendar.HOUR_OF_DAY] = hour
             calendar[Calendar.MINUTE] = minutes
+            date.dateInMilliseconds = calendar.timeInMillis
             Toast.makeText(
                 activity,"$hour:$minutes",Toast.LENGTH_LONG
             ).show()
-            Log.d(TAG,"showDateTimePickerDialog: hour minutes $hour $minutes")
+            Log.d(
+                TAG,"fecha: ${
+                    date.dateInMilliseconds
+                }"
+            )
         }
         TimePickerDialog(
             activity,listenerHour,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false
@@ -125,10 +126,10 @@ class ReservationAddFragment : Fragment() {
             calendar[Calendar.YEAR] = year
             calendar[Calendar.MONTH] = month
             calendar[Calendar.DAY_OF_MONTH] = day
+
             Toast.makeText(
                 activity,"$day/$month/$year",Toast.LENGTH_LONG
             ).show()
-            Log.d(TAG,"showDateTimePickerDialog: dia mes anio : $day/$month/$year")
         }
         val datePicker = DatePickerDialog(
             requireContext(),
@@ -139,7 +140,6 @@ class ReservationAddFragment : Fragment() {
         )
         datePicker.datePicker.minDate = System.currentTimeMillis()
         datePicker.show()
-        date.dateInMilliseconds = calendar.timeInMillis
     }
 
     override fun onDestroy() {

@@ -59,6 +59,7 @@ class ReservationListFragment : Fragment() {
         }
         initRecycleReservations(reservations)
 
+
         binding?.apply {
             fab.setOnClickListener {
                 val action = ReservationListFragmentDirections.fabResToAdd()
@@ -101,7 +102,7 @@ class ReservationListFragment : Fragment() {
                     if(it) {
                         reservations.removeAt(pos)
                         recyclerView.adapter?.notifyItemRemoved(pos)
-                        initRecycleReservations(reservations)
+
                         Log.d(TAG,"onDeleteClick: pos: $pos") //
                         Toast.makeText(
                             activity,"The reservation code ${reservation.id} has been deleted",Toast.LENGTH_SHORT

@@ -29,7 +29,7 @@ class ReservationAddFragment : Fragment() {
     private var binding: FragmentAddReservationBinding? = null
 
     //    private val args: ReservationAddFragmentArgs by navArgs()
-    private var selectedLot = -1 // TODO check porque no toma el numero de lot seleccionado
+    private var selectedLot = 1 // TODO check porque no toma el numero de lot seleccionado
     private var authorizationCode = ""
     private var initialDate = DateReservation()
     private var finalDate = DateReservation()
@@ -92,6 +92,7 @@ class ReservationAddFragment : Fragment() {
                     override fun onItemSelected(
                         parent: AdapterView<*>,view: View,position: Int,id: Long
                     ) {
+                        selectedLot = spinnerList[position].toInt()
                         Toast.makeText(
                             activity," " + "" + spinnerList[position],Toast.LENGTH_SHORT
                         ).show()

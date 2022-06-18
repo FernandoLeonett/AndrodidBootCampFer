@@ -11,17 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp_android.domain.model.Lot
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentLotsBinding
+import com.bootcamp_android.parking_app.viewmodel.LotsViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
 import com.bootcamp_android.parking_app.viewmodel.adapters.LotsAdapter
-import com.bootcamp_android.parking_app.viewmodel.LotsViewModel
 
 class LotsFragment : Fragment() {
 
-    //LotDetailViewModel
+
     private lateinit var lotsViewModel: LotsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
-//    private var spinnerList = mutableListOf<String>()
-
     private var binding: FragmentLotsBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
@@ -40,18 +38,11 @@ class LotsFragment : Fragment() {
         lotsViewModel.loadLots()
 
         lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
-//            spinnerList.clear()
             initRecycleLots(lots)
-//            lots.map {
-//                spinnerList.add("Lot: ${it.parkingLot}")
-//            }
-
         }
 
         binding?.apply {
-
             fab.setOnClickListener {
-
                 val action = LotsFragmentDirections.fabLotToAdd()
                 findNavController().navigate(action)
             }

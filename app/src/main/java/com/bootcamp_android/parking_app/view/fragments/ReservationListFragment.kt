@@ -57,21 +57,19 @@ class ReservationListFragment : Fragment() {
             }
             reservations = args.lot.reservations
         }
+        initRecycleReservations(reservations)
 
         binding?.apply {
-            recyclerReservationList.apply {
-                layoutManager = LinearLayoutManager(activity)
-                adapter = ReservationsAdapter(reservations) { reservation,pos ->
-                    onDeleteClick(
-                        reservation,this,reservations,pos
-                    )
-                }
-            }
             fab.setOnClickListener {
-                val action =ReservationListFragmentDirections.fabResToAdd()
+                val action = ReservationListFragmentDirections.fabResToAdd()
                 findNavController().navigate(action)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 
     override fun onResume() {
@@ -101,9 +99,10 @@ class ReservationListFragment : Fragment() {
                 )
                 reservationsViewModel.mutableSuccessfulDelete.observe(viewLifecycleOwner) {
                     if(it) {
-                        Log.d(TAG,"onDeleteClick: pos: $pos")
                         reservations.removeAt(pos)
                         recyclerView.adapter?.notifyItemRemoved(pos)
+                        initRecycleReservations(reservations)
+                        Log.d(TAG,"onDeleteClick: pos: $pos") //
                         Toast.makeText(
                             activity,"The reservation code ${reservation.id} has been deleted",Toast.LENGTH_SHORT
                         ).show()
@@ -116,5 +115,18 @@ class ReservationListFragment : Fragment() {
             }.setNegativeButton("CANCEL") { dialogInterface,_ -> // cancel the dialogbox
                 dialogInterface.cancel()
             }.show()
+    }
+
+    private fun initRecycleReservations(reservations: List<Reservation>) {
+        binding?.apply {
+            recyclerReservationList.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = ReservationsAdapter(reservations as MutableList<Reservation>) { reservation,pos ->
+                    onDeleteClick(
+                        reservation,this,reservations,pos
+                    )
+                }
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -28,8 +29,8 @@ class ReservationAddFragment : Fragment() {
     private lateinit var viewModelFactory: ViewModelFactory
     private var binding: FragmentAddReservationBinding? = null
 
-    //    private val args: ReservationAddFragmentArgs by navArgs()
-    private var selectedLot = 1 // TODO check porque no toma el numero de lot seleccionado
+
+    private var selectedLot =- 1
     private var authorizationCode = ""
     private var initialDate = DateReservation()
     private var finalDate = DateReservation()
@@ -51,12 +52,6 @@ class ReservationAddFragment : Fragment() {
         view: View,savedInstanceState: Bundle?
     ) {
         binding = FragmentAddReservationBinding.bind(view)
-        addReservationViewModel.loadLots()
-        addReservationViewModel.lots.observe(viewLifecycleOwner) { lots -> //            spinnerList.clear()
-            lots.map {
-                spinnerList.add("Lot: ${it.parkingLot}")
-            }
-        }
         binding?.apply {
             buttonSave.setOnClickListener {
                 authorizationCode = textAuth.text.toString()
@@ -76,25 +71,33 @@ class ReservationAddFragment : Fragment() {
                 }
             }
             textSelectStartDateReservation.setOnClickListener {
-                showDateTimePickerDialog(initialDate)
-            }
-            textSelectEndDateReservation.setOnClickListener {
                 showDateTimePickerDialog(finalDate)
             }
-            val adapter = ArrayAdapter(
-                requireContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,spinnerList
-            )
-
+            textSelectEndDateReservation.setOnClickListener {
+                showDateTimePickerDialog(initialDate)
+            }
 
             lotsOptionsSpinner.apply {
+                addReservationViewModel.loadLots()
+                val adapter = ArrayAdapter<Any>(
+                    requireContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item
+                )
+
+                addReservationViewModel.lots.observe(viewLifecycleOwner) { lots ->
+                    lots.forEach {
+                        adapter.add(it.parkingLot)
+                    }
+
+                }
                 this.adapter = adapter
                 onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
                         parent: AdapterView<*>,view: View,position: Int,id: Long
                     ) {
-                        selectedLot = spinnerList[position].toInt()
+                        selectedLot = adapter.getItem(position) as Int
+
                         Toast.makeText(
-                            activity," " + "" + spinnerList[position],Toast.LENGTH_SHORT
+                            activity,"$selectedLot",Toast.LENGTH_SHORT
                         ).show()
                     }
 

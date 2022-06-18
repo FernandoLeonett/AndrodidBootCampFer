@@ -74,6 +74,7 @@ class ReservationListFragment : Fragment() {
         }
     }
 
+
     override fun onResume() {
         super.onResume()
         lotsViewModel.loadLots()

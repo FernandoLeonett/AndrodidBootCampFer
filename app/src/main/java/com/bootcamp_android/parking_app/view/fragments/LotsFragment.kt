@@ -20,7 +20,7 @@ class LotsFragment : Fragment() {
     //LotDetailViewModel
     private lateinit var lotsViewModel: LotsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
-    var spinerList = mutableListOf<String>()
+//    private var spinnerList = mutableListOf<String>()
 
     private var binding: FragmentLotsBinding? = null
     override fun onCreateView(
@@ -40,11 +40,11 @@ class LotsFragment : Fragment() {
         lotsViewModel.loadLots()
 
         lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
-            spinerList.clear()
+//            spinnerList.clear()
             initRecycleLots(lots)
-            lots.map {
-                spinerList.add("Lot: ${it.parkingLot}")
-            }
+//            lots.map {
+//                spinnerList.add("Lot: ${it.parkingLot}")
+//            }
 
         }
 
@@ -52,7 +52,7 @@ class LotsFragment : Fragment() {
 
             fab.setOnClickListener {
 
-                val action = LotsFragmentDirections.fabLotToAdd(spinerList.toTypedArray())
+                val action = LotsFragmentDirections.fabLotToAdd()
                 findNavController().navigate(action)
             }
         }

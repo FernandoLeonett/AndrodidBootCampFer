@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat
 object Utils {
 
     const val free:String= "Free"
-    const val oneHour = 3600000
+    const val oneHourMilliseconds = 3600000
+    const val  oneMinuteMilliseconds =60000
 
 
     private fun String.capitalizeWords(): String =

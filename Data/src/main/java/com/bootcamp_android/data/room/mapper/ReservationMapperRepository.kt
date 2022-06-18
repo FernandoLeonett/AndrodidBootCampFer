@@ -1,6 +1,5 @@
 package com.bootcamp_android.data.room.mapper
 
-import android.icu.util.UniversalTimeScale.toLong
 import com.bootcamp_android.data.room.entities.ReservationRoom
 
 import com.bootcamp_android.domain.model.Reservation
@@ -18,7 +17,7 @@ class ReservationMapperLocal : BaseMapperRepository<ReservationRoom,Reservation,
     override fun transformFromDomainToRoom(type: Reservation): ReservationRoom = ReservationRoom(
         type.id,
         type.authorizationCode,
-        type.starDate,
+        type.startDate,
         type.endDate,
         type.parkingLot
     )
@@ -27,7 +26,7 @@ class ReservationMapperLocal : BaseMapperRepository<ReservationRoom,Reservation,
 
         type.id,
         type.authorizationCode,
-        type.starDate.toLong(),
+        type.startDate.toLong(),
         type.endDate.toLong(),
         type.parkingLot
     )
@@ -36,7 +35,7 @@ class ReservationMapperLocal : BaseMapperRepository<ReservationRoom,Reservation,
 
         type.id,
         type.authorizationCode,
-        type.starDate.toLong(),
+        type.startDate.toLong(),
         type.endDate.toLong(),
         type.parkingLot
     )

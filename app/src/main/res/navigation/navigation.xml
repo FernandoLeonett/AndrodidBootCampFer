@@ -24,14 +24,13 @@
         android:name="com.bootcamp_android.parking_app.view.fragments.ReservationAddFragment"
         android:label="@string/title_reservation"
         tools:layout="@layout/fragment_add_reservation" >
+<!--        <argument-->
+<!--            android:name="lots"-->
+<!--            app:argType="string[]"-->
+<!--            />-->
         <action
             android:id="@+id/action_fragmentAddReservation_to_lotListFragment"
-            app:destination="@id/lotListFragment"
-            app:popUpTo="@id/lotListFragment" />
-        <argument
-            android:name="lots"
-            app:argType="string[]"/>
-
+            app:destination="@id/lotListFragment" />
     </fragment>
     <fragment
         android:id="@+id/reservationListFragment"

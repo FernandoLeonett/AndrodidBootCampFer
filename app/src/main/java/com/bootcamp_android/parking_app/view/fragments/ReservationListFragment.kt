@@ -48,6 +48,7 @@ class ReservationListFragment : Fragment() {
     }
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
+        binding = FragmentReservationsBinding.bind(itemView)
         lot = args.lot
         var reservations = args.lot.reservations
         lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
@@ -56,10 +57,6 @@ class ReservationListFragment : Fragment() {
             }
             reservations = args.lot.reservations
         }
-
-        binding = FragmentReservationsBinding.bind(itemView)
-
-
 
         binding?.apply {
             recyclerReservationList.apply {
@@ -71,7 +68,8 @@ class ReservationListFragment : Fragment() {
                 }
             }
             fab.setOnClickListener {
-                findNavController().navigate(R.id.fab_res_to_add)
+                val action =ReservationListFragmentDirections.fabResToAdd()
+                findNavController().navigate(action)
             }
         }
     }
@@ -107,9 +105,7 @@ class ReservationListFragment : Fragment() {
                         reservations.removeAt(pos)
                         recyclerView.adapter?.notifyItemRemoved(pos)
                         Toast.makeText(
-                            activity,
-                            "The reservation code ${reservation.id} has been deleted",
-                            Toast.LENGTH_SHORT
+                            activity,"The reservation code ${reservation.id} has been deleted",Toast.LENGTH_SHORT
                         ).show()
                     } else {
                         Toast.makeText(activity,"The Reservation has not been deleted",Toast.LENGTH_SHORT).show()

@@ -13,13 +13,13 @@ class ReservationViewHolder(private val view: View) : RecyclerView.ViewHolder(vi
         val binding = FragmentReservationBinding.bind(view)
         binding.apply {
             textDateStart.text =
-                formatRatforReservationList(reservation.starDate)
+                formatRatforReservationList(reservation.startDate)
             textDateEnd.text =
                 formatRatforReservationList(reservation.endDate)
             textEndHour.text =
-                timeFormat(reservation.starDate)
+                timeFormat(reservation.startDate)
             textHourStart.text =
-                timeFormat(reservation.starDate)
+                timeFormat(reservation.startDate)
            btnDeleteReservation.setOnClickListener { listener(reservation,pos) }
         }
     }

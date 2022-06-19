@@ -11,7 +11,7 @@ interface ReservationDao {
     @Query("SELECT * FROM ReservationRoom")
     fun getReservations(): List<ReservationRoom>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addReservation(addReservation: ReservationRoom)
 
     @Delete

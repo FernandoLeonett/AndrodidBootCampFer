@@ -17,10 +17,11 @@ import com.bootcamp_android.parking_app.viewmodel.adapters.LotsAdapter
 
 class LotsFragment : Fragment() {
 
-
     private lateinit var lotsViewModel: LotsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
     private var binding: FragmentLotsBinding? = null
+    private var free = 0
+    private var busy = 0
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
     ): View? {
@@ -41,6 +42,8 @@ class LotsFragment : Fragment() {
             initRecycleLots(lots)
         }
 
+
+
         binding?.apply {
             fab.setOnClickListener {
                 val action = LotsFragmentDirections.fabLotToAdd()
@@ -59,11 +62,28 @@ class LotsFragment : Fragment() {
         binding = null
     }
 
-    private fun initRecycleLots(lots: List<Lot>) {
-        binding?.recyclerLotList?.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = LotsAdapter(lots) { lot -> lotClick(lot) }
+    private fun initRecycleLots(lots: List<Lot>) { //
+        binding?.apply {
+            recyclerLotList.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = LotsAdapter(lots) { lot -> lotClick(lot) }
+            }
+            val totalLots = lots.size
+            val freeLots = lotsViewModel.geNumberOfFreeLots(lots)
+            val busyLots =totalLots -freeLots
+            free.text ="Free $freeLots"
+            busy.text = "Busy $busyLots"
+
+
+            pbarAvailability.max = lots.size
+            pbarAvailability.progress = busyLots
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        lotsViewModel.loadLots()
+    }
 }
+
 

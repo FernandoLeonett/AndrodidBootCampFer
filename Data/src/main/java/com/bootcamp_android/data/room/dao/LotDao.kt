@@ -12,8 +12,8 @@ interface LotDao {
     @Query("SELECT * FROM LotRoom")
     fun getLots(): List<LotRoom>
 
-    @Query("SELECT * FROM LotRoom Where parkingLot= :id")
-    fun getLotByID(id: Int): LotRoom
+//    @Query("SELECT * FROM LotRoom Where parkingLot= :id")
+//    fun getLotByID(id: Int): LotRoom
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addLot(addReservation: LotRoom)

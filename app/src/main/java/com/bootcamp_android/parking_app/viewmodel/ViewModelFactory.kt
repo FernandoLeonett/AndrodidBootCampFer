@@ -34,7 +34,7 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
                     ParkingService(),ParkingDataBase.getInstance(context)
                 )
             },ValidateReservationUseCase().apply {
-                validateReservationRepository = LotRepository(
+                validateReservationRepository = ReservationRepository(
                     ParkingService(),ParkingDataBase.getInstance(context)
                 )
             },GetLotsUseCase().apply {

@@ -92,27 +92,24 @@ class ReservationListFragment : Fragment() {
         builder.setView(input)
             .setMessage("Are you sure you want to delete this reservation? Please input the authorization code to confirm")
             .setCancelable(true) // dialog box in cancellable
-            // set positive button
-            //take two parameters dialogInterface and an int
+
             .setPositiveButton("OK") { dialogInterface,_ ->
+
                 reservationsViewModel.deleteReservation(
                     reservation,input.text.toString()
                 )
                 reservationsViewModel.mutableSuccessfulDelete.observe(viewLifecycleOwner) {
                     if(it) {
+                        if(pos<= reservations.size && reservations.isNotEmpty()) {
+                            reservations.removeAt(pos)
+                            recyclerView.adapter?.notifyItemRemoved(pos)
 
-//                        if(reservations.size>0)
-                        reservations.removeAt(pos)
-                        initRecycleReservations(reservations)
-//                        recyclerView.adapter?.notifyItemRemoved(pos)
+//                            initRecycleReservations(reservations)
+
+                        }
 
 
-                        Log.d(TAG,"onDeleteClick: pos: $pos") //
-                        Toast.makeText(
-                            activity,"The reservation code ${reservation.id} has been deleted",Toast.LENGTH_SHORT
-                        ).show()
                     } else {
-                        Toast.makeText(activity,"The Reservation has not been deleted",Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -124,13 +121,17 @@ class ReservationListFragment : Fragment() {
 
     private fun initRecycleReservations(reservations: List<Reservation>) {
         binding?.apply {
+
             recyclerReservationList.apply {
+
+
                 layoutManager = LinearLayoutManager(activity)
                 adapter = ReservationsAdapter(reservations as MutableList<Reservation>) { reservation,pos ->
                     onDeleteClick(
                         reservation,this,reservations,pos
                     )
                 }
+
             }
         }
     }

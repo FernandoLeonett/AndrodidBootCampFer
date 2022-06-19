@@ -26,8 +26,11 @@ class ReservationsAdapter(
     override fun onBindViewHolder(holder: ReservationViewHolder,position: Int) {
         val item = reservationData[position]
 
+
+
         holder.bind(item,clickDelete, position)
     }
+
 
     override fun getItemCount() =
         reservationData.size //ask for the type of the view and return it // statics methods for define view types i assign and int for each type so i can compare later

@@ -31,7 +31,7 @@ class ReservationAddFragment : Fragment() {
     private var authorizationCode = ""
     private var initialDate = DateReservation()
     private var finalDate = DateReservation()
-    private var spinnerList = mutableListOf<String>()
+//    private var spinnerList = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
@@ -60,7 +60,7 @@ class ReservationAddFragment : Fragment() {
                 addReservationViewModel.mutableSuccessfulAdd.observe(viewLifecycleOwner) { added ->
                     if(added) {
                         val action = ReservationAddFragmentDirections.actionFragmentAddReservationToLotListFragment()
-                        findNavController().navigate(R.id.action_fragmentAddReservation_to_lotListFragment)
+                        findNavController().navigate(action)
                         Toast.makeText(context,"Added correctly",Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(context,"Could not be processed",Toast.LENGTH_LONG).show()
@@ -113,11 +113,11 @@ class ReservationAddFragment : Fragment() {
             Toast.makeText(
                 activity,"$hour:$minutes",Toast.LENGTH_LONG
             ).show()
-            Log.d(
-                TAG,"fecha: ${
-                    date.dateInMilliseconds
-                }"
-            )
+//            Log.d(
+//                TAG,"fecha: ${
+//                    date.dateInMilliseconds
+//                }"
+//            )
         }
         TimePickerDialog(
             activity,listenerHour,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false

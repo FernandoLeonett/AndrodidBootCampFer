@@ -12,14 +12,17 @@ import com.bootcamp_android.domain.usecases.AddReservationUseCase
 import com.bootcamp_android.domain.usecases.GetLotsUseCase
 import com.bootcamp_android.domain.usecases.ValidateReservationUseCase
 import com.bootcamp_android.domain.util.Result
+import com.bootcamp_android.parking_app.utils.Utils
+import com.bootcamp_android.parking_app.utils.Utils.formatDateForLotList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
 
 class AddReservationViewModel(
     val addReservationUseCase: AddReservationUseCase,
     val validateReservationUseCase: ValidateReservationUseCase,
-    val getLotsUseCase: GetLotsUseCase
+    private val getLotsUseCase: GetLotsUseCase
 ) : ViewModel() {
 
     private val _lots: MutableLiveData<List<Lot>> by lazy {
@@ -29,12 +32,15 @@ class AddReservationViewModel(
     val mutableSuccessfulAdd = MutableLiveData<Boolean>()
 
     fun addReservation(reservation: Reservation) = viewModelScope.launch {
+
+        Log.d(TAG,"FechaInicio :${formatDateForLotList(reservation.startDate)}")
+        Log.d(TAG,"fechaFinal :${formatDateForLotList(reservation.endDate)}")
         if(reservation.authorizationCode != "" && reservation.endDate != -1L && reservation.startDate != -1L && reservation.endDate > reservation.startDate && reservation.parkingLot!=-1) {
             if(withContext(Dispatchers.IO) { validateReservationUseCase(reservation) }) {
                 when(withContext(Dispatchers.IO) { addReservationUseCase(reservation) }) {
                     is Result.Success -> { //                    mutableSuccessfulAdd.postValue(true)
                         mutableSuccessfulAdd.postValue(true)
-                        Log.d(TAG," addr True")
+
                     }
                     is Result.Failure -> {
                         mutableSuccessfulAdd.postValue(false)

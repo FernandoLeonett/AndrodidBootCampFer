@@ -2,9 +2,7 @@ package com.bootcamp_android.parking_app.view.fragments
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bootcamp_android.domain.model.Reservation
+import com.bootcamp_android.domain.util.AddResult
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
 import com.bootcamp_android.parking_app.utils.DateReservation
@@ -30,9 +29,7 @@ class ReservationAddFragment : Fragment() {
     private var selectedLot = -1
     private var authorizationCode = ""
     private var initialDate = DateReservation()
-    private var finalDate = DateReservation()
-//    private var spinnerList = mutableListOf<String>()
-
+    private var finalDate = DateReservation() //    private var spinnerList = mutableListOf<String>()
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
     ): View? { // Inflate the layout for this fragment
@@ -56,15 +53,34 @@ class ReservationAddFragment : Fragment() {
                     "",authorizationCode,initialDate.dateInMilliseconds,finalDate.dateInMilliseconds,selectedLot
                 )
                 addReservationViewModel.addReservation(res)
-
-                addReservationViewModel.mutableSuccessfulAdd.observe(viewLifecycleOwner) { added ->
-                    if(added) {
-                        val action = ReservationAddFragmentDirections.actionFragmentAddReservationToLotListFragment()
-                        findNavController().navigate(action)
-                        Toast.makeText(context,"Added correctly",Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(context,"Could not be processed",Toast.LENGTH_LONG).show()
+                var ok = addReservationViewModel.validateUserData
+                if(ok.successRequest) {
+                    addReservationViewModel.successfulAdded.observe(viewLifecycleOwner) {
+                        if(it ==AddResult.IS_FREE) {
+                            val action =
+                                ReservationAddFragmentDirections.actionFragmentAddReservationToLotListFragment()
+                            findNavController().navigate(action)
+                            Toast.makeText(context,"Added correctly",Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(context,"Could not be processed",Toast.LENGTH_LONG).show()
+                        }
                     }
+                } else {
+                    var msg = ""
+
+                    if(!ok.lot) {
+                        msg = "check the lot"
+                    }
+                    if(!ok.endDate) {
+                        msg += "check the end date"
+                    }
+                    if(!ok.authorizationCode) {
+                        msg += "check the authorization code"
+                    }
+                    if(!ok.orderDate) {
+                        msg += "the end date must be bigger than start date"
+                    }
+                    Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
                 }
             }
             textSelectStartDateReservation.setOnClickListener {
@@ -112,12 +128,11 @@ class ReservationAddFragment : Fragment() {
             date.dateInMilliseconds = calendar.timeInMillis
             Toast.makeText(
                 activity,"$hour:$minutes",Toast.LENGTH_LONG
-            ).show()
-//            Log.d(
-//                TAG,"fecha: ${
-//                    date.dateInMilliseconds
-//                }"
-//            )
+            ).show() //            Log.d(
+            //                TAG,"fecha: ${
+            //                    date.dateInMilliseconds
+            //                }"
+            //            )
         }
         TimePickerDialog(
             activity,listenerHour,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false

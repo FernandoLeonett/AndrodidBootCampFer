@@ -1,5 +1,6 @@
 package com.bootcamp_android.parking_app.viewmodel.adapters
 
+import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.domain.model.Lot
@@ -17,8 +18,10 @@ class LotViewHolder(
 
         binding.apply {
             if(lot.free) {
+                itemView.setBackgroundColor(Color.parseColor("#567845"));
                 textHourLot.text = ""
                 textDateLot.text = Utils.free
+
             } else {
                 textHourLot.text = formatDateForLotList(lot.dateTimeAvailable)
                 textDateLot.text  = timeFormat(lot.dateTimeAvailable)

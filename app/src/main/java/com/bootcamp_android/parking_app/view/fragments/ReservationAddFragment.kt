@@ -1,5 +1,6 @@
 package com.bootcamp_android.parking_app.view.fragments
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -28,7 +29,7 @@ class ReservationAddFragment : Fragment() {
     private lateinit var addReservationViewModel: AddReservationViewModel
     private lateinit var viewModelFactory: ViewModelFactory
     private var binding: FragmentAddReservationBinding? = null
-    private var selectedLot = -1
+    private var selectedLot: Any = -1
     private var authorizationCode = ""
     private var initialDate = DateReservation()
     private var finalDate = DateReservation()
@@ -47,30 +48,31 @@ class ReservationAddFragment : Fragment() {
     override fun onViewCreated(
         view: View,savedInstanceState: Bundle?
     ) {
+
         binding = FragmentAddReservationBinding.bind(view)
         binding?.apply {
             buttonSave.setOnClickListener {
                 authorizationCode = textAuth.text.toString()
                 val res = Reservation(
-                    "",authorizationCode,initialDate.dateInMilliseconds,finalDate.dateInMilliseconds,selectedLot
+                    "",authorizationCode,initialDate.dateInMilliseconds,finalDate.dateInMilliseconds,selectedLot as Int
                 )
                 addReservationViewModel.addReservation(res)
-                var msg = ""
                 val ok = addReservationViewModel.validateUserData
                 if(ok.successRequest) {
-                    addReservationViewModel.successfulAdded.observe(viewLifecycleOwner) {
-                        if(it == AddResult.IS_FREE) {
+                    addReservationViewModel.successfulAdded.observe(viewLifecycleOwner) { result ->
+                        if(result == AddResult.IS_FREE) {
                             val action =
                                 ReservationAddFragmentDirections.actionFragmentAddReservationToLotListFragment()
                             findNavController().navigate(action)
+                            Toast.makeText(activity,getString(R.string.msg_reservation_add_success),Toast.LENGTH_SHORT)
+                                .show()
                         } else {
-                            msg = getString(R.string.msg_reservation_add_error)
+                            errorMessageAdd(ok)
                         }
                     }
                 } else {
-                    msg = errorMessageAdd(ok)
+                    errorMessageAdd(ok)
                 }
-                Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
             }
             textSelectStartDateReservation.setOnClickListener {
                 showDateTimePickerDialog(initialDate,view,0)
@@ -88,7 +90,7 @@ class ReservationAddFragment : Fragment() {
                 addReservationViewModel.lots.observe(viewLifecycleOwner) { lots ->
                     adapter.add(Utils.spinnerDefaultValue)
                     lots.forEach {
-                        adapter.add(it.parkingLot)
+                        adapter.add(Utils.PLACEHOLDER_LOT + it.parkingLot)
                     }
                 }
                 this.adapter = adapter
@@ -97,7 +99,7 @@ class ReservationAddFragment : Fragment() {
                         parent: AdapterView<*>,view: View,position: Int,id: Long
                     ) {
                         if(parent.getItemAtPosition(position) != Utils.spinnerDefaultValue) {
-                            selectedLot = parent.getItemAtPosition(position) as Int
+                            selectedLot = (parent.getItemAtPosition(position) as String ).replace(Utils.PLACEHOLDER_LOT,"").toInt()
                         }
                     }
 
@@ -108,24 +110,34 @@ class ReservationAddFragment : Fragment() {
         }
     }
 
-    private fun errorMessageAdd(ok: AddReservationRequest): String {
-        var msg = ""
-        if(!ok.lot) {
-            msg = getString(R.string.msg_reservation_add_error_lot)
+    private fun errorMessageAdd(ok: AddReservationRequest) {
+        var msg = "\n"
+
+        if(ok.successRequest) {
+            msg = getString(R.string.msg_lot_is_busy)
+        } else {
+            if(!ok.lot) {
+                msg = "\n" + getString(R.string.msg_reservation_add_error_lot)
+            }
+            if(!ok.endDate) {
+                msg += "\n" + getString(R.string.msg_reservation_add_error_end_date)
+            }
+            if(!ok.startDate) {
+                msg += "\n" + getString(R.string.msg_reservation_add_error_start_date)
+            }
+            if(!ok.authorizationCode) {
+                msg += "\n" + getString(R.string.msg_reservation_add_error_auth)
+            }
+            if(!ok.orderDate) {
+                msg += "\n" + getString(R.string.msg_reservation_add_error_order_date)
+            }
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle(getString(R.string.msg_reservation_title_error))
+                setMessage(msg).setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
+                    dialogInterface.dismiss()
+                }.show()
+            }
         }
-        if(!ok.endDate) {
-            msg += getString(R.string.msg_reservation_add_error_end_date)
-        }
-        if(!ok.startDate) {
-            msg += getString(R.string.msg_reservation_add_error_start_date)
-        }
-        if(!ok.authorizationCode) {
-            msg += getString(R.string.msg_reservation_add_error_auth)
-        }
-        if(!ok.orderDate) {
-            msg += getString(R.string.msg_reservation_add_error_order_date)
-        }
-        return msg
     }
 
     private fun showDateTimePickerDialog(date: DateReservation,view: View,inputDate: Int) {

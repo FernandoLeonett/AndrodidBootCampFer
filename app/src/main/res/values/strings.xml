@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Parking App</string>
-    %1$s! You have %2$
+
     <string name="lots_free">Free: %1$d </string>
     <string name="lots_busy">Busy: %1$d </string>
     <string name="title_delete_dialog_reservation">Delete Reservation</string>
-    <string name="msg_reservation_delete_error">Error</string>
+    <string name="msg_server_error">Error</string>
     <string name="msg_reservation_delete_success">deleted successfully</string>
     <string name="text_btn_delete_negative">Cancel</string>
     <string name="text_btn_delete_positive">OK</string>
@@ -15,8 +15,10 @@
     <string name="title_reservation">Add Reservation</string>
     <string name="text_date">date: %1$d/%2$d/%3$d hour: %4$d:%5$d</string>
     <string name="btn_save">SAVE</string>
+    <string name="msg_lot_is_busy">the selected lot is busy just now</string>
+    <string name="placeholder_spinner">Lot </string>
     <string name="authorization_code">Authorization code</string>
-    <string name="msg_reservation_add_error">Could not be added</string>
+    <string name="msg_reservation_title_error">Could not be added</string>
     <string name="msg_reservation_add_success">Added Successfully</string>
     <string name="msg_reservation_add_error_lot">please select a lot</string>
     <string name="msg_reservation_add_error_end_date">check the end date</string>
@@ -25,5 +27,7 @@
     <string name="spinner_default_value">Select a lot</string>
     <string name="input_start_date">Select Start Date</string>
     <string name="input_end_date">Select End Date</string>
+    <string name="title_dialog_add_error">Select End Date</string>
+    <string name="title_dialog_delete_error">Select End Date</string>
     <string name="msg_reservation_add_error_order_date">the end date must be bigger than start date</string>
 </resources>

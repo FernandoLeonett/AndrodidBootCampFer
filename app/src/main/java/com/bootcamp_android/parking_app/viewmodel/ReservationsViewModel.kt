@@ -1,7 +1,5 @@
 package com.bootcamp_android.parking_app.viewmodel
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,23 +16,25 @@ class ReservationsViewModel(
 ) : ViewModel() {
 
     val successfullyDeleted = MutableLiveData<DeleteReservationRequest>()
-//    lateinit var validateUserData: DeleteReservationRequest
+    lateinit var validateUserData: DeleteReservationRequest
 
     fun deleteReservation(reservation: Reservation,authorizationCode: String) = viewModelScope.launch {
         if(reservation.authorizationCode == authorizationCode) {
+            validateUserData = DeleteReservationRequest.SUCCESS_REQUEST
             when(withContext(Dispatchers.IO) { deleteReservationUseCase(reservation,authorizationCode) }) {
                 is Result.Success -> {
-                    successfullyDeleted.postValue(DeleteReservationRequest.SUCCESS)
+                    successfullyDeleted.postValue(DeleteReservationRequest.SUCCESS_RESULT)
 
-                    Log.d(TAG,"deleteReservation: true")
+
                 }
                 is Result.Failure -> {
                     successfullyDeleted.postValue(DeleteReservationRequest.ERROR)
-                    Log.d(TAG,"deleteReservation: false")
+
+
                 }
             }
         } else { // bad code
-            successfullyDeleted.postValue(DeleteReservationRequest.BAD_AUTHORIZATION_CODE)
+         validateUserData = DeleteReservationRequest.BAD_AUTHORIZATION_CODE
 
         }
     }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
+    android:padding="20dp"
     tools:context=".view.MainActivity">
 
     <TextView
@@ -12,7 +13,6 @@
         android:layout_width="272dp"
         android:layout_height="23dp"
         android:layout_marginStart="20dp"
-
         android:textAppearance="@style/pm"
         android:textColor="#757575"
         app:layout_constraintBottom_toBottomOf="@+id/vw_figure_id"
@@ -24,7 +24,6 @@
         android:layout_width="272dp"
         android:layout_height="23dp"
         android:layout_marginTop="14dp"
-
         app:layout_constraintStart_toStartOf="@+id/text_hour_lot"
         app:layout_constraintTop_toTopOf="@+id/vw_figure_id" />
 

@@ -28,7 +28,7 @@
             app:destination="@id/fragmentAddReservation" />
         <argument
             android:name="lot_id"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
     <!--    third screen-->
     <fragment

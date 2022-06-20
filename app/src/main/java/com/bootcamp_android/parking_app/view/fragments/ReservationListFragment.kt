@@ -51,7 +51,7 @@ class ReservationListFragment : Fragment() {
 
         lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
             initRecycleReservations(lots.single {
-                it.parkingLot == args.lotId.toInt()
+                it.parkingLot == args.lotId
             }.reservations)
         }
         binding?.apply {
@@ -84,29 +84,50 @@ class ReservationListFragment : Fragment() {
         val input = EditText(requireContext())
         input.inputType = InputType.TYPE_CLASS_NUMBER
 
-        builder.setView(input).setMessage(getString(R.string.dialog_message_delete_reservation))
-            .setCancelable(true)
+        builder.setView(input).setMessage(getString(R.string.dialog_message_delete_reservation)).setCancelable(true)
             .setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
                 reservationsViewModel.deleteReservation(
                     reservation,input.text.toString()
                 )
-                reservationsViewModel.successfullyDeleted.observe(viewLifecycleOwner) {
-                    var msg = getString(R.string.msg_reservation_delete_error)
-                    if(it == DeleteReservationRequest.SUCCESS) {
-                        if(pos <= reservations.size && reservations.isNotEmpty()) {
-                            reservations.removeAt(pos)
-                            recyclerView.adapter?.notifyItemRemoved(pos) //
-                            msg = getString(R.string.msg_reservation_delete_success)
+
+                if(reservationsViewModel.validateUserData == DeleteReservationRequest.BAD_AUTHORIZATION_CODE) {
+                    errorMessagedDeleted(reservationsViewModel.validateUserData)
+                } else {
+                    reservationsViewModel.successfullyDeleted.observe(viewLifecycleOwner) {
+                        if(it == DeleteReservationRequest.SUCCESS_RESULT) {
+                            if(pos <= reservations.size && reservations.isNotEmpty()) {
+                                reservations.removeAt(pos)
+                                recyclerView.adapter?.notifyItemRemoved(pos) //
+                                Toast.makeText(
+                                    activity,getString(R.string.msg_reservation_delete_success),Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            errorMessagedDeleted(it)
                         }
-                    } else if(it == DeleteReservationRequest.BAD_AUTHORIZATION_CODE) {
-                        msg = getString(R.string.msg_reservation_delete_error_authorization_code)
                     }
-                    Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
                 }
+
+
                 dialogInterface.dismiss()
             }.setNegativeButton(getString(R.string.text_btn_delete_negative)) { dialogInterface,_ ->
                 dialogInterface.cancel()
             }.show()
+    }
+
+    private fun errorMessagedDeleted(ok: DeleteReservationRequest) {
+        val msg = if(ok == DeleteReservationRequest.BAD_AUTHORIZATION_CODE) {
+            getString(R.string.msg_reservation_delete_error_authorization_code)
+        } else {
+            getString(R.string.msg_server_error)
+        }
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle(getString(R.string.title_delete_dialog_reservation))
+            setMessage(msg).setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
+                dialogInterface.dismiss()
+            }
+            show()
+        }
     }
 
     override fun onResume() {

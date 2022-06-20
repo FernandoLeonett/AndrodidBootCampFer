@@ -67,7 +67,7 @@ class LotsFragment : Fragment() {
     }
 
     private fun lotClick(lot: Lot) {
-        val action = LotsFragmentDirections.btnLotToRes(lot.parkingLot.toString())
+        val action = LotsFragmentDirections.btnLotToRes(lot.parkingLot)
         findNavController().navigate(action)
     }
 

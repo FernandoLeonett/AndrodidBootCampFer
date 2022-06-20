@@ -10,18 +10,8 @@ import com.bootcamp_android.domain.repostories.ILotsRepository
 import com.bootcamp_android.domain.util.Result
 
 class LotRepository(
-    var parkingService: ParkingService,private var parkingDataBase: ParkingDataBase
+    private var parkingService: ParkingService,private var parkingDataBase: ParkingDataBase
 ) : ILotsRepository {
-
-//    override suspend fun getLotByID(id: Int): Lot? = getLots().find {
-//        it.parkingLot == id
-//    }
-
-//    override suspend fun getLotByIDFromDataBase(id: Int): Lot {
-//        val lot = parkingDataBase.getLotsDao().getLotByID(id)
-//
-//        return LotMapperLocal().transformFromRoomToDomain(lot)
-//    }
 
     override suspend fun getLots(): List<Lot> {
         val mutableLotList = mutableListOf<Lot>()

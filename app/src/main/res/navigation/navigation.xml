@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/lotListFragment">
+    <!-- First screen   -->
     <fragment
         android:id="@+id/lotListFragment"
         android:name="com.bootcamp_android.parking_app.view.fragments.LotsFragment"
@@ -15,23 +16,8 @@
         <action
             android:id="@+id/fab_lot_to_add"
             app:destination="@id/fragmentAddReservation" />
-
-
-
     </fragment>
-    <fragment
-        android:id="@+id/fragmentAddReservation"
-        android:name="com.bootcamp_android.parking_app.view.fragments.ReservationAddFragment"
-        android:label="@string/title_reservation"
-        tools:layout="@layout/fragment_add_reservation" >
-<!--        <argument-->
-<!--            android:name="lots"-->
-<!--            app:argType="string[]"-->
-<!--            />-->
-        <action
-            android:id="@+id/action_fragmentAddReservation_to_lotListFragment"
-            app:destination="@id/lotListFragment" />
-    </fragment>
+    <!--  second screen-->
     <fragment
         android:id="@+id/reservationListFragment"
         android:name="com.bootcamp_android.parking_app.view.fragments.ReservationListFragment"
@@ -41,10 +27,17 @@
             android:id="@+id/fab_res_to_add"
             app:destination="@id/fragmentAddReservation" />
         <argument
-            android:name="lot"
-            app:argType="com.bootcamp_android.domain.model.Lot"/>
-        <argument
             android:name="lot_id"
-            app:argType="string"/>
+            app:argType="string" />
+    </fragment>
+    <!--    third screen-->
+    <fragment
+        android:id="@+id/fragmentAddReservation"
+        android:name="com.bootcamp_android.parking_app.view.fragments.ReservationAddFragment"
+        android:label="@string/title_reservation"
+        tools:layout="@layout/fragment_add_reservation">
+        <action
+            android:id="@+id/action_fragmentAddReservation_to_lotListFragment"
+            app:destination="@id/lotListFragment" />
     </fragment>
 </navigation>

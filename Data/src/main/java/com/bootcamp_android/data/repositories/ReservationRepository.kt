@@ -66,9 +66,7 @@ class ReservationRepository(
     override suspend fun deleteReservation(
         reservation: Reservation,authorizationCode: String
     ): Result<Boolean> {
-        var result = parkingService.deleteReservation(parkingId,reservation.id)
-
-        return when(result) {
+        return when(val result = parkingService.deleteReservation(parkingId,reservation.id)) {
             is Result.Success -> {
                 deleteReservationOnDataBase(reservation)
                 Result.Success(result.data)

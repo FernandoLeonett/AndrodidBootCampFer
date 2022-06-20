@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
 
         setupActionBarWithNavController(navController)
-        setContentView(binding.root) // always at the end
+        setContentView(binding.root)
     }
 
     override fun onSupportNavigateUp(): Boolean {

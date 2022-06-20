@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bootcamp_android.domain.model.Lot
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.util.DeleteReservationRequest
 import com.bootcamp_android.parking_app.R
@@ -31,7 +30,6 @@ class ReservationListFragment : Fragment() {
     private lateinit var viewModelFactory: ViewModelFactory
     private var binding: FragmentReservationsBinding? = null
     private val args: ReservationListFragmentArgs by navArgs()
-    private var lot: Lot? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
@@ -48,17 +46,14 @@ class ReservationListFragment : Fragment() {
 
     override fun onViewCreated(itemView: View,savedInstanceState: Bundle?) {
         binding = FragmentReservationsBinding.bind(itemView)
-        lot = args.lot
-        var reservations = args.lot.reservations
+        lotsViewModel.loadLots()
+
+
         lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
-            lot = lots.find { l ->
-                l.parkingLot == lot?.parkingLot
-            }
-            reservations = args.lot.reservations
+            initRecycleReservations(lots.single {
+                it.parkingLot == args.lotId.toInt()
+            }.reservations)
         }
-        initRecycleReservations(reservations)
-
-
         binding?.apply {
             fab.setOnClickListener {
                 val action = ReservationListFragmentDirections.fabResToAdd()
@@ -67,9 +62,51 @@ class ReservationListFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
+    private fun initRecycleReservations(reservations: MutableList<Reservation>) {
+        binding?.apply {
+            recyclerReservationList.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = ReservationsAdapter(reservations) { reservation,pos ->
+                    onDeleteClick(
+                        reservation,this,reservations,pos
+                    )
+                }
+            }
+        }
+    }
+
+    private fun onDeleteClick(
+        reservation: Reservation,recyclerView: RecyclerView,reservations: MutableList<Reservation>,pos: Int
+    ) {
+        val builder = AlertDialog.Builder(requireContext())
+
+        builder.setTitle(getString(R.string.title_delete_dialog_reservation))
+        val input = EditText(requireContext())
+        input.inputType = InputType.TYPE_CLASS_NUMBER
+
+        builder.setView(input).setMessage(getString(R.string.dialog_message_delete_reservation))
+            .setCancelable(true)
+            .setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
+                reservationsViewModel.deleteReservation(
+                    reservation,input.text.toString()
+                )
+                reservationsViewModel.successfullyDeleted.observe(viewLifecycleOwner) {
+                    var msg = getString(R.string.msg_reservation_delete_error)
+                    if(it == DeleteReservationRequest.SUCCESS) {
+                        if(pos <= reservations.size && reservations.isNotEmpty()) {
+                            reservations.removeAt(pos)
+                            recyclerView.adapter?.notifyItemRemoved(pos) //
+                            msg = getString(R.string.msg_reservation_delete_success)
+                        }
+                    } else if(it == DeleteReservationRequest.BAD_AUTHORIZATION_CODE) {
+                        msg = getString(R.string.msg_reservation_delete_error_authorization_code)
+                    }
+                    Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
+                }
+                dialogInterface.dismiss()
+            }.setNegativeButton(getString(R.string.text_btn_delete_negative)) { dialogInterface,_ ->
+                dialogInterface.cancel()
+            }.show()
     }
 
     override fun onResume() {
@@ -77,54 +114,8 @@ class ReservationListFragment : Fragment() {
         lotsViewModel.loadLots()
     }
 
-    private fun onDeleteClick(
-        reservation: Reservation,recyclerView: RecyclerView,reservations: MutableList<Reservation>,pos: Int
-    ) {
-        val builder = AlertDialog.Builder(requireContext())
-        Toast.makeText(activity,"The reservation code ${reservation.authorizationCode} ",Toast.LENGTH_SHORT).show()
-
-        builder.setTitle("Delete Reservation ${reservation.id}")
-        val input =
-            EditText(requireContext()) // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.inputType = InputType.TYPE_CLASS_NUMBER //or InputType.TYPE_NUMBER_VARIATION_PASSWORD
-        input.clipToOutline
-        builder.setView(input)
-            .setMessage("Are you sure you want to delete this reservation? Please input the authorization code to confirm")
-            .setCancelable(true) // dialog box in cancellable
-            .setPositiveButton("OK") { dialogInterface,_ ->
-                reservationsViewModel.deleteReservation(
-                    reservation,input.text.toString()
-                )
-                reservationsViewModel.successfullyDeleted.observe(viewLifecycleOwner) {
-                    var msg ="Error"
-                    if(it == DeleteReservationRequest.SUCCESS) {
-                        if(pos <= reservations.size && reservations.isNotEmpty()) {
-                            reservations.removeAt(pos)
-                            recyclerView.adapter?.notifyItemRemoved(pos) //
-                            initRecycleReservations(reservations)
-                            msg = "added successfully"
-                        }
-                    } else if(it == DeleteReservationRequest.BAD_AUTHORIZATION_CODE) {
-                        msg = "check the authorization code"
-                    }
-                    Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
-                }
-                dialogInterface.dismiss()
-            }.setNegativeButton("CANCEL") { dialogInterface,_ -> // cancel the dialogbox
-                dialogInterface.cancel()
-            }.show()
-    }
-
-    private fun initRecycleReservations(reservations: List<Reservation>) {
-        binding?.apply {
-            recyclerReservationList.apply {
-                layoutManager = LinearLayoutManager(activity)
-                adapter = ReservationsAdapter(reservations as MutableList<Reservation>) { reservation,pos ->
-                    onDeleteClick(
-                        reservation,this,reservations,pos
-                    )
-                }
-            }
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

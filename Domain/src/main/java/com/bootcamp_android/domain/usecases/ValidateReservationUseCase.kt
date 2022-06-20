@@ -16,10 +16,8 @@ class ValidateReservationUseCase {
             it.parkingLot == reservation.parkingLot
         }.also { reservations ->
             reservations.forEach {
-
-
                 if(reservation.endDate in it.startDate..it.endDate || reservation.startDate in it.startDate..it.endDate) {
-                    isValid = AddResult.IS_BUSY;
+                    isValid = AddResult.IS_BUSY
                 }
             }
             return isValid

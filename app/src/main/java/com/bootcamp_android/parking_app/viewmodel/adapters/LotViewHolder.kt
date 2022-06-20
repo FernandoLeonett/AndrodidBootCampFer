@@ -4,10 +4,10 @@ import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.domain.model.Lot
-import com.bootcamp_android.domain.util.Utils.formatDateForLotList
-import com.bootcamp_android.domain.util.Utils.timeFormat
 import com.bootcamp_android.parking_app.databinding.FragmentLotBinding
 import com.bootcamp_android.parking_app.utils.Utils
+import com.bootcamp_android.parking_app.utils.Utils.formatDateForLotList
+import com.bootcamp_android.parking_app.utils.Utils.timeFormat
 
 class LotViewHolder(
     private val view: View
@@ -18,18 +18,18 @@ class LotViewHolder(
 
         binding.apply {
             if(lot.free) {
-                itemView.setBackgroundColor(Color.parseColor("#567845"));
+                itemView.setBackgroundColor(Color.parseColor(Utils.FREE_COLOR))
                 textHourLot.text = ""
-                textDateLot.text = Utils.free
-
+                textDateLot.text = Utils.FREE
             } else {
                 textHourLot.text = formatDateForLotList(lot.dateTimeAvailable)
-                textDateLot.text  = timeFormat(lot.dateTimeAvailable)
+                textDateLot.text = timeFormat(lot.dateTimeAvailable)
+                itemView.setBackgroundColor(Color.parseColor(Utils.BUSY_COLOR))
             }
 
 
             textIdLot.text = lot.parkingLot.toString()
-            itemView.setOnClickListener { //
+            itemView.setOnClickListener {
                 listener(lot)
             }
         }

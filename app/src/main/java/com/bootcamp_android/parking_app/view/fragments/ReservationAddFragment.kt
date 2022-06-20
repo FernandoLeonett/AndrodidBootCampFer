@@ -16,7 +16,9 @@ import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.util.AddResult
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
+import com.bootcamp_android.parking_app.utils.AddReservationRequest
 import com.bootcamp_android.parking_app.utils.DateReservation
+import com.bootcamp_android.parking_app.utils.Utils
 import com.bootcamp_android.parking_app.viewmodel.AddReservationViewModel
 import com.bootcamp_android.parking_app.viewmodel.ViewModelFactory
 import java.util.*
@@ -29,10 +31,10 @@ class ReservationAddFragment : Fragment() {
     private var selectedLot = -1
     private var authorizationCode = ""
     private var initialDate = DateReservation()
-    private var finalDate = DateReservation() //    private var spinnerList = mutableListOf<String>()
+    private var finalDate = DateReservation()
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
-    ): View? { // Inflate the layout for this fragment
+    ): View? {
         viewModelFactory = ViewModelFactory(requireContext())
         addReservationViewModel = ViewModelProvider(
             this,viewModelFactory
@@ -53,41 +55,28 @@ class ReservationAddFragment : Fragment() {
                     "",authorizationCode,initialDate.dateInMilliseconds,finalDate.dateInMilliseconds,selectedLot
                 )
                 addReservationViewModel.addReservation(res)
-                var ok = addReservationViewModel.validateUserData
+                var msg = ""
+                val ok = addReservationViewModel.validateUserData
                 if(ok.successRequest) {
                     addReservationViewModel.successfulAdded.observe(viewLifecycleOwner) {
-                        if(it ==AddResult.IS_FREE) {
+                        if(it == AddResult.IS_FREE) {
                             val action =
                                 ReservationAddFragmentDirections.actionFragmentAddReservationToLotListFragment()
                             findNavController().navigate(action)
-                            Toast.makeText(context,"Added correctly",Toast.LENGTH_LONG).show()
                         } else {
-                            Toast.makeText(context,"Could not be processed",Toast.LENGTH_LONG).show()
+                            msg = getString(R.string.msg_reservation_add_error)
                         }
                     }
                 } else {
-                    var msg = ""
-
-                    if(!ok.lot) {
-                        msg = "check the lot"
-                    }
-                    if(!ok.endDate) {
-                        msg += "check the end date"
-                    }
-                    if(!ok.authorizationCode) {
-                        msg += "check the authorization code"
-                    }
-                    if(!ok.orderDate) {
-                        msg += "the end date must be bigger than start date"
-                    }
-                    Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
+                    msg = errorMessageAdd(ok)
                 }
+                Toast.makeText(activity,msg,Toast.LENGTH_SHORT).show()
             }
             textSelectStartDateReservation.setOnClickListener {
-                showDateTimePickerDialog(initialDate)
+                showDateTimePickerDialog(initialDate,view,0)
             }
             textSelectEndDateReservation.setOnClickListener {
-                showDateTimePickerDialog(finalDate)
+                showDateTimePickerDialog(finalDate,view,1)
             }
 
             lotsOptionsSpinner.apply {
@@ -97,6 +86,7 @@ class ReservationAddFragment : Fragment() {
                 )
 
                 addReservationViewModel.lots.observe(viewLifecycleOwner) { lots ->
+                    adapter.add(Utils.spinnerDefaultValue)
                     lots.forEach {
                         adapter.add(it.parkingLot)
                     }
@@ -106,33 +96,52 @@ class ReservationAddFragment : Fragment() {
                     override fun onItemSelected(
                         parent: AdapterView<*>,view: View,position: Int,id: Long
                     ) {
-                        selectedLot = adapter.getItem(position) as Int
-
-                        Toast.makeText(
-                            activity,"$selectedLot",Toast.LENGTH_SHORT
-                        ).show()
+                        if(parent.getItemAtPosition(position) != Utils.spinnerDefaultValue) {
+                            selectedLot = parent.getItemAtPosition(position) as Int
+                        }
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>) { // write code to perform some action
+                    override fun onNothingSelected(parent: AdapterView<*>) {
                     }
                 }
             }
         }
     }
 
-    private fun showDateTimePickerDialog(date: DateReservation) {
+    private fun errorMessageAdd(ok: AddReservationRequest): String {
+        var msg = ""
+        if(!ok.lot) {
+            msg = getString(R.string.msg_reservation_add_error_lot)
+        }
+        if(!ok.endDate) {
+            msg += getString(R.string.msg_reservation_add_error_end_date)
+        }
+        if(!ok.startDate) {
+            msg += getString(R.string.msg_reservation_add_error_start_date)
+        }
+        if(!ok.authorizationCode) {
+            msg += getString(R.string.msg_reservation_add_error_auth)
+        }
+        if(!ok.orderDate) {
+            msg += getString(R.string.msg_reservation_add_error_order_date)
+        }
+        return msg
+    }
+
+    private fun showDateTimePickerDialog(date: DateReservation,view: View,inputDate: Int) {
+        binding = FragmentAddReservationBinding.bind(view)
         val calendar = Calendar.getInstance()
         val listenerHour = TimePickerDialog.OnTimeSetListener { _,hour,minutes ->
             calendar[Calendar.HOUR_OF_DAY] = hour
             calendar[Calendar.MINUTE] = minutes
+            val day: Int = calendar[Calendar.DAY_OF_MONTH]
+            val month: Int = calendar[Calendar.MONTH]
+            val year: Int = calendar[Calendar.YEAR]
+            val input =
+                if(inputDate == 0) binding?.textSelectStartDateReservation else binding?.textSelectEndDateReservation
+
+            input?.text = getString(R.string.text_date,day,month + 1,year,hour,minutes)
             date.dateInMilliseconds = calendar.timeInMillis
-            Toast.makeText(
-                activity,"$hour:$minutes",Toast.LENGTH_LONG
-            ).show() //            Log.d(
-            //                TAG,"fecha: ${
-            //                    date.dateInMilliseconds
-            //                }"
-            //            )
         }
         TimePickerDialog(
             activity,listenerHour,calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false
@@ -141,10 +150,6 @@ class ReservationAddFragment : Fragment() {
             calendar[Calendar.YEAR] = year
             calendar[Calendar.MONTH] = month
             calendar[Calendar.DAY_OF_MONTH] = day
-
-            Toast.makeText(
-                activity,"$day/$month/$year",Toast.LENGTH_LONG
-            ).show()
         }
         val datePicker = DatePickerDialog(
             requireContext(),

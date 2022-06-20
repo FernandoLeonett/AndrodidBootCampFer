@@ -1,9 +1,7 @@
 package com.bootcamp_android.data.room.dao
 
-
 import androidx.room.*
 import com.bootcamp_android.data.room.entities.ReservationRoom
-
 
 @Dao
 interface ReservationDao {
@@ -16,7 +14,6 @@ interface ReservationDao {
 
     @Delete
     fun deleteReservation(deleteReservation: ReservationRoom)
-
 }
 
 

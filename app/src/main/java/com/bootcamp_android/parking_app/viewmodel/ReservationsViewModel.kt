@@ -18,7 +18,7 @@ class ReservationsViewModel(
 ) : ViewModel() {
 
     val successfullyDeleted = MutableLiveData<DeleteReservationRequest>()
-    lateinit var validateUserData: DeleteReservationRequest
+//    lateinit var validateUserData: DeleteReservationRequest
 
     fun deleteReservation(reservation: Reservation,authorizationCode: String) = viewModelScope.launch {
         if(reservation.authorizationCode == authorizationCode) {

@@ -34,7 +34,7 @@ class AddReservationViewModel(
         if(validateUserData.successRequest) {
             if((withContext(Dispatchers.IO) { validateReservationUseCase(reservation) } == AddResult.IS_FREE)) {
                 when(withContext(Dispatchers.IO) { addReservationUseCase(reservation) }) {
-                    is Result.Success -> { //                    successfulAdded.postValue(true)
+                    is Result.Success -> {
                         successfulAdded.postValue(AddResult.IS_FREE)
                     }
                     is Result.Failure -> {
@@ -46,6 +46,7 @@ class AddReservationViewModel(
             }
         }
     }
+
 
     fun loadLots() = viewModelScope.launch {
         val lotResponse: List<Lot> = withContext(Dispatchers.IO) { getLotsUseCase.getLots() }

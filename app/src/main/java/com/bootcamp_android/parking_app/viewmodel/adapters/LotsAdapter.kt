@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.domain.model.Lot
-import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 
 class LotsAdapter(private val lotData: List<Lot>,private val listener: (Lot) -> Unit) :
@@ -12,7 +11,7 @@ class LotsAdapter(private val lotData: List<Lot>,private val listener: (Lot) -> 
 
     override fun onCreateViewHolder(
         parent: ViewGroup,viewType: Int
-    ): LotViewHolder { // here i cannot get one view holder, that`s the reason i assign an custom int to the view type in getItemViewType
+    ): LotViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_lot,parent,false)
 
         return LotViewHolder(view)

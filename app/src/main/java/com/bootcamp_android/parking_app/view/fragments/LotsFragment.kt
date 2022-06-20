@@ -20,8 +20,7 @@ class LotsFragment : Fragment() {
     private lateinit var lotsViewModel: LotsViewModel
     private lateinit var viewModelFactory: ViewModelFactory
     private var binding: FragmentLotsBinding? = null
-    private var free = 0
-    private var busy = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?
     ): View? {
@@ -29,8 +28,6 @@ class LotsFragment : Fragment() {
         lotsViewModel = ViewModelProvider(
             this,viewModelFactory
         ).get(LotsViewModel::class.java)
-
-
         return inflater.inflate(R.layout.fragment_lots,container,false)
     }
 
@@ -41,9 +38,6 @@ class LotsFragment : Fragment() {
         lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
             initRecycleLots(lots)
         }
-
-
-
         binding?.apply {
             fab.setOnClickListener {
                 val action = LotsFragmentDirections.fabLotToAdd()
@@ -52,17 +46,7 @@ class LotsFragment : Fragment() {
         }
     }
 
-    private fun lotClick(lot: Lot) {
-        val action = LotsFragmentDirections.btnLotToRes(lot,lot.parkingLot.toString())
-        findNavController().navigate(action)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
-    }
-
-    private fun initRecycleLots(lots: List<Lot>) { //
+    private fun initRecycleLots(lots: List<Lot>) {
         binding?.apply {
             recyclerLotList.apply {
                 layoutManager = LinearLayoutManager(activity)
@@ -70,19 +54,31 @@ class LotsFragment : Fragment() {
             }
             val totalLots = lots.size
             val freeLots = lotsViewModel.geNumberOfFreeLots(lots)
-            val busyLots =totalLots -freeLots
-            free.text ="Free $freeLots"
-            busy.text = "Busy $busyLots"
+            val busyLots = totalLots - freeLots
+            free.text = getString(R.string.lots_free,freeLots)
+            busy.text = getString(R.string.lots_busy,busyLots)
 
 
-            pbarAvailability.max = lots.size
+            lots.size.also {
+                pbarAvailability.max = it
+            }
             pbarAvailability.progress = busyLots
         }
+    }
+
+    private fun lotClick(lot: Lot) {
+        val action = LotsFragmentDirections.btnLotToRes(lot.parkingLot.toString())
+        findNavController().navigate(action)
     }
 
     override fun onResume() {
         super.onResume()
         lotsViewModel.loadLots()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }
 

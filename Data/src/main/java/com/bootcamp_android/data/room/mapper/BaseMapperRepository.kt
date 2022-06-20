@@ -1,8 +1,6 @@
 package com.bootcamp_android.data.room.mapper
 
-
-
-interface BaseMapperRepository<E, D, F> {
+interface BaseMapperRepository<E,D,F> {
 
     fun transformFromRoomToDomain(type: E): D
 
@@ -11,5 +9,4 @@ interface BaseMapperRepository<E, D, F> {
     fun transformFromRepositoryToDomain(type: F): D
 
     fun transformFromRepositoryToRoom(type: F): E
-
 }

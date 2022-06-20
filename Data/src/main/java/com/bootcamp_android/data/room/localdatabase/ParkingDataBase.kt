@@ -10,7 +10,8 @@ import com.bootcamp_android.data.room.entities.LotRoom
 import com.bootcamp_android.data.room.entities.ReservationRoom
 
 @Database(
-    entities = [LotRoom::class, ReservationRoom::class],version = 1)
+    entities = [LotRoom::class,ReservationRoom::class],version = 1
+)
 abstract class ParkingDataBase : RoomDatabase() {
 
     companion object {
@@ -20,23 +21,16 @@ abstract class ParkingDataBase : RoomDatabase() {
 
         @Synchronized
         fun getInstance(context: Context): ParkingDataBase {
-            if (!this::instance.isInitialized) {
+            if(!this::instance.isInitialized) {
                 instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    ParkingDataBase::class.java,
-                    DATABASE_NAME
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
+                    context.applicationContext,ParkingDataBase::class.java,DATABASE_NAME
+                ).fallbackToDestructiveMigration().build()
             }
             return instance
         }
-
     }
 
     abstract fun getLotsDao(): LotDao
     abstract fun getReservationDao(): ReservationDao
-
-
 }
 

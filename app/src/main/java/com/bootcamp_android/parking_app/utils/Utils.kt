@@ -4,13 +4,17 @@ import java.text.SimpleDateFormat
 
 object Utils {
 
-    const val free:String= "Free"
-    const val oneHourMilliseconds = 3600000
-    const val  oneMinuteMilliseconds =60000
+    const val FREE:String= "Free"
+    const val BUSY:String= "busy"
+    const val spinnerDefaultValue ="Select a Lot"
+    const val  FREE_COLOR = "#606c38"
+    const val  BUSY_COLOR = "#283618"
+
+
 
 
     private fun String.capitalizeWords(): String =
-        split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } } //    fun isMarkedAsFree(startDate: Long,endDate: Long) = System.currentTimeMillis() !in startDate..endDate
+        split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
     fun formatDateForLotList(date: Long): String {
         val simpleDateFormat = SimpleDateFormat("EEEE d MMMM yyyy")
         return simpleDateFormat.format(date).capitalizeWords()

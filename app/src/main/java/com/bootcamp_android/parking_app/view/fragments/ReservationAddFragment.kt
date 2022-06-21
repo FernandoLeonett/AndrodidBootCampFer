@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -138,6 +139,11 @@ class ReservationAddFragment : Fragment() {
     }
 
     private fun successAddMessage() {
+        binding?.apply {
+            textSelectEndDateReservation?.text =""
+            textSelectStartDateReservation?.text=""
+            textAuth.text.clear()
+        }
         AlertDialog.Builder(requireContext()).apply {
             setTitle(getString(R.string.msg_reservation_add_success))
             setMessage(R.string.msg_continue_adding).setPositiveButton(getString(R.string.text_btn_add_positive)) { dialogInterface,_ ->

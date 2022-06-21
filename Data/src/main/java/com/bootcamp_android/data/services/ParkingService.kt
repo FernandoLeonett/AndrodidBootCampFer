@@ -5,12 +5,14 @@ import com.bootcamp_android.data.services.response.LotResponse
 
 import com.bootcamp_android.data.services.retrofit_instance.RetrofitInstance
 import com.bootcamp_android.domain.model.Reservation
+import com.bootcamp_android.domain.repostories.IReservationRepository
 import com.bootcamp_android.domain.util.Result
 import com.bootcamp_android.domain.util.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ParkingService { companion object {
+class ParkingService  {
+    companion object {
 
     const val PARKING_ID = Utils.parkingId
 }

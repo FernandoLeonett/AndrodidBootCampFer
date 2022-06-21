@@ -7,6 +7,7 @@ import com.bootcamp_android.domain.model.Lot
 import com.bootcamp_android.parking_app.databinding.FragmentLotBinding
 import com.bootcamp_android.parking_app.utils.Utils
 import com.bootcamp_android.parking_app.utils.Utils.formatDateForLotList
+import com.bootcamp_android.parking_app.utils.Utils.timeAvailable
 import com.bootcamp_android.parking_app.utils.Utils.timeFormat
 
 class LotViewHolder(
@@ -24,11 +25,14 @@ class LotViewHolder(
             } else {
                 textHourLot.text = formatDateForLotList(lot.dateTimeAvailable)
                 textDateLot.text = timeFormat(lot.dateTimeAvailable)
-                itemView.setBackgroundColor(Color.parseColor(Utils.BUSY_COLOR))
+                itemView.setBackgroundColor(
+                    Color.parseColor(Utils.BUSY_COLOR)
+                )
             }
 
 
             textIdLot.text = lot.parkingLot.toString()
+            timeAvailable.text = timeAvailable(lot.availableForTime)
             itemView.setOnClickListener {
                 listener(lot)
             }

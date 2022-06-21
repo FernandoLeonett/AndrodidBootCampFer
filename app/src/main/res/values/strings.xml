@@ -13,7 +13,7 @@
     <string name="title_reservations_detail">Lot # {lot_id}</string>
     <string name="btn_delete">DELETE</string>
     <string name="title_reservation">Add Reservation</string>
-    <string name="text_date">date: %1$d/%2$d/%3$d hour: %4$d:%5$d</string>
+<!--    <string name="text_date">date: %1$d/%2$d/%3$d hour: %4$d:%5$d</string>-->
     <string name="btn_save">SAVE</string>
     <string name="msg_lot_is_busy">the selected lot is busy just now</string>
     <string name="placeholder_spinner">Lot </string>

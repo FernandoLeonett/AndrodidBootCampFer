@@ -39,6 +39,7 @@ class FillLotsUseCase {
                 this.free = true
             } else if(res.startDate > actual) {
                 this.free = true
+                availableForTime =res.startDate-actual
             } else {
                 var index = reservations.indexOf(res)
                 while (index < reservations.size - 1 && dateTimeAvailable == -1L) {
@@ -46,7 +47,7 @@ class FillLotsUseCase {
                     if(space > 0) {
                         dateTimeAvailable = reservations[index].endDate
                         if(index < reservations.size - 1) {
-                            availableForTime = space
+                            this.availableForTime = space
                         }
                     } else {
                         index++

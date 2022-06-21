@@ -48,7 +48,6 @@ class ReservationAddFragment : Fragment() {
     override fun onViewCreated(
         view: View,savedInstanceState: Bundle?
     ) {
-
         binding = FragmentAddReservationBinding.bind(view)
         binding?.apply {
             buttonSave.setOnClickListener {
@@ -99,7 +98,8 @@ class ReservationAddFragment : Fragment() {
                         parent: AdapterView<*>,view: View,position: Int,id: Long
                     ) {
                         if(parent.getItemAtPosition(position) != Utils.spinnerDefaultValue) {
-                            selectedLot = (parent.getItemAtPosition(position) as String ).replace(Utils.PLACEHOLDER_LOT,"").toInt()
+                            selectedLot =
+                                (parent.getItemAtPosition(position) as String).replace(Utils.PLACEHOLDER_LOT,"").toInt()
                         }
                     }
 
@@ -146,13 +146,10 @@ class ReservationAddFragment : Fragment() {
         val listenerHour = TimePickerDialog.OnTimeSetListener { _,hour,minutes ->
             calendar[Calendar.HOUR_OF_DAY] = hour
             calendar[Calendar.MINUTE] = minutes
-            val day: Int = calendar[Calendar.DAY_OF_MONTH]
-            val month: Int = calendar[Calendar.MONTH]
-            val year: Int = calendar[Calendar.YEAR]
             val input =
                 if(inputDate == 0) binding?.textSelectStartDateReservation else binding?.textSelectEndDateReservation
 
-            input?.text = getString(R.string.text_date,day,month + 1,year,hour,minutes)
+            input?.text = Utils.formatDateInput(calendar.timeInMillis)
             date.dateInMilliseconds = calendar.timeInMillis
         }
         TimePickerDialog(

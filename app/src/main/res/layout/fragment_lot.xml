@@ -20,6 +20,16 @@
         app:layout_constraintTop_toBottomOf="@id/text_date_lot" />
 
     <TextView
+        android:id="@+id/time_available"
+        android:layout_width="272dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="20dp"
+        android:textAppearance="@style/pm"
+        android:textColor="#AE0F0F"
+        app:layout_constraintStart_toEndOf="@+id/vw_figure_id"
+        app:layout_constraintTop_toBottomOf="@+id/text_hour_lot" />
+
+    <TextView
         android:id="@+id/text_date_lot"
         android:layout_width="272dp"
         android:layout_height="23dp"

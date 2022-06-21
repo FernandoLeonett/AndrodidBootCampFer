@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/lotListFragment">
+    <!-- First screen   -->
+    <fragment
+        android:id="@+id/lotListFragment"
+        android:name="com.bootcamp_android.parking_app.view.fragments.LotsFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_lots"
+        >
+        <action
+            android:id="@+id/btn_lot_to_res"
+            app:destination="@id/reservationListFragment" />
+        <action
+            android:id="@+id/fab_lot_to_add"
+            app:destination="@id/fragmentAddReservation" />
+    </fragment>
+    <!--  second screen-->
+    <fragment
+        android:id="@+id/reservationListFragment"
+        android:name="com.bootcamp_android.parking_app.view.fragments.ReservationListFragment"
+        android:label="@string/title_reservations_detail"
+        tools:layout="@layout/fragment_reservations">
+        <action
+            android:id="@+id/fab_res_to_add"
+            app:destination="@id/fragmentAddReservation" />
+        <argument
+            android:name="lot_id"
+            app:argType="integer" />
+    </fragment>
+    <!--    third screen-->
+    <fragment
+        android:id="@+id/fragmentAddReservation"
+        android:name="com.bootcamp_android.parking_app.view.fragments.ReservationAddFragment"
+        android:label="@string/title_reservation"
+        tools:layout="@layout/fragment_add_reservation">
+        <action
+            android:id="@+id/action_fragmentAddReservation_to_lotListFragment"
+            app:destination="@id/lotListFragment" />
+    </fragment>
+</navigation>

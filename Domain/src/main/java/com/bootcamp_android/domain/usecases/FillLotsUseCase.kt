@@ -20,6 +20,7 @@ class FillLotsUseCase {
             if(lot != null) {
                 emptyLot.reservations = lot.reservations
             }
+      
             emptyLot.calculateTimeAvailable()
         }
         return lots

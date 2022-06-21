@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -64,11 +63,7 @@ class ReservationAddFragment : Fragment() {
                 } else {
                     addReservationViewModel.successfulAdded.observe(viewLifecycleOwner) { result ->
                         if(result == AddResult.IS_FREE) {
-                            val action =
-                                ReservationAddFragmentDirections.actionFragmentAddReservationToLotListFragment()
-                            findNavController().navigate(action)
-                            Toast.makeText(activity,getString(R.string.msg_reservation_add_success),Toast.LENGTH_SHORT)
-                                .show()
+                            successAddMessage()
                         } else {
                             errorMessageAdd(ok)
                         }
@@ -139,6 +134,19 @@ class ReservationAddFragment : Fragment() {
             setMessage(msg).setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
                 dialogInterface.dismiss()
             }.show()
+        }
+    }
+
+    private fun successAddMessage() {
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle(getString(R.string.msg_reservation_add_success))
+            setMessage(R.string.msg_continue_adding).setPositiveButton(getString(R.string.text_btn_add_positive)) { dialogInterface,_ ->
+                dialogInterface.dismiss()
+            }.setNegativeButton(getString(R.string.text_btn_add_negative)) { dialogInterface,_ ->
+                val action = ReservationAddFragmentDirections.actionFragmentAddReservationToLotListFragment()
+                findNavController().navigate(action)
+            }
+            show()
         }
     }
 

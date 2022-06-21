@@ -3,6 +3,7 @@ package com.bootcamp_android.parking_app.utils
 import com.bootcamp_android.domain.model.Reservation
 
 data class AddReservationRequest(
+    val reservation: Reservation,
     var lot: Boolean = true,
     var startDate: Boolean = true,
     var endDate: Boolean = true,
@@ -11,27 +12,26 @@ data class AddReservationRequest(
     var successRequest: Boolean = false,
 ) {
 
-    operator fun invoke(reservation: Reservation) = validate(reservation)
+    init {
+        validate()
+    }
 
-    private fun validate(reservation: Reservation): AddReservationRequest {
-        val ok = AddReservationRequest()
+    private fun validate() {
         if(reservation.authorizationCode == "") {
-            ok.authorizationCode = false
+            authorizationCode = false
         }
         if(reservation.parkingLot == -1) {
-            ok.lot = false
+            lot = false
         }
         if(reservation.endDate == -1L) {
-            ok.endDate = false
+            endDate = false
         }
         if(reservation.startDate == -1L) {
-            ok.startDate = false
+            startDate = false
         }
         if(reservation.endDate < reservation.startDate) {
-            ok.orderDate = false
+            orderDate = false
         }
-        ok.successRequest = orderDate && endDate && startDate && lot && authorizationCode
-
-        return ok
+        successRequest = orderDate && endDate && startDate && lot && authorizationCode
     }
 }

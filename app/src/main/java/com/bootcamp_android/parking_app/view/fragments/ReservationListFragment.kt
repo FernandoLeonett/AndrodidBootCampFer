@@ -8,13 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.util.DeleteReservationRequest
 import com.bootcamp_android.parking_app.R
@@ -66,18 +64,16 @@ class ReservationListFragment : Fragment() {
     private fun initRecycleReservations(reservations: MutableList<Reservation>) {
         binding?.apply {
             recyclerReservationList.apply {
-
                 layoutManager = LinearLayoutManager(activity)
                 adapter = ReservationsAdapter(reservations) { reservation,pos ->
                     onDeleteClick(adapter as ReservationsAdapter,reservations,reservation,pos)
-
                 }
             }
         }
     }
 
     private fun onDeleteClick(
-       adapter: ReservationsAdapter,reservations: MutableList<Reservation>, reservation: Reservation,pos: Int
+        adapter: ReservationsAdapter,reservations: MutableList<Reservation>,reservation: Reservation,pos: Int
     ) {
         val builder = AlertDialog.Builder(requireContext())
 
@@ -86,15 +82,17 @@ class ReservationListFragment : Fragment() {
         input.inputType = InputType.TYPE_CLASS_NUMBER
 
         builder.setView(input).setMessage(getString(R.string.dialog_message_delete_reservation)).setCancelable(true)
-            .setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
+            .setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ -> //                addReservationViewModel.addReservation(res)
                 reservationsViewModel.deleteReservation(
                     reservation,input.text.toString()
                 )
-
-                if(reservationsViewModel.validateUserData == DeleteReservationRequest.BAD_AUTHORIZATION_CODE) {
-                    errorMessagedDeleted(reservationsViewModel.validateUserData)
+                val ok = reservationsViewModel.validateUserData
+                if(ok != DeleteReservationRequest.SUCCESS_REQUEST) {
+                    dialogInterface.dismiss()
+                    errorMessagedDeleted(ok)
                 } else {
                     reservationsViewModel.successfullyDeleted.observe(viewLifecycleOwner) {
+                        dialogInterface.dismiss()
                         if(it == DeleteReservationRequest.SUCCESS_RESULT) {
                             if(pos <= reservations.size && reservations.isNotEmpty()) {
                                 reservations.removeAt(pos)
@@ -109,26 +107,27 @@ class ReservationListFragment : Fragment() {
                         }
                     }
                 }
-
-
-                dialogInterface.dismiss()
             }.setNegativeButton(getString(R.string.text_btn_delete_negative)) { dialogInterface,_ ->
                 dialogInterface.cancel()
             }.show()
     }
 
     private fun errorMessagedDeleted(ok: DeleteReservationRequest) {
-        val msg = if(ok == DeleteReservationRequest.BAD_AUTHORIZATION_CODE) {
-            getString(R.string.msg_reservation_delete_error_authorization_code)
-        } else {
-            getString(R.string.msg_server_error)
+        val msg = when(ok) {
+            DeleteReservationRequest.BAD_AUTHORIZATION_CODE -> {
+                getString(R.string.check_auth_code)
+            }
+            DeleteReservationRequest.CURRENT_RESERVATION -> getString(R.string.msg_reservation_delete_error_current_reservation)
+            else -> getString(R.string.msg_server_error)
         }
         AlertDialog.Builder(requireContext()).apply {
             setTitle(getString(R.string.title_delete_dialog_reservation))
             setMessage(msg).setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
                 dialogInterface.dismiss()
+
+
             }
-            show()
+            this.show()
         }
     }
 
@@ -141,5 +140,4 @@ class ReservationListFragment : Fragment() {
         super.onDestroy()
         binding = null
     }
-
 }

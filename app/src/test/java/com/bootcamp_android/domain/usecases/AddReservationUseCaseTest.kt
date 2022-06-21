@@ -1,6 +1,11 @@
 package com.bootcamp_android.domain.usecases
 
+import com.bootcamp_android.data.repositories.LotRepository
+import com.bootcamp_android.data.repositories.ReservationRepository
+import com.bootcamp_android.data.room.localdatabase.ParkingDataBase
+import com.bootcamp_android.data.services.ParkingService
 import com.bootcamp_android.domain.model.Reservation
+import com.bootcamp_android.domain.repostories.ILotsRepository
 import com.bootcamp_android.domain.repostories.IReservationRepository
 import com.bootcamp_android.domain.util.Result
 import io.mockk.MockKAnnotations
@@ -8,6 +13,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.runBlocking
+import org.hamcrest.core.Every
 import org.junit.Before
 import org.junit.Test
 
@@ -15,6 +21,7 @@ internal class AddReservationUseCaseTest {
 
     @RelaxedMockK
     private lateinit var reservationRepository: IReservationRepository
+
     private lateinit var addReservationUseCase: AddReservationUseCase
 
     @Before
@@ -29,7 +36,7 @@ internal class AddReservationUseCaseTest {
 
     @Test
     fun `verify connect one time wit reservation repository`() = runBlocking {
-        var reservation = Reservation("1","1",System.currentTimeMillis(),System.currentTimeMillis() + 1,12)
+        val reservation = Reservation("1","1",System.currentTimeMillis(),System.currentTimeMillis() + 1,12)
 
         coEvery { reservationRepository.addReservation(reservation) } returns Result.Success(true)
 

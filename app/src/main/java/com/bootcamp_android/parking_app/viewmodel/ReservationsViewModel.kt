@@ -20,22 +20,22 @@ class ReservationsViewModel(
 
     fun deleteReservation(reservation: Reservation,authorizationCode: String) = viewModelScope.launch {
         if(reservation.authorizationCode == authorizationCode) {
-            validateUserData = DeleteReservationRequest.SUCCESS_REQUEST
-            when(withContext(Dispatchers.IO) { deleteReservationUseCase(reservation,authorizationCode) }) {
-                is Result.Success -> {
-                    successfullyDeleted.postValue(DeleteReservationRequest.SUCCESS_RESULT)
+            if(System.currentTimeMillis() !in reservation.startDate..reservation.endDate) {
+                validateUserData = DeleteReservationRequest.SUCCESS_REQUEST
 
-
+                when(withContext(Dispatchers.IO) { deleteReservationUseCase(reservation,authorizationCode) }) {
+                    is Result.Success -> {
+                        successfullyDeleted.postValue(DeleteReservationRequest.SUCCESS_RESULT)
+                    }
+                    is Result.Failure -> {
+                        successfullyDeleted.postValue(DeleteReservationRequest.ERROR)
+                    }
                 }
-                is Result.Failure -> {
-                    successfullyDeleted.postValue(DeleteReservationRequest.ERROR)
-
-
-                }
+            } else { // bad code
+                validateUserData = DeleteReservationRequest.CURRENT_RESERVATION
             }
-        } else { // bad code
-         validateUserData = DeleteReservationRequest.BAD_AUTHORIZATION_CODE
-
+        } else {
+            validateUserData = DeleteReservationRequest.BAD_AUTHORIZATION_CODE
         }
     }
 }

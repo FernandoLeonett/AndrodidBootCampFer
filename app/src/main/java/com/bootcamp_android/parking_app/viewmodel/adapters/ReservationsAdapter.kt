@@ -7,7 +7,7 @@ import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.parking_app.R
 
 class ReservationsAdapter(
-    private val reservationData: MutableList<Reservation>,private val clickDelete: (Reservation,Int) -> Unit
+    private val reservationData: MutableList<Reservation>,private var listener: (Reservation,Int) -> Unit
 ) : RecyclerView.Adapter<ReservationViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -19,8 +19,10 @@ class ReservationsAdapter(
 
     override fun onBindViewHolder(holder: ReservationViewHolder,position: Int) {
         val item = reservationData[position]
-        holder.bind(item,clickDelete,position)
+        holder.bind(item,listener)
     }
 
     override fun getItemCount() = reservationData.size
 }
+
+

@@ -31,11 +31,11 @@ class FillLotsUseCase {
             val actual: Long = System.currentTimeMillis()
             val res =
                 if(this.reservations.size == 1) reservations[0] else // filtering the reservations have begun before current time
-                    reservations.sortedBy { it.endDate }.last {
+                    reservations.sortedBy { it.endDate }.maxByOrNull {
                         it.startDate < actual // filtering the reservations have begun before current time
                     } // get the most recent reservation before current
 
-            if(res.endDate < actual) { // if the most recent reservation has finished then set its
+            if(res?.endDate!! < actual) { // if the most recent reservation has finished then set its
                 //                this.dateTimeAvailable = res.endDate
                 this.free = true
             } else if(res.startDate > actual) {

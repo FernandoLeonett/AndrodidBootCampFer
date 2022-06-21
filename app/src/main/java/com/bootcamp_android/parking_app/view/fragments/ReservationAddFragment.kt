@@ -147,10 +147,11 @@ class ReservationAddFragment : Fragment() {
         AlertDialog.Builder(requireContext()).apply {
             setTitle(getString(R.string.msg_reservation_add_success))
             setMessage(R.string.msg_continue_adding).setPositiveButton(getString(R.string.text_btn_add_positive)) { dialogInterface,_ ->
-                dialogInterface.dismiss()
+                dialogInterface.cancel()
             }.setNegativeButton(getString(R.string.text_btn_add_negative)) { dialogInterface,_ ->
-                val action = ReservationAddFragmentDirections.actionFragmentAddReservationToLotListFragment()
-                findNavController().navigate(action)
+                dialogInterface.dismiss()
+
+                findNavController().popBackStack()
             }
             show()
         }

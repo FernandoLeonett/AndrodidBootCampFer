@@ -10,7 +10,7 @@ import com.bootcamp_android.parking_app.utils.Utils.timeFormat
 
 class ReservationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(reservation: Reservation,listener: (Reservation,Int) -> Unit, pos:Int) {
+    fun bind(reservation: Reservation,  listener:(Reservation,Int)->Unit) {
         val binding = FragmentReservationBinding.bind(view)
         binding.apply {
             textDateStart.text =
@@ -21,7 +21,11 @@ class ReservationViewHolder(private val view: View) : RecyclerView.ViewHolder(vi
                 timeFormat(reservation.startDate)
             textHourStart.text =
                 timeFormat(reservation.startDate)
-           btnDeleteReservation.setOnClickListener { listener(reservation,pos) }
+
+
+           btnDeleteReservation.setOnClickListener{
+               listener(reservation,absoluteAdapterPosition)
+           }
         }
     }
 }

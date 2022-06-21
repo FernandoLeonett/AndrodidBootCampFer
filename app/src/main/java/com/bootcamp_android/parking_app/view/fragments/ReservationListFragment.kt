@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -65,18 +66,18 @@ class ReservationListFragment : Fragment() {
     private fun initRecycleReservations(reservations: MutableList<Reservation>) {
         binding?.apply {
             recyclerReservationList.apply {
+
                 layoutManager = LinearLayoutManager(activity)
                 adapter = ReservationsAdapter(reservations) { reservation,pos ->
-                    onDeleteClick(
-                        reservation,this,reservations,pos
-                    )
+                    onDeleteClick(adapter as ReservationsAdapter,reservations,reservation,pos)
+
                 }
             }
         }
     }
 
     private fun onDeleteClick(
-        reservation: Reservation,recyclerView: RecyclerView,reservations: MutableList<Reservation>,pos: Int
+       adapter: ReservationsAdapter,reservations: MutableList<Reservation>, reservation: Reservation,pos: Int
     ) {
         val builder = AlertDialog.Builder(requireContext())
 
@@ -97,10 +98,11 @@ class ReservationListFragment : Fragment() {
                         if(it == DeleteReservationRequest.SUCCESS_RESULT) {
                             if(pos <= reservations.size && reservations.isNotEmpty()) {
                                 reservations.removeAt(pos)
-                                recyclerView.adapter?.notifyItemRemoved(pos) //
+                                adapter.notifyItemRemoved(pos)
                                 Toast.makeText(
                                     activity,getString(R.string.msg_reservation_delete_success),Toast.LENGTH_SHORT
                                 ).show()
+                                initRecycleReservations(reservations)
                             }
                         } else {
                             errorMessagedDeleted(it)
@@ -139,4 +141,5 @@ class ReservationListFragment : Fragment() {
         super.onDestroy()
         binding = null
     }
+
 }

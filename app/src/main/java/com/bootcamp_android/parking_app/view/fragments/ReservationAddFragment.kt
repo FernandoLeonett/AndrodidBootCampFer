@@ -57,7 +57,9 @@ class ReservationAddFragment : Fragment() {
                 )
                 addReservationViewModel.addReservation(res)
                 val ok = addReservationViewModel.validateUserData
-                if(ok.successRequest) {
+                if(!ok.successRequest) {
+                    errorMessageAdd(ok)
+                } else {
                     addReservationViewModel.successfulAdded.observe(viewLifecycleOwner) { result ->
                         if(result == AddResult.IS_FREE) {
                             val action =
@@ -65,45 +67,45 @@ class ReservationAddFragment : Fragment() {
                             findNavController().navigate(action)
                             Toast.makeText(activity,getString(R.string.msg_reservation_add_success),Toast.LENGTH_SHORT)
                                 .show()
-                        } else {
+                        }else{
+
                             errorMessageAdd(ok)
                         }
                     }
-                } else {
-                    errorMessageAdd(ok)
-                }
-            }
-            textSelectStartDateReservation.setOnClickListener {
-                showDateTimePickerDialog(initialDate,view,0)
-            }
-            textSelectEndDateReservation.setOnClickListener {
-                showDateTimePickerDialog(finalDate,view,1)
-            }
-
-            lotsOptionsSpinner.apply {
-                addReservationViewModel.loadLots()
-                val adapter = ArrayAdapter<Any>(
-                    requireContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item
-                )
-
-                addReservationViewModel.lots.observe(viewLifecycleOwner) { lots ->
-                    adapter.add(Utils.spinnerDefaultValue)
-                    lots.forEach {
-                        adapter.add(Utils.PLACEHOLDER_LOT + it.parkingLot)
+                    textSelectStartDateReservation.setOnClickListener {
+                        showDateTimePickerDialog(initialDate,view,0)
                     }
-                }
-                this.adapter = adapter
-                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,view: View,position: Int,id: Long
-                    ) {
-                        if(parent.getItemAtPosition(position) != Utils.spinnerDefaultValue) {
-                            selectedLot =
-                                (parent.getItemAtPosition(position) as String).replace(Utils.PLACEHOLDER_LOT,"").toInt()
+                    textSelectEndDateReservation.setOnClickListener {
+                        showDateTimePickerDialog(finalDate,view,1)
+                    }
+
+                    lotsOptionsSpinner.apply {
+                        addReservationViewModel.loadLots()
+                        val adapter = ArrayAdapter<Any>(
+                            requireContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item
+                        )
+
+                        addReservationViewModel.lots.observe(viewLifecycleOwner) { lots ->
+                            adapter.add(Utils.spinnerDefaultValue)
+                            lots.forEach {
+                                adapter.add(Utils.PLACEHOLDER_LOT + it.parkingLot)
+                            }
                         }
-                    }
+                        this.adapter = adapter
+                        onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,view: View,position: Int,id: Long
+                            ) {
+                                if(parent.getItemAtPosition(position) != Utils.spinnerDefaultValue) {
+                                    selectedLot =
+                                        (parent.getItemAtPosition(position) as String).replace(Utils.PLACEHOLDER_LOT,"")
+                                            .toInt()
+                                }
+                            }
 
-                    override fun onNothingSelected(parent: AdapterView<*>) {
+                            override fun onNothingSelected(parent: AdapterView<*>) {
+                            }
+                        }
                     }
                 }
             }

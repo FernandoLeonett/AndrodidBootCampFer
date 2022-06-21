@@ -9,8 +9,8 @@ data class AddReservationRequest(
     var endDate: Boolean = true,
     var orderDate: Boolean = true,
     var authorizationCode: Boolean = true,
-    var successRequest: Boolean = false
-) {
+    var successRequest: Boolean = false,
+    ) {
 
     init {
         validate()

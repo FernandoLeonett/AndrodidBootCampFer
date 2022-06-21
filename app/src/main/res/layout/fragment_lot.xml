@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
-    tools:context=".MainActivity">
+    android:padding="20dp"
+    tools:context=".view.MainActivity">
 
     <TextView
         android:id="@+id/text_hour_lot"
         android:layout_width="272dp"
         android:layout_height="23dp"
         android:layout_marginStart="20dp"
-        android:text="@string/pm"
         android:textAppearance="@style/pm"
         android:textColor="#757575"
         app:layout_constraintBottom_toBottomOf="@+id/vw_figure_id"
@@ -20,11 +20,20 @@
         app:layout_constraintTop_toBottomOf="@id/text_date_lot" />
 
     <TextView
+        android:id="@+id/time_available"
+        android:layout_width="272dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="20dp"
+        android:textAppearance="@style/pm"
+        android:textColor="#AE0F0F"
+        app:layout_constraintStart_toEndOf="@+id/vw_figure_id"
+        app:layout_constraintTop_toBottomOf="@+id/text_hour_lot" />
+
+    <TextView
         android:id="@+id/text_date_lot"
         android:layout_width="272dp"
         android:layout_height="23dp"
         android:layout_marginTop="14dp"
-        android:text="@string/monday_25_m"
         app:layout_constraintStart_toStartOf="@+id/text_hour_lot"
         app:layout_constraintTop_toTopOf="@+id/vw_figure_id" />
 

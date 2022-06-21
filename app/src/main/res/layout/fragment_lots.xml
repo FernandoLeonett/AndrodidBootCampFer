@@ -1,69 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".view.MainActivity"
+    >
     <!-- Rectangle top -->
-    <View
-        android:id="@+id/text_header_lot_list"
-        android:layout_width="0dp"
-        android:layout_height="83dp"
-        app:layout_constraintBottom_toTopOf="@id/recycler_lot_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--progress bar-->
+    <!--    <View-->
+    <!--        android:parkingLot="@+parkingLot/text_header_lot_list"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="83dp"-->
+    <!--        android:layout_marginTop="50dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    &lt;!&ndash;progress bar&ndash;&gt;-->
     <ProgressBar
         android:id="@+id/pbar_availability"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:max="100"
-        android:progress="20"
+
         android:scaleY="3"
-        app:layout_constraintBottom_toBottomOf="@+id/text_header_lot_list"
-        app:layout_constraintEnd_toEndOf="@id/text_header_lot_list"
-        app:layout_constraintStart_toStartOf="@id/text_header_lot_list"
-        app:layout_constraintTop_toBottomOf="@id/text_header_lot_list"
-        app:layout_constraintTop_toTopOf="@id/text_header_lot_list" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <!-- busy -->
     <TextView
+        android:id="@+id/busy"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="@string/busy"
+        android:layout_marginTop="10dp"
+
         android:textAppearance="@style/busy"
-        app:layout_constraintBottom_toBottomOf="@id/text_header_lot_list"
-        app:layout_constraintStart_toStartOf="@id/text_header_lot_list"
+        app:layout_constraintStart_toStartOf="@id/pbar_availability"
+        app:layout_constraintTop_toBottomOf="@id/pbar_availability"
         />
     <!-- free -->
     <TextView
+        android:id="@+id/free"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginEnd="30dp"
-        android:text="@string/free"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
         android:textAppearance="@style/free"
-        app:layout_constraintBottom_toBottomOf="@id/text_header_lot_list"
-        app:layout_constraintEnd_toEndOf="@id/text_header_lot_list" />
+        app:layout_constraintEnd_toEndOf="@id/pbar_availability"
+        app:layout_constraintTop_toBottomOf="@id/pbar_availability" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_lot_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_header_lot_list">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@id/busy"
+        app:layout_constraintTop_toTopOf="@id/pbar_availability" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/submit"
+
         android:src="@android:drawable/ic_input_add"
         app:flow_horizontalBias="0.1"
         app:layout_constraintBottom_toBottomOf="parent"

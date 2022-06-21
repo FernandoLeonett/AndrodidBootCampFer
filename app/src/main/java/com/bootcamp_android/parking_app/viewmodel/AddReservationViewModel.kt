@@ -27,10 +27,11 @@ class AddReservationViewModel(
     }
     val lots: LiveData<List<Lot>> = _lots
     val successfulAdded = MutableLiveData<AddResult>()
-    lateinit var validateUserData: AddReservationRequest
+     var validateUserData: AddReservationRequest =  AddReservationRequest()
 
     fun addReservation(reservation: Reservation) = viewModelScope.launch {
-        validateUserData = AddReservationRequest(reservation)
+        validateUserData = AddReservationRequest().invoke(reservation)
+
         if(validateUserData.successRequest) {
             if((withContext(Dispatchers.IO) { validateReservationUseCase(reservation) } == AddResult.IS_FREE)) {
                 when(withContext(Dispatchers.IO) { addReservationUseCase(reservation) }) {

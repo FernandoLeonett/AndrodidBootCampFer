@@ -55,6 +55,8 @@ class ReservationAddFragment : Fragment() {
                 val res = Reservation(
                     "",authorizationCode,initialDate.dateInMilliseconds,finalDate.dateInMilliseconds,selectedLot as Int
                 )
+
+
                 addReservationViewModel.addReservation(res)
                 val ok = addReservationViewModel.validateUserData
                 if(!ok.successRequest) {
@@ -67,45 +69,43 @@ class ReservationAddFragment : Fragment() {
                             findNavController().navigate(action)
                             Toast.makeText(activity,getString(R.string.msg_reservation_add_success),Toast.LENGTH_SHORT)
                                 .show()
-                        }else{
-
+                        } else {
                             errorMessageAdd(ok)
                         }
                     }
-                    textSelectStartDateReservation.setOnClickListener {
-                        showDateTimePickerDialog(initialDate,view,0)
+                }
+            }
+            textSelectStartDateReservation.setOnClickListener {
+                showDateTimePickerDialog(initialDate,view,0)
+            }
+            textSelectEndDateReservation.setOnClickListener {
+                showDateTimePickerDialog(finalDate,view,1)
+            }
+
+            lotsOptionsSpinner.apply {
+                addReservationViewModel.loadLots()
+                val adapter = ArrayAdapter<Any>(
+                    requireContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item
+                )
+
+                addReservationViewModel.lots.observe(viewLifecycleOwner) { lots ->
+                    adapter.add(Utils.spinnerDefaultValue)
+                    lots.forEach {
+                        adapter.add(Utils.PLACEHOLDER_LOT + it.parkingLot)
                     }
-                    textSelectEndDateReservation.setOnClickListener {
-                        showDateTimePickerDialog(finalDate,view,1)
+                }
+                this.adapter = adapter
+                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,view: View,position: Int,id: Long
+                    ) {
+                        if(parent.getItemAtPosition(position) != Utils.spinnerDefaultValue) {
+                            selectedLot =
+                                (parent.getItemAtPosition(position) as String).replace(Utils.PLACEHOLDER_LOT,"").toInt()
+                        }
                     }
 
-                    lotsOptionsSpinner.apply {
-                        addReservationViewModel.loadLots()
-                        val adapter = ArrayAdapter<Any>(
-                            requireContext(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item
-                        )
-
-                        addReservationViewModel.lots.observe(viewLifecycleOwner) { lots ->
-                            adapter.add(Utils.spinnerDefaultValue)
-                            lots.forEach {
-                                adapter.add(Utils.PLACEHOLDER_LOT + it.parkingLot)
-                            }
-                        }
-                        this.adapter = adapter
-                        onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(
-                                parent: AdapterView<*>,view: View,position: Int,id: Long
-                            ) {
-                                if(parent.getItemAtPosition(position) != Utils.spinnerDefaultValue) {
-                                    selectedLot =
-                                        (parent.getItemAtPosition(position) as String).replace(Utils.PLACEHOLDER_LOT,"")
-                                            .toInt()
-                                }
-                            }
-
-                            override fun onNothingSelected(parent: AdapterView<*>) {
-                            }
-                        }
+                    override fun onNothingSelected(parent: AdapterView<*>) {
                     }
                 }
             }
@@ -116,7 +116,7 @@ class ReservationAddFragment : Fragment() {
         var msg = "\n"
 
         if(ok.successRequest) {
-            msg = getString(R.string.msg_lot_is_busy)
+            msg += getString(R.string.msg_lot_is_busy)
         } else {
             if(!ok.lot) {
                 msg = "\n" + getString(R.string.msg_reservation_add_error_lot)
@@ -133,12 +133,12 @@ class ReservationAddFragment : Fragment() {
             if(!ok.orderDate) {
                 msg += "\n" + getString(R.string.msg_reservation_add_error_order_date)
             }
-            AlertDialog.Builder(requireContext()).apply {
-                setTitle(getString(R.string.msg_reservation_title_error))
-                setMessage(msg).setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
-                    dialogInterface.dismiss()
-                }.show()
-            }
+        }
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle(getString(R.string.msg_reservation_title_error))
+            setMessage(msg).setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
+                dialogInterface.dismiss()
+            }.show()
         }
     }
 

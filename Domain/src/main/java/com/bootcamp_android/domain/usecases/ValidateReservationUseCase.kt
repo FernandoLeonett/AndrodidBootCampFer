@@ -12,15 +12,18 @@ class ValidateReservationUseCase {
 
     private suspend fun validateReservation(reservation: Reservation): AddResult {
         var isValid = AddResult.IS_FREE
-        validateReservationRepository.getReservations().filter {
-            it.parkingLot == reservation.parkingLot
-        }.also { reservations ->
-            reservations.forEach {
+
+        if(reservation.endDate <= reservation.startDate) {
+            isValid = AddResult.ORDER_DATE
+        } else {
+            validateReservationRepository.getReservations().filter {
+                it.parkingLot == reservation.parkingLot
+            }.onEach {
                 if(reservation.endDate in it.startDate..it.endDate || reservation.startDate in it.startDate..it.endDate) {
                     isValid = AddResult.IS_BUSY
                 }
             }
-            return isValid
         }
+        return isValid
     }
 }

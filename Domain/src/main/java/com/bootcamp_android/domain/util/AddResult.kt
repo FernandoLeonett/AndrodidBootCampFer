@@ -4,5 +4,5 @@ enum class AddResult {
 
     IS_FREE,
     IS_BUSY,
-    Error
+    Error, ORDER_DATE
 }

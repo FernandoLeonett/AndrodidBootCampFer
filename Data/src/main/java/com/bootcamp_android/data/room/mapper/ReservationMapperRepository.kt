@@ -14,10 +14,10 @@ class ReservationMapperLocal : BaseMapperRepository<ReservationRoom,Reservation,
     )
 
     override fun transformFromRepositoryToDomain(type: Reservation): Reservation = Reservation(
-        type.id,type.authorizationCode,type.startDate.toLong(),type.endDate.toLong(),type.parkingLot
+        type.id,type.authorizationCode,type.startDate,type.endDate,type.parkingLot
     )
 
     override fun transformFromRepositoryToRoom(type: Reservation): ReservationRoom = ReservationRoom(
-        type.id,type.authorizationCode,type.startDate.toLong(),type.endDate.toLong(),type.parkingLot
+        type.id,type.authorizationCode,type.startDate,type.endDate,type.parkingLot
     )
 }

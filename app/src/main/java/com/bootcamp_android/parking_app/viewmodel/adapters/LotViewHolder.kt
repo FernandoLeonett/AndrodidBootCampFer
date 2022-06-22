@@ -14,7 +14,7 @@ class LotViewHolder(
     private val view: View
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(lot: Lot,listener: (Lot) -> Unit) {
+    fun bind(lot: Lot,listener: (Int) -> Unit) {
         val binding = FragmentLotBinding.bind(view)
 
         binding.apply {
@@ -34,7 +34,7 @@ class LotViewHolder(
             textIdLot.text = lot.parkingLot.toString()
             timeAvailable.text = timeAvailable(lot.availableForTime)
             itemView.setOnClickListener {
-                listener(lot)
+                listener(lot.parkingLot)
             }
         }
     }

@@ -9,7 +9,7 @@ import com.bootcamp_android.data.room.entities.LotRoom
 @Dao
 interface LotDao {
 
-    @Query("SELECT * FROM LotRoom")
+    @Query("SELECT * FROM LotTable")
     fun getLots(): List<LotRoom>
 
 //    @Query("SELECT * FROM LotRoom Where parkingLot= :id")
@@ -17,4 +17,5 @@ interface LotDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addLot(addReservation: LotRoom)
+
 }

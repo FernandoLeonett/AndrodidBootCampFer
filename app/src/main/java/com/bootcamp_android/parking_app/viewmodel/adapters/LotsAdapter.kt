@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp_android.domain.model.Lot
 import com.bootcamp_android.parking_app.R
 
-class LotsAdapter(private val lotData: List<Lot>,private val listener: (Lot) -> Unit) :
+class LotsAdapter(private val lotData: List<Lot>,private val listener: (Int) -> Unit) :
     RecyclerView.Adapter<LotViewHolder>() {
 
     override fun onCreateViewHolder(

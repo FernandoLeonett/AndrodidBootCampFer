@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -49,9 +50,16 @@ class ReservationListFragment : Fragment() {
 
 
         lotsViewModel.lots.observe(viewLifecycleOwner) { lots ->
-            initRecycleReservations(lots.single {
+            val res = lots.single {
                 it.parkingLot == args.lotId
-            }.reservations)
+            }.reservations
+
+            if(res.isEmpty()) {
+                binding?.msgListRes?.isVisible = true
+            } else {
+                initRecycleReservations(res)
+                binding?.msgListRes?.isVisible = false
+            }
         }
         binding?.apply {
             fab.setOnClickListener {
@@ -87,10 +95,7 @@ class ReservationListFragment : Fragment() {
                     reservation,input.text.toString()
                 )
                 val ok = reservationsViewModel.validateUserData
-                if(ok != DeleteReservationRequest.SUCCESS_REQUEST) {
-                    dialogInterface.dismiss()
-                    errorMessagedDeleted(ok)
-                } else {
+                if(ok == DeleteReservationRequest.SUCCESS_REQUEST) {
                     reservationsViewModel.successfullyDeleted.observe(viewLifecycleOwner) {
                         dialogInterface.dismiss()
                         if(it == DeleteReservationRequest.SUCCESS_RESULT) {
@@ -106,6 +111,9 @@ class ReservationListFragment : Fragment() {
                             errorMessagedDeleted(it)
                         }
                     }
+                } else {
+                    dialogInterface.dismiss()
+                    errorMessagedDeleted(ok)
                 }
             }.setNegativeButton(getString(R.string.text_btn_delete_negative)) { dialogInterface,_ ->
                 dialogInterface.cancel()
@@ -117,7 +125,6 @@ class ReservationListFragment : Fragment() {
             DeleteReservationRequest.BAD_AUTHORIZATION_CODE -> {
                 getString(R.string.check_auth_code)
             }
-            DeleteReservationRequest.CURRENT_RESERVATION -> getString(R.string.msg_reservation_delete_error_current_reservation)
             else -> getString(R.string.msg_server_error)
         }
         AlertDialog.Builder(requireContext()).apply {

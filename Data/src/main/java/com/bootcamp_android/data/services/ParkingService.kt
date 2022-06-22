@@ -5,9 +5,9 @@ import com.bootcamp_android.data.services.response.LotResponse
 
 import com.bootcamp_android.data.services.retrofit_instance.RetrofitInstance
 import com.bootcamp_android.domain.model.Reservation
-import com.bootcamp_android.domain.repostories.IReservationRepository
 import com.bootcamp_android.domain.util.Result
 import com.bootcamp_android.domain.util.Utils
+import com.bootcamp_android.domain.util.Utils.parkingId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -60,7 +60,7 @@ class ParkingService  {
     }
 
     suspend fun addReservation(
-        parkingId: String,
+
         reservation: com.bootcamp_android.data.services.request.ReservationRequest
     ): Result<Boolean> {
         var result: Result<Boolean>
@@ -81,7 +81,7 @@ class ParkingService  {
         return result
     }
 
-    suspend fun deleteReservation(parkingId: String,reservationId: String): Result<Boolean> {
+    suspend fun deleteReservation(reservationId: String): Result<Boolean> {
         var result: Result<Boolean>
         withContext(Dispatchers.IO) {
             result = try {

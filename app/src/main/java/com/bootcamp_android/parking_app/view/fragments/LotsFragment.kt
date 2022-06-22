@@ -53,7 +53,7 @@ class LotsFragment : Fragment() {
                 adapter = LotsAdapter(lots) { lot -> lotClick(lot) }
             }
             val totalLots = lots.size
-            val freeLots = lotsViewModel.geNumberOfFreeLots(lots)
+            val freeLots = lotsViewModel.freeLots
             val busyLots = totalLots - freeLots
             free.text = getString(R.string.lots_free,freeLots)
             busy.text = getString(R.string.lots_busy,busyLots)
@@ -66,8 +66,8 @@ class LotsFragment : Fragment() {
         }
     }
 
-    private fun lotClick(lot: Lot) {
-        val action = LotsFragmentDirections.btnLotToRes(lot.parkingLot)
+    private fun lotClick(lotId: Int) {
+        val action = LotsFragmentDirections.btnLotToRes(lotId)
         findNavController().navigate(action)
     }
 

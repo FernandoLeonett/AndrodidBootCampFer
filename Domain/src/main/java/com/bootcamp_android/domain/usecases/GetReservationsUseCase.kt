@@ -8,4 +8,6 @@ class GetReservationsUseCase {
     lateinit var reservationRepository: IReservationRepository
 
     suspend fun getReservation() = reservationRepository.getReservations()
+
+
 }

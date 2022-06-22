@@ -7,6 +7,8 @@ class FillLotsUseCase {
 
     operator fun invoke(lots: List<Lot>,res: List<Reservation>) = fillLots(lots,res)
 
+
+
     private fun fillLots(lots: List<Lot>,reservations: List<Reservation>): List<Lot> {
         val lotsWithReservations = reservations.groupBy {
             it.parkingLot
@@ -25,6 +27,7 @@ class FillLotsUseCase {
         }
         return lots
     }
+
 
     private fun Lot.calculateTimeAvailable() {
         if(this.reservations.size > 0) {

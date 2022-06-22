@@ -7,8 +7,8 @@ import com.bootcamp_android.data.services.request.ReservationRequest
 import com.bootcamp_android.domain.model.Parking
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.repostories.IReservationRepository
+import com.bootcamp_android.domain.util.AddResult
 import com.bootcamp_android.domain.util.Result
-import com.bootcamp_android.domain.util.Utils.parkingId
 
 class ReservationRepository(
     private var parkingService: ParkingService,private var parkingDataBase: ParkingDataBase
@@ -44,41 +44,52 @@ class ReservationRepository(
         return reservationList
     }
 
+    override suspend fun deleteReservation(resID: String): Result<Boolean> {
+      return  when(deleteFromRemote(resID)) {
+            is Result.Success ->{  deleteFromLocal(resID)}
+            else -> Result.Failure(Exception())
+        }
+    }
+
     override suspend fun addReservation(
-        reservation: Reservation
+        res: Reservation
     ): Result<Boolean> {
-        val result = parkingService.addReservation(
-            (parkingId),ReservationRequest(
-                reservation.authorizationCode,reservation.startDate,reservation.endDate,reservation.parkingLot
-            )
+        return when(resToRemote(res)) {
+            is Result.Success -> Result.Success(true)
+            else -> Result.Failure(Exception("ERROR"))
+        }
+    }
+
+    private suspend fun deleteFromRemote(resId: String): Result<Boolean> {
+        return when(val result = parkingService.deleteReservation(resId)) {
+            is Result.Success -> {
+                Result.Success(result.data)
+            }
+            is Result.Failure -> {
+                Result.Failure(result.exception)
+            }
+            else -> return Result()
+        }
+    }
+
+    private suspend fun deleteFromLocal(resId: String):Result<Boolean> {
+         parkingDataBase.getReservationDao().deleteReservation(resId)
+        return  Result.Success(true)
+    }
+
+    private suspend fun resToRemote(res: Reservation): Result<Boolean> {
+        val newReservation = ReservationRequest(
+            res.authorizationCode,res.startDate,res.endDate,res.parkingLot
         )
 
-        return when(result) {
+        return when(val result = parkingService.addReservation(newReservation)) {
             is Result.Success -> {
-                Result.Success(result.data)
+                Result.Success(true)
             }
             is Result.Failure -> {
                 Result.Failure(result.exception)
             }
+            else -> return Result()
         }
-    }
-
-    override suspend fun deleteReservation(
-        reservation: Reservation,authorizationCode: String
-    ): Result<Boolean> {
-        return when(val result = parkingService.deleteReservation(parkingId,reservation.id)) {
-            is Result.Success -> {
-                deleteReservationOnDataBase(reservation)
-                Result.Success(result.data)
-            }
-            is Result.Failure -> {
-                Result.Failure(result.exception)
-            }
-        }
-    }
-
-    private fun deleteReservationOnDataBase(reservation: Reservation) {
-        val localReservation = ReservationMapperLocal().transformFromRepositoryToRoom(reservation)
-        parkingDataBase.getReservationDao().deleteReservation(localReservation)
     }
 }

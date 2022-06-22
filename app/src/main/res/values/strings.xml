@@ -2,6 +2,7 @@
     <string name="app_name">Parking App</string>
     <string name="lots_free">Free: %1$d </string>
     <string name="lots_busy">Busy: %1$d </string>
+    <string name="msg_list_res">No there is`nt reservations yet</string>
     <string name="title_delete_dialog_reservation">Delete Reservation</string>
     <string name="msg_server_error">Error</string>
     <string name="msg_reservation_delete_success">deleted successfully</string>

@@ -1,6 +1,7 @@
 package com.bootcamp_android.parking_app.utils
 
 import java.text.SimpleDateFormat
+import kotlin.math.floor
 
 object Utils {
 
@@ -29,17 +30,17 @@ object Utils {
 
     fun timeAvailable(time: Long): String {
         val hour = time / 3600000
-        val minutes = (time % 3600000 * 0.000017).toInt()
+        val minutes = floor(time % 3600000 * 0.000017).toInt()
         val msg = if(time != -1L) {
             "free for: $hour hours $minutes min"
         } else {
-            "Totally Free"
+            "Unlimited time free"
         }
         return msg
     }
-    fun formatDateInput(time: Long):String{
-       val format =  SimpleDateFormat("dd/MM/yyyy HH:mm");
-      return  format.format(time)
 
+    fun formatDateInput(time: Long): String {
+        val format = SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return format.format(time)
     }
 }

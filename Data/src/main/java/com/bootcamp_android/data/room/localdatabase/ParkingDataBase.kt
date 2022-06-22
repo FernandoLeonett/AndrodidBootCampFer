@@ -10,7 +10,7 @@ import com.bootcamp_android.data.room.entities.LotRoom
 import com.bootcamp_android.data.room.entities.ReservationRoom
 
 @Database(
-    entities = [LotRoom::class,ReservationRoom::class],version = 1
+    entities = [LotRoom::class,ReservationRoom::class],version = 3
 )
 abstract class ParkingDataBase : RoomDatabase() {
 

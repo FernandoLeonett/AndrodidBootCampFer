@@ -13,7 +13,18 @@ class LotRepository(
     private var parkingService: ParkingService,private var parkingDataBase: ParkingDataBase
 ) : ILotsRepository {
 
-    override suspend fun getLots(): List<Lot> {
+    override suspend fun getLots(fromLocal: Boolean): List<Lot> {
+        return when(fromLocal) {
+            true -> {
+                getLocalInfo()
+            }
+            else -> {
+                getLotsFromRemote()
+            }
+        }
+    }
+
+    private suspend fun getLotsFromRemote(): List<Lot> {
         val mutableLotList = mutableListOf<Lot>()
         val lotList = Parking(lotsForReserve = mutableLotList)
         val result = parkingService.getLots()
@@ -33,7 +44,7 @@ class LotRepository(
         parkingDataBase.getLotsDao().addLot(localLot)
     }
 
-    private fun getLocalInfo(): MutableList<Lot> {
+    private fun getLocalInfo(): List<Lot> {
         val dataBaseLots = parkingDataBase.getLotsDao().getLots()
         val lotList = mutableListOf<Lot>()
         dataBaseLots.forEach {

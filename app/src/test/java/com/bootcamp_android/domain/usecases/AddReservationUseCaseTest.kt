@@ -1,11 +1,6 @@
 package com.bootcamp_android.domain.usecases
 
-import com.bootcamp_android.data.repositories.LotRepository
-import com.bootcamp_android.data.repositories.ReservationRepository
-import com.bootcamp_android.data.room.localdatabase.ParkingDataBase
-import com.bootcamp_android.data.services.ParkingService
 import com.bootcamp_android.domain.model.Reservation
-import com.bootcamp_android.domain.repostories.ILotsRepository
 import com.bootcamp_android.domain.repostories.IReservationRepository
 import com.bootcamp_android.domain.util.Result
 import io.mockk.MockKAnnotations
@@ -13,7 +8,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.core.Every
 import org.junit.Before
 import org.junit.Test
 
@@ -21,7 +15,6 @@ internal class AddReservationUseCaseTest {
 
     @RelaxedMockK
     private lateinit var reservationRepository: IReservationRepository
-
     private lateinit var addReservationUseCase: AddReservationUseCase
 
     @Before
@@ -32,16 +25,46 @@ internal class AddReservationUseCaseTest {
         addReservationUseCase.apply {
             this.addReservationRepository = reservationRepository
         }
+
     }
 
     @Test
-    fun `verify connect one time wit reservation repository`() = runBlocking {
+    fun `verify connect one time with reservation repository`() = runBlocking {
         val reservation = Reservation("1","1",System.currentTimeMillis(),System.currentTimeMillis() + 1,12)
 
         coEvery { reservationRepository.addReservation(reservation) } returns Result.Success(true)
 
+        addReservationUseCase(reservation)
 
 
-        coVerify { reservationRepository.addReservation(reservation) }
+        coVerify(exactly = 1) { reservationRepository.addReservation(reservation) is Result.Success}
     }
+
+    @Test
+    fun `verify no connect one time with reservation repository`() = runBlocking {
+        val reservation = Reservation("1","1",System.currentTimeMillis(),System.currentTimeMillis() + 1,12)
+
+        coEvery { reservationRepository.addReservation(reservation) } returns Result.Failure(Exception())
+
+        var result = addReservationUseCase(reservation)
+
+
+        coVerify(exactly = 0) { reservationRepository.addReservation(reservation)}
+    }
+
+    @Test
+    fun `verify no connect one time with reservation repository assert`() = runBlocking {
+        val reservation = Reservation("1","1",System.currentTimeMillis(),System.currentTimeMillis() + 1,12)
+        val exception = Exception()
+        coEvery { reservationRepository.addReservation(reservation) } returns Result.Failure(exception)
+
+        var result = addReservationUseCase(reservation)
+
+
+        coVerify() { reservationRepository.addReservation(reservation)}
+
+        assert(result == Result.Failure(exception))
+
+    }
+
 }

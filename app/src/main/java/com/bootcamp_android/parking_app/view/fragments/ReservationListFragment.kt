@@ -124,8 +124,6 @@ class ReservationListFragment : Fragment() {
             setTitle(getString(R.string.title_delete_dialog_reservation))
             setMessage(msg).setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->
                 dialogInterface.dismiss()
-
-
             }
             this.show()
         }

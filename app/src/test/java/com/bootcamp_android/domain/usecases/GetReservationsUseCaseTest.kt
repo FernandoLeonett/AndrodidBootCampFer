@@ -1,11 +1,11 @@
 package com.bootcamp_android.domain.usecases
 
 import com.bootcamp_android.data.repositories.ReservationRepository
-import com.bootcamp_android.domain.repostories.IReservationRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -20,21 +20,17 @@ class GetReservationsUseCaseTest {
     fun onBefore() {
         MockKAnnotations.init(this)
         getReservationsUseCase = GetReservationsUseCase()
-        getReservationsUseCase.reservationRepository    = reservationRepository
-
+        getReservationsUseCase.reservationRepository = reservationRepository
     }
 
     @Test
-    fun `get reservations`() = runBlocking {
+    fun `call to the repository one time`() = runBlocking {
         coEvery {
             reservationRepository.getReservations()
-        } returns emptyList()
-        //given
-        val result =GetReservationsUseCase()
-        assert(result.reservationRepository.getReservations().isEmpty())
-        //then
-//        coVerify {
-//            reservationRepository.getReservations()
-//        }
+        } returns mockk()
+        getReservationsUseCase.getReservation()
+        coVerify(exactly = 1) {
+            reservationRepository.getReservations()
+        }
     }
 }

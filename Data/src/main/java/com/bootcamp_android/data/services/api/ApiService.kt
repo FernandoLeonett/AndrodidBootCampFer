@@ -8,21 +8,21 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @DELETE("{parkingId}/reservations/{reservationId}.json")
+    @DELETE("{PARKING_ID}/reservations/{reservationId}.json")
     suspend fun deleteReservation(
-        @Path("parkingId") parkingId: String,
+        @Path("PARKING_ID") parkingId: String,
         @Path("reservationId") reservationId: String
     ): Response<Any?>
 
-    @POST("{parkingId}/reservations.json")
+    @POST("{PARKING_ID}/reservations.json")
     suspend fun addReservations(
-        @Path("parkingId") id: String,
+        @Path("PARKING_ID") id: String,
         @Body reservationRequest: ReservationRequest
     ): Response<Any>
 
-    @GET("parkings/{parkingId}/.json")
-    suspend fun getParkingLots(@Path("parkingId") id: String): ParkingLotListResponse
+    @GET("parkings/{PARKING_ID}/.json")
+    suspend fun getParkingLots(@Path("PARKING_ID") id: String): ParkingLotListResponse
 
-    @GET("{parkingId}/reservations.json")
-    suspend fun getReservations(@Path("parkingId") id: String): ReservationListResponse?
+    @GET("{PARKING_ID}/reservations.json")
+    suspend fun getReservations(@Path("PARKING_ID") id: String): ReservationListResponse?
 }

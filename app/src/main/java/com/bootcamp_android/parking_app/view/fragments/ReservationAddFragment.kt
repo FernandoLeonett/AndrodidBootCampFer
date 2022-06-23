@@ -10,13 +10,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bootcamp_android.domain.model.Reservation
+import com.bootcamp_android.domain.util.AddReservationRequest
 import com.bootcamp_android.domain.util.AddResult
+import com.bootcamp_android.domain.util.IResultAdd
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
-import com.bootcamp_android.parking_app.utils.AddReservationRequest
 import com.bootcamp_android.parking_app.utils.DateReservation
 import com.bootcamp_android.parking_app.utils.Utils
 import com.bootcamp_android.parking_app.viewmodel.AddReservationViewModel
@@ -53,20 +55,19 @@ class ReservationAddFragment : Fragment() {
                 authorizationCode = textAuth.text.toString()
                 val res = Reservation(
                     "",authorizationCode,initialDate.dateInMilliseconds,finalDate.dateInMilliseconds,selectedLot as Int
-                )
-
-
-                addReservationViewModel.addReservation(res)
-                val ok = addReservationViewModel.validateUserData
+                ) //
+                val ok = addReservationViewModel.validateDataUser(res)
                 if(!ok.successRequest) {
                     errorMessageAdd(ok)
                 } else {
+                    addReservationViewModel.addReservation(res)
                     addReservationViewModel.successfulAdded.observe(viewLifecycleOwner) { result ->
-                        if(result == AddResult.IS_FREE) {
+                        if(result == AddResult.SUCCESS) {
                             successAddMessage()
                         } else {
-                            errorMessageAdd(ok)
+                            errorMessageAdd(result)
                         }
+                        addReservationViewModel.successfulAdded = MutableLiveData<AddResult>()
                     }
                 }
             }
@@ -107,28 +108,32 @@ class ReservationAddFragment : Fragment() {
         }
     }
 
-    private fun errorMessageAdd(ok: AddReservationRequest) {
-        var msg = "\n"
-
-        if(ok.successRequest) {
-            msg += getString(R.string.msg_lot_is_busy)
-        } else {
-            if(!ok.lot) {
-                msg = "\n" + getString(R.string.msg_reservation_add_error_lot)
+    private fun errorMessageAdd(ok: IResultAdd) {
+        var msg = ""
+        when(ok) {
+            is AddReservationRequest -> {
+                if(!ok.endDate) {
+                    msg += "\n" + getString(R.string.msg_reservation_add_error_end_date)
+                }
+                if(!ok.startDate) {
+                    msg += "\n" + getString(R.string.msg_reservation_add_error_start_date)
+                }
+                if(!ok.lot) {
+                    msg += "\n" + getString(R.string.msg_reservation_add_error_lot)
+                }
+                if(!ok.authorizationCode) {
+                    msg += "\n" + getString(R.string.msg_reservation_add_error_auth)
+                }
             }
-            if(!ok.endDate) {
-                msg += "\n" + getString(R.string.msg_reservation_add_error_end_date)
-            }
-            if(!ok.startDate) {
-                msg += "\n" + getString(R.string.msg_reservation_add_error_start_date)
-            }
-            if(!ok.authorizationCode) {
-                msg += "\n" + getString(R.string.msg_reservation_add_error_auth)
-            }
-            if(!ok.orderDate) {
-                msg += "\n" + getString(R.string.msg_reservation_add_error_order_date)
+            is AddResult -> msg = when(ok) {
+                AddResult.ORDER_DATE -> getString(R.string.msg_reservation_add_error_order_date)
+                AddResult.IS_BUSY -> getString(R.string.msg_lot_is_busy)
+                AddResult.BAD_REQUEST -> getString(R.string.msg_add_bad_request)
+                else -> getString(R.string.msg_server_error)
             }
         }
+
+
         AlertDialog.Builder(requireContext()).apply {
             setTitle(getString(R.string.msg_reservation_title_error))
             setMessage(msg).setPositiveButton(getString(R.string.text_btn_delete_positive)) { dialogInterface,_ ->

@@ -6,6 +6,7 @@
     <string name="title_delete_dialog_reservation">Delete Reservation</string>
     <string name="msg_server_error">Error</string>
     <string name="msg_reservation_delete_success">deleted successfully</string>
+    <string name="msg_add_bad_request">this reservation cannot be added</string>
     <string name="text_btn_delete_negative">Cancel</string>
     <string name="text_btn_delete_positive">OK</string>
     <string name="text_btn_add_positive">YES</string>

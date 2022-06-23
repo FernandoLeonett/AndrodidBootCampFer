@@ -7,14 +7,13 @@ import com.bootcamp_android.data.services.retrofit_instance.RetrofitInstance
 import com.bootcamp_android.domain.model.Reservation
 import com.bootcamp_android.domain.util.Result
 import com.bootcamp_android.domain.util.Utils
-import com.bootcamp_android.domain.util.Utils.parkingId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ParkingService  {
     companion object {
 
-    const val PARKING_ID = Utils.parkingId
+    const val PARKING_ID = Utils.PARKING_ID
 }
 
     suspend fun getLots(): Result<List<LotResponse>> {
@@ -67,7 +66,7 @@ class ParkingService  {
         withContext(Dispatchers.IO) {
             result = try {
                 val response = RetrofitInstance.getRetrofit().create(ApiService::class.java).addReservations(
-                    parkingId,reservation
+                    Utils.PARKING_ID,reservation
                 )
                 if(response.isSuccessful) {
                     Result.Success(true)
@@ -86,7 +85,7 @@ class ParkingService  {
         withContext(Dispatchers.IO) {
             result = try {
                 val response = RetrofitInstance.getRetrofit().create(ApiService::class.java).deleteReservation(
-                    parkingId,reservationId
+                    Utils.PARKING_ID,reservationId
                 )
                 if(response.isSuccessful) {
                     Result.Success(true)

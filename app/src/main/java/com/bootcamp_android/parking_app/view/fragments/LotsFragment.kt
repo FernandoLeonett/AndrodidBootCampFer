@@ -53,7 +53,7 @@ class LotsFragment : Fragment() {
                 adapter = LotsAdapter(lots) { lot -> lotClick(lot) }
             }
             val totalLots = lots.size
-            val freeLots = lotsViewModel.freeLots
+            val freeLots = lotsViewModel.freeLots(lots)
             val busyLots = totalLots - freeLots
             free.text = getString(R.string.lots_free,freeLots)
             busy.text = getString(R.string.lots_busy,busyLots)

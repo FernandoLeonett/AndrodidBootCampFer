@@ -34,7 +34,7 @@ object Utils {
         val msg = if(time != -1L) {
             "free for: $hour hours $minutes min"
         } else {
-            "Unlimited time free"
+            "available for unlimited time"
         }
         return msg
     }

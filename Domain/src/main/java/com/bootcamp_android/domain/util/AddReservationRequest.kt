@@ -1,16 +1,16 @@
-package com.bootcamp_android.parking_app.utils
+package com.bootcamp_android.domain.util
 
 import com.bootcamp_android.domain.model.Reservation
+import com.bootcamp_android.domain.util.IResultAdd
 
-data class AddReservationRequest(
+class AddReservationRequest(
     val reservation: Reservation,
     var lot: Boolean = true,
     var startDate: Boolean = true,
     var endDate: Boolean = true,
-    var orderDate: Boolean = true,
     var authorizationCode: Boolean = true,
     var successRequest: Boolean = false,
-) {
+) : IResultAdd {
 
     init {
         validate()
@@ -29,9 +29,7 @@ data class AddReservationRequest(
         if(reservation.startDate == -1L) {
             startDate = false
         }
-        if(reservation.endDate < reservation.startDate) {
-            orderDate = false
-        }
-        successRequest = orderDate && endDate && startDate && lot && authorizationCode
+
+        successRequest = endDate && startDate && lot && authorizationCode
     }
 }

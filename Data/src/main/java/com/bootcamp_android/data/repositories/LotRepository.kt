@@ -13,15 +13,8 @@ class LotRepository(
     private var parkingService: ParkingService,private var parkingDataBase: ParkingDataBase
 ) : ILotsRepository {
 
-    override suspend fun getLots(fromLocal: Boolean): List<Lot> {
-        return when(fromLocal) {
-            true -> {
-                getLocalInfo()
-            }
-            else -> {
-                getLotsFromRemote()
-            }
-        }
+    override suspend fun getLots(): List<Lot> {
+        return getLocalInfo().ifEmpty { getLotsFromRemote() }
     }
 
     private suspend fun getLotsFromRemote(): List<Lot> {

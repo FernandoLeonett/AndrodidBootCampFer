@@ -5,5 +5,5 @@ import com.bootcamp_android.domain.util.Result
 
 interface ILotsRepository {
 
-    suspend fun getLots(fromLocal:Boolean): List<Lot>
+    suspend fun getLots(): List<Lot>
 }

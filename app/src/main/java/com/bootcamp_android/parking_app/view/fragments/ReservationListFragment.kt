@@ -10,12 +10,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp_android.domain.model.Reservation
-import com.bootcamp_android.domain.util.DeleteReservationRequest
+import com.bootcamp_android.domain.util.DeleteResult
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentReservationsBinding
 import com.bootcamp_android.parking_app.viewmodel.LotsViewModel
@@ -94,37 +95,32 @@ class ReservationListFragment : Fragment() {
                 reservationsViewModel.deleteReservation(
                     reservation,input.text.toString()
                 )
-                val ok = reservationsViewModel.validateUserData
-                if(ok == DeleteReservationRequest.SUCCESS_REQUEST) {
-                    reservationsViewModel.successfullyDeleted.observe(viewLifecycleOwner) {
-                        dialogInterface.dismiss()
-                        if(it == DeleteReservationRequest.SUCCESS_RESULT) {
-                            if(pos <= reservations.size && reservations.isNotEmpty()) {
-                                reservations.removeAt(pos)
-                                adapter.notifyItemRemoved(pos)
-                                Toast.makeText(
-                                    activity,getString(R.string.msg_reservation_delete_success),Toast.LENGTH_SHORT
-                                ).show()
-                                initRecycleReservations(reservations)
-                            }
-                        } else {
-                            errorMessagedDeleted(it)
-                        }
-                    }
-                } else {
+
+                reservationsViewModel.successfullyDeleted.observe(viewLifecycleOwner) {
                     dialogInterface.dismiss()
-                    errorMessagedDeleted(ok)
+                    if(it == DeleteResult.SUCCESS_RESULT) {
+                        if(pos <= reservations.size && reservations.isNotEmpty()) {
+                            reservations.removeAt(pos)
+                            adapter.notifyItemRemoved(pos)
+                            Toast.makeText(
+                                activity,getString(R.string.msg_reservation_delete_success),Toast.LENGTH_SHORT
+                            ).show()
+                            initRecycleReservations(reservations)
+                        }
+                    } else {
+                        errorMessagedDeleted(it)
+                    }
+                    reservationsViewModel.successfullyDeleted = MutableLiveData<DeleteResult>()
                 }
+
             }.setNegativeButton(getString(R.string.text_btn_delete_negative)) { dialogInterface,_ ->
                 dialogInterface.cancel()
             }.show()
     }
 
-    private fun errorMessagedDeleted(ok: DeleteReservationRequest) {
+    private fun errorMessagedDeleted(ok: DeleteResult) {
         val msg = when(ok) {
-            DeleteReservationRequest.BAD_AUTHORIZATION_CODE -> {
-                getString(R.string.check_auth_code)
-            }
+            DeleteResult.BAD_AUTHORIZATION_CODE -> getString(R.string.check_auth_code)
             else -> getString(R.string.msg_server_error)
         }
         AlertDialog.Builder(requireContext()).apply {

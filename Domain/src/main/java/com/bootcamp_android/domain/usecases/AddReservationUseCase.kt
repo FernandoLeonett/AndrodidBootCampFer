@@ -8,17 +8,16 @@ import javax.management.timer.Timer.ONE_MINUTE
 
 class AddReservationUseCase {
 
+    private lateinit var isValid: AddResult
     lateinit var addReservationRepository: IReservationRepository
 
     suspend operator fun invoke(reservation: Reservation) = validateReservation(reservation)
     private val currentTime = System.currentTimeMillis()
     private suspend fun validateReservation(reservation: Reservation): AddResult {
-        var isValid = AddResult.IS_FREE
-
         if(reservation.startDate < currentTime || reservation.parkingLot < 0 || reservation.authorizationCode == "") {
-            isValid = AddResult.BAD_REQUEST
+            isValid = AddResult.AddResponse.REQUEST
         } else if(reservation.endDate < reservation.startDate + ONE_MINUTE) {
-            isValid = AddResult.ORDER_DATE
+            isValid = AddResult.AddResponse.ORDER
         } else {
             val reservationList = addReservationRepository.getReservations().filter {
                 it.parkingLot == reservation.parkingLot
@@ -26,15 +25,15 @@ class AddReservationUseCase {
             if(reservationList.isNotEmpty()) {
                 reservationList.onEach {
                     if(reservation.endDate in it.startDate..it.endDate || reservation.startDate in it.startDate..it.endDate) {
-                        isValid = AddResult.IS_BUSY
+                        isValid = AddResult.AddResponse.BUSY
                     }
                 }
             }
-            if(isValid == AddResult.IS_FREE) {
-                if(addReservationRepository.addReservation(reservation) !is Result.Success) {
-                    isValid = AddResult.Error
-                }else{
-                    isValid =AddResult.SUCCESS
+            if(!this::isValid.isInitialized) {
+                isValid = if(addReservationRepository.addReservation(reservation) !is Result.Success) {
+                    AddResult.AddResponse.Error
+                } else {
+                    AddResult.AddResponse.SUCCESS
                 }
             }
         }

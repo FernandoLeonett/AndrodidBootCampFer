@@ -99,20 +99,16 @@ class ReservationListFragment : Fragment() {
                 reservationsViewModel.successfullyDeleted.observe(viewLifecycleOwner) {
                     dialogInterface.dismiss()
                     if(it == DeleteResult.SUCCESS_RESULT) {
-                        if(pos <= reservations.size && reservations.isNotEmpty()) {
-                            reservations.removeAt(pos)
-                            adapter.notifyItemRemoved(pos)
-                            Toast.makeText(
-                                activity,getString(R.string.msg_reservation_delete_success),Toast.LENGTH_SHORT
-                            ).show()
-                            initRecycleReservations(reservations)
-                        }
+                        reservations.removeAt(pos)
+                        adapter.notifyItemRemoved(pos)
+                        Toast.makeText(
+                            activity,getString(R.string.msg_reservation_delete_success),Toast.LENGTH_SHORT
+                        ).show()
                     } else {
                         errorMessagedDeleted(it)
                     }
                     reservationsViewModel.successfullyDeleted = MutableLiveData<DeleteResult>()
                 }
-
             }.setNegativeButton(getString(R.string.text_btn_delete_negative)) { dialogInterface,_ ->
                 dialogInterface.cancel()
             }.show()

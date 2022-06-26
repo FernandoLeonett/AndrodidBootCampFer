@@ -14,9 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bootcamp_android.domain.model.Reservation
-import com.bootcamp_android.domain.util.AddReservationRequest
 import com.bootcamp_android.domain.util.AddResult
-import com.bootcamp_android.domain.util.IResultAdd
 import com.bootcamp_android.parking_app.R
 import com.bootcamp_android.parking_app.databinding.FragmentAddReservationBinding
 import com.bootcamp_android.parking_app.utils.DateReservation
@@ -55,14 +53,16 @@ class ReservationAddFragment : Fragment() {
                 authorizationCode = textAuth.text.toString()
                 val res = Reservation(
                     "",authorizationCode,initialDate.dateInMilliseconds,finalDate.dateInMilliseconds,selectedLot as Int
-                ) //
-                val ok = addReservationViewModel.validateDataUser(res)
-                if(!ok.successRequest) {
+                )
+                val ok: AddResult.AddRequest = addReservationViewModel.validateDataUser(
+                    res
+                )
+                if(!ok.succes) {
                     errorMessageAdd(ok)
                 } else {
                     addReservationViewModel.addReservation(res)
                     addReservationViewModel.successfulAdded.observe(viewLifecycleOwner) { result ->
-                        if(result == AddResult.SUCCESS) {
+                        if(result == AddResult.AddResponse.SUCCESS) {
                             successAddMessage()
                         } else {
                             errorMessageAdd(result)
@@ -72,10 +72,10 @@ class ReservationAddFragment : Fragment() {
                 }
             }
             textSelectStartDateReservation.setOnClickListener {
-                showDateTimePickerDialog(initialDate,view,0)
+                showDateTimePickerDialog(initialDate,0)
             }
             textSelectEndDateReservation.setOnClickListener {
-                showDateTimePickerDialog(finalDate,view,1)
+                showDateTimePickerDialog(finalDate,1)
             }
 
             lotsOptionsSpinner.apply {
@@ -108,27 +108,27 @@ class ReservationAddFragment : Fragment() {
         }
     }
 
-    private fun errorMessageAdd(ok: IResultAdd) {
+    private fun errorMessageAdd(ok: AddResult) {
         var msg = ""
         when(ok) {
-            is AddReservationRequest -> {
-                if(!ok.endDate) {
+            is AddResult.AddRequest -> {
+                if(!ok.endValid) {
                     msg += "\n" + getString(R.string.msg_reservation_add_error_end_date)
                 }
-                if(!ok.startDate) {
+                if(!ok.startValid) {
                     msg += "\n" + getString(R.string.msg_reservation_add_error_start_date)
                 }
-                if(!ok.lot) {
+                if(!ok.parkingValid) {
                     msg += "\n" + getString(R.string.msg_reservation_add_error_lot)
                 }
-                if(!ok.authorizationCode) {
+                if(!ok.authValid) {
                     msg += "\n" + getString(R.string.msg_reservation_add_error_auth)
                 }
             }
-            is AddResult -> msg = when(ok) {
-                AddResult.ORDER_DATE -> getString(R.string.msg_reservation_add_error_order_date)
-                AddResult.IS_BUSY -> getString(R.string.msg_lot_is_busy)
-                AddResult.BAD_REQUEST -> getString(R.string.msg_add_bad_request)
+            else -> msg = when(ok) {
+                AddResult.AddResponse.ORDER -> getString(R.string.msg_reservation_add_error_order_date)
+                AddResult.AddResponse.ORDER -> getString(R.string.msg_lot_is_busy)
+                AddResult.AddResponse.REQUEST -> getString(R.string.msg_add_bad_request)
                 else -> getString(R.string.msg_server_error)
             }
         }
@@ -155,21 +155,21 @@ class ReservationAddFragment : Fragment() {
             }.setNegativeButton(getString(R.string.text_btn_add_negative)) { dialogInterface,_ ->
                 dialogInterface.dismiss()
 
-                findNavController().navigate(R.id.action_fragmentAddReservation_to_lotListFragment)
+                findNavController().popBackStack()
             }
             show()
         }
     }
 
-    private fun showDateTimePickerDialog(date: DateReservation,view: View,inputDate: Int) {
-        binding = FragmentAddReservationBinding.bind(view)
+    private fun showDateTimePickerDialog(date: DateReservation,inputDate: Int) {
         val calendar = Calendar.getInstance()
         val listenerHour = TimePickerDialog.OnTimeSetListener { _,hour,minutes ->
             calendar[Calendar.HOUR_OF_DAY] = hour
             calendar[Calendar.MINUTE] = minutes
-            val input =
-                if(inputDate == 0) binding?.textSelectStartDateReservation else binding?.textSelectEndDateReservation
-
+            val input = when(inputDate) {
+                0 -> binding?.textSelectStartDateReservation
+                else -> binding?.textSelectEndDateReservation
+            }
             input?.text = Utils.formatDateInput(calendar.timeInMillis)
             date.dateInMilliseconds = calendar.timeInMillis
         }
